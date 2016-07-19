@@ -72,7 +72,7 @@ export default function API() {
     const sendChannel = async (state, prevState) => {
       const channel = state && state.user.channel
       const prevChannel = prevState && prevState.user.channel
-      if (channel != prevChannel) {
+      if (channel && channel != prevChannel) {
         api.http('POST', `/channel/join/${channel}`, {
           previousChannelId: prevChannel
         })
