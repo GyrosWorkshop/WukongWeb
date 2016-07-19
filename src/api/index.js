@@ -73,7 +73,7 @@ export default function API() {
       const channel = state && state.user.channel
       const prevChannel = prevState && prevState.user.channel
       if (channel && channel != prevChannel) {
-        api.http('POST', `/channel/join/${channel}`, {
+        await api.http('POST', `/channel/join/${channel}`, {
           previousChannelId: prevChannel
         })
       }
@@ -92,16 +92,16 @@ export default function API() {
         )
       )
       if (!prevState || !isEqual(song, prevSong)) {
-        api.http('POST', `/channel/updateNextSong/${state.user.channel}`,
+        await api.http('POST', `/channel/updateNextSong/${state.user.channel}`,
           song.songId ? song : null
         )
       }
     }
     const sendSync = async (state, prevState) => {
-      api.http('POST', `/channel/finished/${state.user.channel}`)
+      await api.http('POST', `/channel/finished/${state.user.channel}`)
     }
     const sendDownvote = async (state, prevState) => {
-      api.http('POST', `/channel/downVote/${state.user.channel}`)
+      await api.http('POST', `/channel/downVote/${state.user.channel}`)
     }
     const sendSearch = async (state, prevState) => {
       const keyword = state && state.search.keyword
