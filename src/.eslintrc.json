@@ -1,0 +1,23 @@
+{
+  "env": {
+    "node": false,
+    "commonjs": true,
+    "browser": true
+  },
+  "globals": {
+    "__env": false
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "extends": ["plugin:react/recommended"],
+  "rules": {
+    "no-console": ["error", {"allow": ["log"]}]
+  }
+}
