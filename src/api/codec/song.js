@@ -6,50 +6,34 @@ export function encode(object = {}) {
 }
 
 export function decode(object = {}) {
-  const parseLyrics = (lyricsText) => {
-    let lyrcArr = []
-    let lyrics  = []
-
-    if (lyricsText) {
-      // filter lyrics, get the original one, should be with timeline.
-      let originalLyric = lyricsText
-        .filter(v => v.withTimeline && !v.translate)
-        || lyricsText
-        .filter(v => v.withTimeline)
-
-      if (originalLyric.length > 0)
-        lyrcArr = originalLyric[0].lyric.split('\n')
-    }
-    const reg = /\[\d+:\d+\.\d+\]/g
-
-    lyrcArr.forEach(line => {
-      let res  = line.match(reg)
-      let lyrc = line.replace(reg, '')
-
-      if (res) {
-        res.forEach(key => {
-          let min      = Number(String(key.match(/\[\d+/)).slice(1))
-          let sec      = Number(String(key.match(/\:\d+/)).slice(1))
-          let millisec = Number(String(key.match(/\.\d+/)))
-          let time = min * 60 + sec + millisec
-          lyrics.push({
-            time,
-            lyrc
-          })
+  const parseLyrics = lyrics => {
+    if (!lyrics) return
+    const lrcItems = lyrics
+      .filter(item => item.withTimeline)
+      .sort((item1, item2) => item1.translate - item2.translate)
+    if (!lrcItems) return
+    const lrcText = lrcItems[0].lyric || ''
+    const metadata = {}
+    const lines = []
+    lrcText.split('\n').forEach(line => {
+      const match = line.trim().match(/^\[(.*?):(.*?)](.*)$/)
+      if (!match) return
+      const parts = match.slice(1, 4)
+      if (isNaN(parseInt(parts[0])) || isNaN(parseFloat(parts[1]))) {
+        metadata[parts[0]] = parts[1]
+      } else {
+        lines.push({
+          time: parseInt(parts[0]) * 60 + parseFloat(parts[1]),
+          text: parts[2]
         })
       }
     })
-    if (lyrics.length > 0) {
-      // If we have lyrics, display the title of song before playing.
-      lyrics.push({
-        time: -1,
-        lyrc: `${object.title} - ${object.artist}`
-      })
+    if (metadata.offset) {
+      const offset = parseFloat(metadata.offset)
+      lines.forEach(line => line.time += offset)
     }
-    // sort lyric lines by time order
-    lyrics = lyrics.sort((a, b) => a.time - b.time)
-
-    return lyrics
+    lines.sort((line1, line2) => line1.time - line2.time)
+    return lines
   }
 
   return {
@@ -62,7 +46,6 @@ export function decode(object = {}) {
     artwork: object.artwork,
     file: object.file,
     length: object.length,
-    bitrate: object.bitrate,
     lyrics: parseLyrics(object.lyrics)
   }
 }

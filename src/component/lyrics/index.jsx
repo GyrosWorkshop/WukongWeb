@@ -36,7 +36,7 @@ export default class Lyrics extends Component {
       for (let i = 0; i < lyrics.length; i++) {
         if (lyrics[i].time <= time &&
           (!lyrics[i + 1] || time < lyrics[i + 1].time)) {
-          return lyrics[i].lyrc
+          return lyrics[i].text
         }
       }
     }
