@@ -91,7 +91,7 @@ export default function API() {
             ? undefined : prevState.song.playlist[0]
         )
       )
-      if (!isEqual(song, prevSong)) {
+      if (!prevState || !isEqual(song, prevSong)) {
         api.http('POST', `/channel/updateNextSong/${state.user.channel}`,
           song.songId ? song : null
         )
