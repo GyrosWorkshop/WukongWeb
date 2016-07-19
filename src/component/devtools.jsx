@@ -18,10 +18,6 @@ export default createDevTools(
         Action.Song.play.type,
         Action.Song.preload.type
       ]}
-      statesFilter={state => {
-        state.song.playing.lyrics = '<TRUNCATED>'
-        return state
-      }}
     >
       <LogMonitor theme='tomorrow' />
     </FilteredMonitor>
