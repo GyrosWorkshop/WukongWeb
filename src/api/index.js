@@ -136,7 +136,7 @@ export default function API() {
               time: (Date.now() / 1000) - (data.elapsed || 0)
             }))
             break
-          case 'NextSongUpdated':
+          case 'NextSongUpdate':
             next(Action.Song.preload.create(
               Codec.Song.decode(data.song)
             ))

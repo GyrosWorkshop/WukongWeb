@@ -4,3 +4,4 @@ build
 *.swp
 .idea
 .DS_Store
+.vscode/.browse.VC.db*
