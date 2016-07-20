@@ -7,12 +7,13 @@ export function encode(object = {}) {
 
 export function decode(object = {}) {
   const parseLyrics = lyrics => {
-    if (!lyrics || lyrics.length === 0) return
+    if (!lyrics) return
     const lrcItems = lyrics
       .filter(item => item.withTimeline)
       .sort((item1, item2) => item1.translate - item2.translate)
-    if (!lrcItems) return
+    if (!lrcItems.length) return
     const lrcText = lrcItems[0].lyric || ''
+    if (!lrcText.length) return
     const metadata = {}
     const lines = []
     lrcText.split('\n').forEach(line => {
