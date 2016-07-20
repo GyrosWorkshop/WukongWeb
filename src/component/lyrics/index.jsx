@@ -25,26 +25,46 @@ export default class Lyrics extends Component {
     muiTheme: PropTypes.object.isRequired
   }
 
-  getLyricsLine() {
+  state = {
+    lineIndex: -1,
+    lineContent: '',
+    overflowWidth: 0,
+    scrollDuration: 0
+  }
+
+  componentWillReceiveProps(nextProps) {
     const {lyrics, elapsed} = this.props
-    if (lyrics) {
-      return lyrics.find((line, index) => {
-        const nextLine = lyrics[index + 1]
-        return nextLine
-          ? line.time <= elapsed && elapsed < nextLine.time
-          : true
-      }).text
-    } else {
-      return '没有歌词 o(*≧▽≦)ツ'
+    const lineIndex = lyrics ? lyrics.findIndex((line, index) => {
+      const nextLine = lyrics[index + 1]
+      return nextLine
+        ? line.time <= elapsed && elapsed < nextLine.time
+        : true
+    }) : -1
+    const lineContent = lineIndex >= 0
+      ? lyrics[lineIndex].text
+      : '没有歌词 o(*≧▽≦)ツ'
+    this.setState({lineIndex, lineContent})
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.lineIndex != prevState.lineIndex) {
+      const {line} = this.refs
+      const {lyrics} = this.props
+      const {lineIndex} = this.state
+      const overflowWidth = line.clientWidth - line.scrollWidth
+      const scrollDuration = lineIndex < lyrics.length - 1
+        ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
+        : 2
+      setTimeout(() => this.setState({overflowWidth, scrollDuration}), 0)
     }
   }
 
   render() {
     const style = this.generateStyle()
     return (
-      <div style={style.footer}>
-        <div style={style.content}>
-          {this.getLyricsLine()}
+      <div style={style.lyrics}>
+        <div style={style.content} ref='line'>
+          {this.state.lineContent}
         </div>
       </div>
     )
@@ -52,7 +72,7 @@ export default class Lyrics extends Component {
 
   generateStyle() {
     return {
-      footer: {
+      lyrics: {
         width: '100%',
         height: '100%',
         background: this.props.muiTheme.footer.backgroundColor,
@@ -60,22 +80,17 @@ export default class Lyrics extends Component {
         fontFamily: this.props.muiTheme.fontFamily
       },
       content: {
-        width: '100%',
-        height: '100%',
+        marginLeft: '1em',
+        marginRight: '1em',
         fontSize: '1.2em',
         lineHeight: `${this.props.height}px`,
         textAlign: 'center',
-        margin: 0,
-        [this.props.muiTheme.responsive.tablet.mediaQuery]: {
-          width: 'auto',
-          marginLeft: '10%',
-          marginRight: '10%'
-        },
-        [this.props.muiTheme.responsive.desktop.mediaQuery]: {
-          width: this.props.muiTheme.responsive.desktop.breakpoint * 0.8,
-          marginLeft: 'auto',
-          marginRight: 'auto'
-        }
+        whiteSpace: 'nowrap',
+        animation: `marquee ${this.state.scrollDuration}s ease`,
+        animationName: Radium.keyframes({
+          '0%': {transform: 'translate(0, 0)'},
+          '100%': {transform: `translate(${this.state.overflowWidth}px, 0)`},
+        }, 'marquee')
       }
     }
   }
