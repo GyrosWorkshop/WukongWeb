@@ -7,7 +7,7 @@ export function encode(object = {}) {
 
 export function decode(object = {}) {
   const parseLyrics = lyrics => {
-    if (!lyrics) return
+    if (!lyrics || lyrics.length === 0) return
     const lrcItems = lyrics
       .filter(item => item.withTimeline)
       .sort((item1, item2) => item1.translate - item2.translate)
