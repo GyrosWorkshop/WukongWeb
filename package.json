@@ -2,7 +2,6 @@
   "name": "wukong-music-web",
   "version": "0.0.1",
   "description": "Web client of Wukong",
-  "main": "index.js",
   "dependencies": {
     "lodash": "^4.13.1",
     "material-ui": "^0.15.2",

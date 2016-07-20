@@ -26,21 +26,17 @@ export default class Lyrics extends Component {
   }
 
   getLyricsLine() {
-    const lyrics = this.props.lyrics
-    const time = this.props.elapsed
+    const {lyrics, elapsed} = this.props
     if (lyrics) {
-      /**
-       *  ...A....B..|..C....D...
-       *  needle is B (B <= t < C)
-       */
-      for (let i = 0; i < lyrics.length; i++) {
-        if (lyrics[i].time <= time &&
-          (!lyrics[i + 1] || time < lyrics[i + 1].time)) {
-          return lyrics[i].text
-        }
-      }
+      return lyrics.find((line, index) => {
+        const nextLine = lyrics[index + 1]
+        return nextLine
+          ? line.time <= elapsed && elapsed < nextLine.time
+          : true
+      }).text
+    } else {
+      return '没有歌词 o(*≧▽≦)ツ'
     }
-    return '没有歌词 o(*≧▽≦)ツ'
   }
 
   render() {

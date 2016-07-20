@@ -121,7 +121,7 @@ export default function API() {
       await fetchUser()
       const state = store.getState()
       await sendChannel(state)
-      sendUpnext(state)
+      await sendUpnext(state)
       api.websocket(({send}) => (event, data) => {
         switch (event) {
           case 'UserListUpdated':
