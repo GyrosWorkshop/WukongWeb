@@ -3,5 +3,5 @@ build
 *.log
 *.swp
 .idea
+.vscode
 .DS_Store
-.vscode/.browse.VC.db*
