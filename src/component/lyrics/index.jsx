@@ -28,17 +28,15 @@ export default class Lyrics extends Component {
   state = {
     lineIndex: -1,
     lineContent: '',
-    overflowWidth: 0,
-    scrollDuration: 0
+    overflowWidth: '0',
+    scrollDuration: '0'
   }
 
   componentWillReceiveProps(nextProps) {
     const {lyrics, elapsed} = this.props
     const lineIndex = lyrics ? lyrics.findIndex((line, index) => {
       const nextLine = lyrics[index + 1]
-      return nextLine
-        ? line.time <= elapsed && elapsed < nextLine.time
-        : true
+      return !nextLine || elapsed < nextLine.time
     }) : -1
     const lineContent = lineIndex >= 0
       ? lyrics[lineIndex].text
@@ -48,13 +46,15 @@ export default class Lyrics extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.lineIndex != prevState.lineIndex) {
-      const {line} = this.refs
-      const {lyrics} = this.props
-      const {lineIndex} = this.state
-      const overflowWidth = line.clientWidth - line.scrollWidth
-      const scrollDuration = lineIndex < lyrics.length - 1
-        ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
-        : 2
+      const {refs: {line}, props: {lyrics}, state: {lineIndex}} = this
+      const overflowWidth = (
+        line.clientWidth - line.scrollWidth
+      ).toFixed(0)
+      const scrollDuration = (
+        lineIndex < lyrics.length - 1
+          ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time + 0.05
+          : 4
+      ).toFixed(1)
       setTimeout(() => this.setState({overflowWidth, scrollDuration}), 0)
     }
   }
@@ -86,7 +86,7 @@ export default class Lyrics extends Component {
         lineHeight: `${this.props.height}px`,
         textAlign: 'center',
         whiteSpace: 'nowrap',
-        animation: `marquee ${this.state.scrollDuration}s ease`,
+        animation: `marquee ${this.state.scrollDuration}s ease infinite`,
         animationName: Radium.keyframes({
           '0%': {transform: 'translate(0, 0)'},
           '100%': {transform: `translate(${this.state.overflowWidth}px, 0)`},
