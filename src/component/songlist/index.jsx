@@ -41,6 +41,7 @@ export default class SongList extends Component {
       switch (siteId) {
         case 'netease-cloud-music': return '网易云音乐'
         case 'QQMusic': return 'QQ 音乐'
+        case 'Xiami': return '阿里音乐'
         default: return ''
       }
     }
