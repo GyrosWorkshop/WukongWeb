@@ -98,10 +98,20 @@ export default function API() {
       }
     }
     const sendSync = async (state, prevState) => {
-      await api.http('POST', `/channel/finished/${state.user.channel}`)
+      const song = Codec.Song.encode(
+        state && state.song.playing
+      )
+      await api.http('POST', `/channel/finished/${state.user.channel}`,
+        song.songId ? song : null
+      )
     }
     const sendDownvote = async (state, prevState) => {
-      await api.http('POST', `/channel/downVote/${state.user.channel}`)
+      const song = Codec.Song.encode(
+        state && state.song.playing
+      )
+      await api.http('POST', `/channel/downVote/${state.user.channel}`,
+        song.songId ? song : null
+      )
     }
     const sendSearch = async (state, prevState) => {
       const keyword = state && state.search.keyword
