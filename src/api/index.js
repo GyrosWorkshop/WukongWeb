@@ -140,16 +140,16 @@ export default function API() {
             }))
             break
           case 'Play':
-            next(Action.Song.play.create({
+            next(Action.Song.play.create(data.song && {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
               time: (Date.now() / 1000) - (data.elapsed || 0)
             }))
             break
           case 'NextSongUpdate':
-            next(Action.Song.preload.create(
-              Codec.Song.decode(data.song)
-            ))
+            next(Action.Song.preload.create(data.song && {
+              ...Codec.Song.decode(data.song)
+            }))
             break
         }
       })
