@@ -33,7 +33,7 @@ export function decode(object = {}) {
       string = string.substr(match[1].length)
     }
     if (metadata.offset) {
-      const offset = parseFloat(metadata.offset)
+      const offset = parseFloat(metadata.offset) / 1000
       lines.forEach(line => line.time += offset)
     }
     lines.sort((line1, line2) => line1.time - line2.time)
