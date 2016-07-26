@@ -37,9 +37,9 @@ export default class Field extends Component {
     return (
       <div style={style.container}>
         <TextField
+          style={style.field}
           hintText={this.props.name}
           value={this.state.value}
-          fullWidth={true}
           underlineShow={false}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
@@ -60,6 +60,12 @@ export default class Field extends Component {
         width: '100%',
         height: '100%',
         position: 'relative'
+      },
+      field: {
+        display: 'block',
+        width: 'auto',
+        marginLeft: '1em',
+        marginRight: 48
       },
       button: {
         position: 'absolute',

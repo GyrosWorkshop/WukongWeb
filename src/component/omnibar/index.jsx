@@ -55,10 +55,7 @@ export default class OmniBar extends Component {
         marginRight: this.props.muiTheme.appBar.padding,
         marginTop: this.props.muiTheme.spacing.desktopGutterMini,
         marginBottom: this.props.muiTheme.spacing.desktopGutterMini,
-        paddingLeft: '1em',
-        paddingRight: '1em',
-        paddingTop: 0,
-        paddingBottom: 0,
+        padding: 0,
         [this.props.muiTheme.responsive.tablet.mediaQuery]: {
           width: this.props.muiTheme.searchField.recommendedWidth,
           marginLeft: 'auto',
