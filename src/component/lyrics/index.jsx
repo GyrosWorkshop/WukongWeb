@@ -75,6 +75,7 @@ export default class Lyrics extends Component {
       lyrics: {
         width: '100%',
         height: '100%',
+        boxShadow: this.props.muiTheme.footer.boxShadow,
         background: this.props.muiTheme.footer.backgroundColor,
         color: this.props.muiTheme.footer.textColor,
         fontFamily: this.props.muiTheme.fontFamily
