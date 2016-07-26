@@ -4,12 +4,12 @@ import Radium from 'radium'
 import Paper from 'material-ui/Paper'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
-const PaperRadium = Radium(Paper)
-
 import Heading from './heading'
 import Status from '../status'
 import Player from '../player'
 import Profile from '../profile'
+
+const PaperRadium = Radium(Paper)
 
 function mapStateToProps(state) {
   return {
