@@ -7,6 +7,6 @@ export default merge(lightBaseTheme, {
     primary2Color: '#e95d3b',
     accent1Color: '#99dc3c',
     pickerHeaderColor: '#f09442',
-    footerColor: '#336699'
+    footerColor: 'rgb(0, 122, 204)'
   }
 })
