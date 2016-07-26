@@ -6,7 +6,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import Frame from './frame'
 import TopBar from '../topbar'
 import Lyrics from '../lyrics'
-import SearchBar from '../searchbar'
+import OmniBar from '../omnibar'
 import SongList from '../songlist'
 import getTheme from '../../theme'
 import lightTheme from '../../theme/light'
@@ -22,7 +22,7 @@ export default class App extends Component {
             header={<TopBar />}
             footer={<Lyrics />}
           >
-            <SearchBar />
+            <OmniBar />
             <SongList />
           </Frame>
         </MuiThemeProvider>

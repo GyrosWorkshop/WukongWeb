@@ -18,7 +18,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class SearchBar extends Component {
+export default class OmniBar extends Component {
   static propTypes = {
     onSearch: PropTypes.func
   }
