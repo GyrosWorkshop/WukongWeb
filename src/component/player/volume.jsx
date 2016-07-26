@@ -49,7 +49,6 @@ export default class Volume extends Component {
     const style = this.generateStyle()
     return (
       <IconButton
-        tooltip='Volume'
         touchRippleColor={this.props.muiTheme.appBar.textColor}
         onTouchTap={this.onPopoverOpen}
       >

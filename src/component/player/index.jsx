@@ -109,7 +109,6 @@ export default class Player extends Component {
       <div style={style.toolbar}>
         &#8203;
         <Button
-          title='Downvote'
           icon={ThumbDownIcon}
           onAction={this.onDownvoteAction}
         />
@@ -124,7 +123,6 @@ export default class Player extends Component {
         {
           this.props.playing.file && !this.state.isPlaying
             ? <Button
-                title='Play'
                 icon={PlayArrowIcon}
                 onAction={this.onPlayAction}
               />
