@@ -46,6 +46,7 @@ export default function getTheme(theme) {
     },
     footer: {
       backgroundColor: theme.palette.footerColor,
+      boxShadow: '0px -2px 5px rgba(0, 0, 0, 0.3)',
       textColor: theme.palette.alternateTextColor,
       height: 50
     },
