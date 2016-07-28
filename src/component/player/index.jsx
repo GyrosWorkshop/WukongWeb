@@ -88,18 +88,17 @@ export default class Player extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {playing, preload} = this.refs
-    const playingFile = this.props.playing.file || ''
-    if (playing.src != playingFile) {
-      playing.src = playingFile
-      playing.currentTime = (Date.now() / 1000) - this.props.playing.time
-      const player = this.props.playing.player
-      if (playingFile && this.props.userId == player) {
+    if (this.props.playing.id != prevProps.playing.id) {
+      const {file, time, player} = this.props.playing
+      playing.src = file
+      playing.currentTime = (Date.now() / 1000) - time
+      if (file && player && player == this.props.userId) {
         this.props.onPlayOwn(this.props.playing)
       }
     }
-    const preloadFile = this.props.preload.file || ''
-    if (preload.src != preloadFile) {
-      preload.src = preloadFile
+    if (this.props.preload.id != prevProps.preload.id) {
+      const {file} = this.props.preload
+      preload.src = file
     }
   }
 
