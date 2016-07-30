@@ -12,7 +12,7 @@ export function decode(object = {}) {
       .filter(item => item.withTimeline)
       .sort((item1, item2) => item1.translate - item2.translate)
     if (!lrcItems.length) return
-    const lrcText = (lrcItems[0].lyric || '').split('\n').join(' ')
+    const lrcText = (lrcItems[0].lyric || '').split(/[\n\r]/).join(' ')
     if (!lrcText.length) return
     const metadata = {}
     const lines = []
