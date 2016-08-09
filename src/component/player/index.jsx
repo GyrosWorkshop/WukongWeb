@@ -48,7 +48,7 @@ export default class Player extends Component {
   }
 
   state = {
-    initialVolume: localStorage.getItem(kVolumeKey) || 0.5,
+    initialVolume: parseFloat(localStorage.getItem(kVolumeKey)) || 0.5,
     isPlaying: false,
     canSetVolume: (() => {
       const audio = document.createElement('audio')
@@ -64,7 +64,7 @@ export default class Player extends Component {
 
   onVolumeChange = (() => {
     const debouncedSave = debounce(value => {
-      localStorage.setItem(kVolumeKey, value)
+      localStorage.setItem(kVolumeKey, value.toFixed(2))
     }, 1000)
     return value => {
       const {playing} = this.refs
