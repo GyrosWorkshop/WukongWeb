@@ -1,11 +1,11 @@
-const key = 'wukong'
+const kStorageKey = 'wukong'
 
 export default function Storage() {
   const open = (state = {}) => {
     try {
       state = {
         ...state,
-        ...JSON.parse(localStorage.getItem(key))
+        ...JSON.parse(localStorage.getItem(kStorageKey))
       }
       const channel = location.hash.replace(/^#/, '')
       if (channel) {
@@ -27,10 +27,10 @@ export default function Storage() {
           playlist: state.song.playlist
         }
       }
-      localStorage.setItem(key, JSON.stringify(state))
+      localStorage.setItem(kStorageKey, JSON.stringify(state))
       location.hash = state.user.channel || ''
     } catch (error) {
-      localStorage.removeItem(key)
+      localStorage.removeItem(kStorageKey)
       location.hash = ''
     }
   }

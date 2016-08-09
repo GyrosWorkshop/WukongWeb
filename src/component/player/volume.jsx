@@ -18,7 +18,6 @@ export default class Volume extends Component {
 
   state = {
     value: this.props.initialValue,
-    level: 2,
     popover: false,
     popoverAnchor: null
   }
@@ -26,7 +25,7 @@ export default class Volume extends Component {
   getVolumeIcon() {
     return [
       VolumeMuteIcon, VolumeDownIcon, VolumeUpIcon
-    ][this.state.level]
+    ][Math.ceil(this.state.value * 2)]
   }
 
   onPopoverOpen = (event) => {
@@ -39,8 +38,7 @@ export default class Volume extends Component {
   }
 
   onVolumeChange = (event, value) => {
-    const level = Math.ceil(value * 2)
-    this.setState({value, level})
+    this.setState({value})
     this.props.onChange(value)
   }
 

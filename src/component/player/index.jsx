@@ -2,10 +2,13 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
 import ThumbDownIcon from 'material-ui/svg-icons/action/thumb-down'
+import {debounce} from 'lodash'
 
 import Volume from './volume'
 import Button from './button'
 import Action from '../../action'
+
+const kVolumeKey = 'volume'
 
 function mapStateToProps(state) {
   return {
@@ -45,7 +48,7 @@ export default class Player extends Component {
   }
 
   state = {
-    initialVolume: 0.5,
+    initialVolume: localStorage.getItem(kVolumeKey) || 0.5,
     isPlaying: false,
     canSetVolume: (() => {
       const audio = document.createElement('audio')
@@ -59,10 +62,16 @@ export default class Player extends Component {
     playing.play()
   }
 
-  onVolumeChange = (value) => {
-    const {playing} = this.refs
-    playing.volume = value
-  }
+  onVolumeChange = (() => {
+    const debouncedSave = debounce(value => {
+      localStorage.setItem(kVolumeKey, value)
+    }, 1000)
+    return value => {
+      const {playing} = this.refs
+      playing.volume = value
+      debouncedSave(value)
+    }
+  })()
 
   onDownvoteAction = (event) => {
     this.props.onDownvote()
