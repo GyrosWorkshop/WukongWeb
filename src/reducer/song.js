@@ -15,7 +15,9 @@ function playlist(state = [], action) {
         action.song
       ]
     case Action.Song.remove.type:
-      return state.filter(song => song.id != action.song.id)
+      return [
+        ...state.filter(song => song.id != action.song.id)
+      ]
     default:
       return state
   }
@@ -24,7 +26,7 @@ function playlist(state = [], action) {
 function playing(state = {}, action) {
   switch (action.type) {
     case Action.Song.play.type:
-      return action.song
+      return {...action.song}
     default:
       return state
   }
@@ -33,7 +35,7 @@ function playing(state = {}, action) {
 function preload(state = {}, action) {
   switch (action.type) {
     case Action.Song.preload.type:
-      return action.song
+      return {...action.song}
     default:
       return state
   }

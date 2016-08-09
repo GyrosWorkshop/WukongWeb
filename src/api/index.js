@@ -140,7 +140,7 @@ export default function API() {
             }))
             break
           case 'Play':
-            data.song && next(Action.Song.play.create(data.song && {
+            next(Action.Song.play.create(data.song && {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
               time: (Date.now() / 1000) - (data.elapsed || 0)
