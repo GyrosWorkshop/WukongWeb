@@ -1,5 +1,4 @@
 import React, {Component, PropTypes} from 'react'
-import ReactDOM from 'react-dom'
 import IconButton from 'material-ui/IconButton'
 import Popover from 'material-ui/Popover'
 import Slider from 'material-ui/Slider'
@@ -60,14 +59,9 @@ export default class Volume extends Component {
         >
           <Slider
             style={style.slider}
+            sliderStyle={style.sliderInner}
             value={this.state.value}
             onChange={this.onVolumeChange}
-            ref={slider => {
-              const element = ReactDOM.findDOMNode(slider)
-              if (element) {
-                element.querySelector('div').style.margin = 0
-              }
-            }}
           />
         </Popover>
       </IconButton>
@@ -82,6 +76,9 @@ export default class Volume extends Component {
         marginBottom: this.props.muiTheme.slider.handleSizeActive / 2,
         marginLeft: this.props.muiTheme.slider.handleSizeActive,
         marginRight: this.props.muiTheme.slider.handleSizeActive
+      },
+      sliderInner: {
+        margin: 0
       }
     }
   }
