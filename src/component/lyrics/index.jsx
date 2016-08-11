@@ -46,15 +46,14 @@ export default class Lyrics extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {refs: {line}, props: {lyrics}, state: {lineIndex}} = this
-    if (!lyrics || lineIndex < 0) return
-    if (lineIndex == prevState.lineIndex) return
     const overflowWidth = (
       line.clientWidth - line.scrollWidth
     ).toFixed(0)
     const scrollDuration = (
-      lineIndex < lyrics.length - 1
-        ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
-        : 10
+      lineIndex < 0 ? 0 :
+        lineIndex < lyrics.length - 1
+          ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
+          : 10
     ).toFixed(1)
     setTimeout(() => this.setState({overflowWidth, scrollDuration}), 0)
   }
