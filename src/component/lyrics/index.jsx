@@ -53,8 +53,8 @@ export default class Lyrics extends Component {
     ).toFixed(0)
     const scrollDuration = (
       lineIndex < lyrics.length - 1
-        ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time + 0.05
-        : 4
+        ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
+        : 10
     ).toFixed(1)
     setTimeout(() => this.setState({overflowWidth, scrollDuration}), 0)
   }
@@ -87,11 +87,13 @@ export default class Lyrics extends Component {
         lineHeight: `${this.props.height}px`,
         textAlign: 'center',
         whiteSpace: 'nowrap',
-        animation: `marquee ${this.state.scrollDuration}s ease infinite`,
         animationName: Radium.keyframes({
           '0%': {transform: 'translate(0, 0)'},
           '100%': {transform: `translate(${this.state.overflowWidth}px, 0)`},
-        }, 'marquee')
+        }, 'marquee'),
+        animationDuration: `${this.state.scrollDuration}s`,
+        animationTimingFunction: 'ease',
+        animationIterationCount: 'infinite'
       }
     }
   }
