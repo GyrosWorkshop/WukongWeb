@@ -22,72 +22,58 @@ export default class Item extends Component {
   render() {
     const style = this.generateStyle()
     return (
-      <div style={style.container}>
-        <Paper style={style.item}>
-          <div style={style.topOverlay}>
-            <div style={style.textContainer}>
-              <div style={style.extraLabel}>{this.props.extra}</div>
+      <Paper style={style.item}>
+        <div style={style.topOverlay}>
+          <div style={style.textContainer}>
+            <div style={style.extraLabel}>{this.props.extra}</div>
+          </div>
+        </div>
+        <div style={style.bottomOverlay}>
+          <div style={style.textContainer}>
+            <div
+              style={style.textLabel}
+              title={this.props.text}
+            >
+              {this.props.text}
+            </div>
+            <div
+              style={style.detailLabel}
+              title={this.props.detail}
+            >
+              {this.props.detail}
             </div>
           </div>
-          <div style={style.bottomOverlay}>
-            <div style={style.textContainer}>
-              <div
-                style={style.textLabel}
-                title={this.props.text}
-              >
-                {this.props.text}
-              </div>
-              <div
-                style={style.detailLabel}
-                title={this.props.detail}
-              >
-                {this.props.detail}
-              </div>
-            </div>
-            <div>
-              <IconMenu
-                iconButtonElement={
-                  <IconButton
-                    touchRippleColor={this.props.muiTheme.gridTile.textColor}
-                  >
-                    <MoreVertIcon
-                      color={this.props.muiTheme.gridTile.textColor}
-                    />
-                  </IconButton>
-                }
-                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              >
-                {this.props.actions.map(action => (
-                  <MenuItem
-                    key={action.key}
-                    primaryText={action.title}
-                    leftIcon={action.icon}
-                    onTouchTap={action.callback}
+          <div>
+            <IconMenu
+              iconButtonElement={
+                <IconButton
+                  touchRippleColor={this.props.muiTheme.gridTile.textColor}
+                >
+                  <MoreVertIcon
+                    color={this.props.muiTheme.gridTile.textColor}
                   />
-                ))}
-              </IconMenu>
-            </div>
+                </IconButton>
+              }
+              anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+              {this.props.actions.map(action => (
+                <MenuItem
+                  key={action.key}
+                  primaryText={action.title}
+                  leftIcon={action.icon}
+                  onTouchTap={action.callback}
+                />
+              ))}
+            </IconMenu>
           </div>
-        </Paper>
-      </div>
+        </div>
+      </Paper>
     )
   }
 
   generateStyle() {
     return {
-      container: {
-        boxSizing: 'border-box',
-        height: this.props.muiTheme.gridTile.boxHeight,
-        width: `${100 / 2}%`,
-        padding: this.props.muiTheme.spacing.desktopGutterMini,
-        [this.props.muiTheme.responsive.tablet.mediaQuery]: {
-          width: `${100 / 3}%`
-        },
-        [this.props.muiTheme.responsive.desktop.mediaQuery]: {
-          width: `${100 / 4}%`
-        }
-      },
       item: {
         width: '100%',
         height: '100%',

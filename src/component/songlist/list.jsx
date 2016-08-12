@@ -16,7 +16,14 @@ export default class List extends Component {
     const style = this.generateStyle()
     return (
       <div style={style.list}>
-        {this.props.items.map(item => <Item {...item} />)}
+        {this.props.items.map(({key, ...props}) => (
+          <div
+            style={style.item}
+            key={key}
+          >
+            <Item {...props} />
+          </div>
+        ))}
       </div>
     )
   }
@@ -45,6 +52,18 @@ export default class List extends Component {
           width: this.props.muiTheme.responsive.desktop.breakpoint * 0.8,
           marginLeft: 'auto',
           marginRight: 'auto'
+        }
+      },
+      item: {
+        boxSizing: 'border-box',
+        height: this.props.muiTheme.gridTile.boxHeight,
+        width: `${100 / 2}%`,
+        padding: this.props.muiTheme.spacing.desktopGutterMini,
+        [this.props.muiTheme.responsive.tablet.mediaQuery]: {
+          width: `${100 / 3}%`
+        },
+        [this.props.muiTheme.responsive.desktop.mediaQuery]: {
+          width: `${100 / 4}%`
         }
       }
     }
