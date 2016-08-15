@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
 import ThumbDownIcon from 'material-ui/svg-icons/action/thumb-down'
+import muiThemeable from 'material-ui/styles/muiThemeable'
 import {debounce} from 'lodash'
 
 import Volume from './volume'
@@ -36,6 +37,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
+@muiThemeable()
 export default class Player extends Component {
   static propTypes = {
     playing: PropTypes.object,
@@ -164,7 +166,8 @@ export default class Player extends Component {
         display: 'flex',
         alignItems: 'center',
         marginLeft: 12,
-        marginRight: 12
+        marginRight: 12,
+        fontSize: this.props.muiTheme.appBar.bodyFontSize
       }
     }
   }
