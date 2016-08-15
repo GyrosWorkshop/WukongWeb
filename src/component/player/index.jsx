@@ -129,7 +129,7 @@ export default class Player extends Component {
         &#8203;
         {
           this.state.isPlaying &&
-            <div>
+            <div style={style.remainingTime}>
               {this.state.remainingTimed}
             </div>
         }
@@ -166,8 +166,11 @@ export default class Player extends Component {
         display: 'flex',
         alignItems: 'center',
         marginLeft: 12,
-        marginRight: 12,
-        fontSize: this.props.muiTheme.appBar.bodyFontSize
+        marginRight: 12
+      },
+      remainingTime: {
+        fontSize: this.props.muiTheme.appBar.bodyFontSize,
+        padding: 12
       }
     }
   }
