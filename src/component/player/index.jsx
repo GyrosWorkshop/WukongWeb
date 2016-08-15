@@ -54,7 +54,9 @@ export default class Player extends Component {
       const audio = document.createElement('audio')
       audio.volume = 0
       return audio.volume == 0
-    })()
+    })(),
+    remainingTime: 0,
+    remainingTimed: ''
   }
 
   onPlayAction = (event) => {
@@ -87,6 +89,13 @@ export default class Player extends Component {
       this.setState({isPlaying: false})
     })
     playing.addEventListener('timeupdate', event => {
+      this.setState({remainingTime: playing.duration - playing.currentTime})
+      this.setState({
+        remainingTimed: parseInt(this.state.remainingTime / 60)
+          .toString()
+          + ':' + ('00' + parseInt(this.state.remainingTime % 60))
+            .toString().slice(-2)
+      })
       this.props.onElapsed(playing.currentTime)
     })
     playing.addEventListener('ended', event => {
@@ -116,6 +125,12 @@ export default class Player extends Component {
     return (
       <div style={style.toolbar}>
         &#8203;
+        {
+          this.state.isPlaying &&
+            <div>
+              {this.state.remainingTimed}
+            </div>
+        }
         <Button
           icon={ThumbDownIcon}
           onAction={this.onDownvoteAction}
