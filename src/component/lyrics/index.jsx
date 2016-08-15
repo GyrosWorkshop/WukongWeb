@@ -55,6 +55,10 @@ export default class Lyrics extends Component {
           ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
           : 10
     ).toFixed(1)
+    if (overflowWidth == prevState.overflowWidth &&
+        scrollDuration == prevState.scrollDuration) {
+      return
+    }
     setTimeout(() => this.setState({overflowWidth, scrollDuration}), 0)
   }
 

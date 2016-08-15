@@ -46,7 +46,8 @@ export default class Player extends Component {
     onPlayOwn: PropTypes.func,
     onElapsed: PropTypes.func,
     onEnded: PropTypes.func,
-    onDownvote: PropTypes.func
+    onDownvote: PropTypes.func,
+    muiTheme: PropTypes.object.isRequired
   }
 
   state = {
@@ -57,8 +58,7 @@ export default class Player extends Component {
       audio.volume = 0
       return audio.volume == 0
     })(),
-    remainingTime: 0,
-    remainingTimed: ''
+    remainingTime: 0
   }
 
   onPlayAction = (event) => {
@@ -92,12 +92,6 @@ export default class Player extends Component {
     })
     playing.addEventListener('timeupdate', event => {
       this.setState({remainingTime: playing.duration - playing.currentTime})
-      this.setState({
-        remainingTimed: parseInt(this.state.remainingTime / 60)
-          .toString()
-          + ':' + ('00' + parseInt(this.state.remainingTime % 60))
-            .toString().slice(-2)
-      })
       this.props.onElapsed(playing.currentTime)
     })
     playing.addEventListener('ended', event => {
@@ -128,10 +122,13 @@ export default class Player extends Component {
       <div style={style.toolbar}>
         &#8203;
         {
-          this.state.isPlaying &&
-            <div style={style.remainingTime}>
-              {this.state.remainingTimed}
-            </div>
+          this.state.isPlaying
+            ? <div style={style.label}>
+                {Math.floor(this.state.remainingTime / 60)}
+                :
+                {`00${Math.floor(this.state.remainingTime % 60)}`.substr(-2)}
+              </div>
+            : null
         }
         <Button
           icon={ThumbDownIcon}
@@ -168,7 +165,7 @@ export default class Player extends Component {
         marginLeft: 12,
         marginRight: 12
       },
-      remainingTime: {
+      label: {
         fontSize: this.props.muiTheme.appBar.bodyFontSize,
         padding: 12
       }
