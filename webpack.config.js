@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const production = process.env.NODE_ENV == 'production'
 const sourcePath = path.join(__dirname, 'src')
@@ -20,10 +21,16 @@ const config = {
   module: {
     loaders: [{
       test: /\.(js|jsx)$/, include: sourcePath,
-      loaders: ['babel']
+      loader: 'babel'
+    }, {
+      test: /\.(sass)$/, include: sourcePath,
+      loader: ExtractTextPlugin.extract({
+        loader: ['css', 'sass'],
+        fallbackLoader: ['style']
+      })
     }, {
       test: /\.(png)$/, include: sourcePath,
-      loaders: ['url?limit=10000']
+      loader: 'url'
     }]
   },
   plugins: [],
