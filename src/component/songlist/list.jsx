@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react'
 import Radium from 'radium'
+import FlipMove from 'react-flip-move'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
 import Item from './item'
@@ -15,25 +16,27 @@ export default class List extends Component {
   render() {
     const style = this.generateStyle()
     return (
-      <div style={style.list}>
-        {this.props.items.map(({key, ...props}) => (
-          <div
-            style={style.item}
-            key={key}
-          >
-            <Item {...props} />
-          </div>
-        ))}
+      <div style={style.container}>
+        <FlipMove
+          typeName='div'
+          style={style.list}
+          easing='ease'
+          duration={250}
+        >
+          {this.props.items.map(({key, ...props}) => (
+            <div style={style.item} key={key}>
+              <Item {...props} />
+            </div>
+          ))}
+        </FlipMove>
       </div>
     )
   }
 
   generateStyle() {
     return {
-      list: {
+      container: {
         boxSizing: 'border-box',
-        display: 'flex',
-        flexWrap: 'wrap',
         width: '100%',
         marginLeft: 0,
         marginRight: 0,
@@ -53,6 +56,10 @@ export default class List extends Component {
           marginLeft: 'auto',
           marginRight: 'auto'
         }
+      },
+      list: {
+        display: 'flex',
+        flexWrap: 'wrap'
       },
       item: {
         boxSizing: 'border-box',
