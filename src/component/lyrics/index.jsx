@@ -50,11 +50,9 @@ export default class Lyrics extends Component {
       line.clientWidth - line.scrollWidth
     ).toFixed(0)
     const scrollDuration = (
-      lineIndex < 0 ? 0 : (
-        lineIndex < lyrics.length - 1
-          ? lyrics[lineIndex + 1].time - lyrics[lineIndex].time
-          : 10
-      )
+      !lyrics || lineIndex < 0 ? 0 :
+        lineIndex == lyrics.length - 1 ? 10 :
+          lyrics[lineIndex + 1].time - lyrics[lineIndex].time
     ).toFixed(1)
     if (overflowWidth == prevState.overflowWidth &&
         scrollDuration == prevState.scrollDuration) {
