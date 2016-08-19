@@ -24,13 +24,12 @@ const config = {
       loader: 'babel'
     }, {
       test: /\.(sass)$/, include: sourcePath,
-      loader: ExtractTextPlugin.extract({
-        loader: ['css', 'sass'],
-        fallbackLoader: ['style']
-      })
+      loader: ExtractTextPlugin.extract('style', [
+        'css?sourceMap&modules', 'sass?sourceMap'
+      ])
     }, {
       test: /\.(png)$/, include: sourcePath,
-      loader: 'url'
+      loader: 'url?limit=10000'
     }]
   },
   plugins: [],
@@ -49,19 +48,20 @@ config.plugins.push(
     production: JSON.stringify(production),
     server: JSON.stringify(process.env.WUKONG_SERVER)
   }}),
-  new HtmlPlugin((() => {
-    const option = {
-      template: './index.html'
-    }
-    if (production) option.minify = {
+  new HtmlPlugin({
+    template: './index.html',
+    minify: !production ? undefined : {
       collapseWhitespace: true,
       collapseBooleanAttributes: true,
       removeEmptyAttributes: true,
       removeRedundantAttributes: true,
       removeComments: true
     }
-    return option
-  })())
+  }),
+  new ExtractTextPlugin('style.css', {
+    allChunks: true,
+    disable: !production
+  })
 )
 
 if (production) config.plugins.push(
