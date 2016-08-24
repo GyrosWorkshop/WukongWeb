@@ -7,6 +7,7 @@ export default class Button extends Component {
   static propTypes = {
     icon: PropTypes.func,
     onAction: PropTypes.func,
+    downvote: PropTypes.bool,
     muiTheme: PropTypes.object.isRequired
   }
 
@@ -16,6 +17,7 @@ export default class Button extends Component {
       <IconButton
         touchRippleColor={this.props.muiTheme.appBar.textColor}
         onTouchTap={this.props.onAction}
+        disabled={this.props.downvote}
       >
         <Icon color={this.props.muiTheme.appBar.textColor} />
       </IconButton>

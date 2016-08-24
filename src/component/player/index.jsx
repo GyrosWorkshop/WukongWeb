@@ -15,7 +15,8 @@ function mapStateToProps(state) {
   return {
     playing: state.song.playing,
     preload: state.song.preload,
-    userId: state.user.id
+    userId: state.user.id,
+    downvote: state.song.status.downvote
   }
 }
 
@@ -32,7 +33,7 @@ function mapDispatchToProps(dispatch) {
     },
     onDownvote() {
       dispatch(Action.Song.downvote.create())
-    },
+    }
   }
 }
 
@@ -43,6 +44,7 @@ export default class Player extends Component {
     playing: PropTypes.object,
     preload: PropTypes.object,
     userId: PropTypes.string,
+    downvote: PropTypes.bool,
     onPlayOwn: PropTypes.func,
     onElapsed: PropTypes.func,
     onEnded: PropTypes.func,
@@ -133,6 +135,7 @@ export default class Player extends Component {
         <Button
           icon={ThumbDownIcon}
           onAction={this.onDownvoteAction}
+          downvote={this.props.downvote}
         />
         {
           this.state.canSetVolume
