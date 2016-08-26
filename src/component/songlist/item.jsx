@@ -57,7 +57,7 @@ export default class Item extends Component {
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-              {this.props.actions.map(action => (
+              {(this.props.actions || []).map(action => (
                 <MenuItem
                   key={action.key}
                   primaryText={action.title}
