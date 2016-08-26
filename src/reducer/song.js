@@ -18,6 +18,12 @@ function playlist(state = [], action) {
       return [
         ...state.filter(song => song.id != action.song.id)
       ]
+    case Action.Song.move.type: {
+      const newState = state.slice()
+      const item = newState.splice(action.from, 1).pop()
+      newState.splice(action.to, 0, item)
+      return newState
+    }
     default:
       return state
   }

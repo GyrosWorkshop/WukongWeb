@@ -13,6 +13,11 @@ export const remove = {
   create(song) { return {type: this.type, song} }
 }
 
+export const move = {
+  type: 'SongMove',
+  create(from, to) { return {type: this.type, from, to} }
+}
+
 export const play = {
   type: 'SongPlay',
   create(song) { return {type: this.type, song} }
