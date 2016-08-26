@@ -22,6 +22,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSongDelete(song) {
       dispatch(Action.Song.remove.create(song))
+    },
+    onSongMove(from, to) {
+      dispatch(Action.Song.move.create(from, to))
     }
   }
 }
@@ -33,7 +36,12 @@ export default class SongList extends Component {
     results: PropTypes.arrayOf(PropTypes.object),
     keyword: PropTypes.string,
     onSongUpNext: PropTypes.func,
-    onSongDelete: PropTypes.func
+    onSongDelete: PropTypes.func,
+    onSongMove: PropTypes.func
+  }
+
+  isSearch() {
+    return !!this.props.keyword
   }
 
   getItems() {
@@ -45,7 +53,7 @@ export default class SongList extends Component {
         default: return ''
       }
     }
-    const search = !!this.props.keyword
+    const search = this.isSearch()
     return this.props[search ? 'results' : 'songs'].map(song => ({
       key: song.id,
       image: song.artwork || artworkImage,
@@ -71,10 +79,13 @@ export default class SongList extends Component {
     }))
   }
 
-
   render() {
     return (
-      <List items={this.getItems()} />
+      <List
+        items={this.getItems()}
+        canMove={!this.isSearch()}
+        onItemMove={this.props.onSongMove}
+      />
     )
   }
 
