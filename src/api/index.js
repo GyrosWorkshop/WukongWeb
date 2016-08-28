@@ -144,7 +144,7 @@ export default function API() {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
               time: (Date.now() / 1000) - (data.elapsed || 0),
-              downvote: data.downvoted
+              downvote: data.downvote
             }))
             break
           case 'NextSongUpdate':
