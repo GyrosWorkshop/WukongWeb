@@ -50,7 +50,8 @@ export default function API() {
         socket.onerror = event => {
           throw new Error('WebSocket failed')
         }
-        socket.onopen = event => {
+        socket.onopen = async event => {
+          await sendUpnext(store.getState())
           emit('ready', event)
         }
         socket.onmessage = event => {
@@ -131,7 +132,6 @@ export default function API() {
       await fetchUser()
       const state = store.getState()
       await sendChannel(state)
-      await sendUpnext(state)
       api.websocket(({send}) => (event, data) => {
         switch (event) {
           case 'UserListUpdated':
