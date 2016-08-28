@@ -53,7 +53,9 @@ export default class Player extends Component {
   }
 
   state = {
-    initialVolume: parseFloat(localStorage.getItem(kVolumeKey)) || 0.5,
+    initialVolume: isNaN(parseFloat(localStorage.getItem(kVolumeKey))) ?
+      0.5 :
+      parseFloat(localStorage.getItem(kVolumeKey)),
     isPlaying: false,
     canSetVolume: (() => {
       const audio = document.createElement('audio')
