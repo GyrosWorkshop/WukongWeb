@@ -143,7 +143,8 @@ export default function API() {
             next(Action.Song.play.create(data.song && {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
-              time: (Date.now() / 1000) - (data.elapsed || 0)
+              time: (Date.now() / 1000) - (data.elapsed || 0),
+              downvote: data.downvoted
             }))
             break
           case 'NextSongUpdate':
