@@ -55,7 +55,7 @@ export default class Player extends Component {
   state = {
     initialVolume: (() => {
       const volume = parseFloat(localStorage.getItem(kVolumeKey))
-      return isNaN(volume) ? 0.5 : volume 
+      return isNaN(volume) ? 0.5 : volume
     })(),
     isPlaying: false,
     canSetVolume: (() => {
@@ -137,8 +137,8 @@ export default class Player extends Component {
         }
         <Button
           icon={ThumbDownIcon}
+          disabled={this.props.downvote}
           onAction={this.onDownvoteAction}
-          downvote={this.props.downvote}
         />
         {
           this.state.canSetVolume

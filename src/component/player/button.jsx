@@ -6,8 +6,8 @@ import muiThemeable from 'material-ui/styles/muiThemeable'
 export default class Button extends Component {
   static propTypes = {
     icon: PropTypes.func,
+    disabled: PropTypes.bool,
     onAction: PropTypes.func,
-    downvote: PropTypes.bool,
     muiTheme: PropTypes.object.isRequired
   }
 
@@ -16,8 +16,8 @@ export default class Button extends Component {
     return (
       <IconButton
         touchRippleColor={this.props.muiTheme.appBar.textColor}
+        disabled={this.props.disabled}
         onTouchTap={this.props.onAction}
-        disabled={this.props.downvote}
       >
         <Icon color={this.props.muiTheme.appBar.textColor} />
       </IconButton>
