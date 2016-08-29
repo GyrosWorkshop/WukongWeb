@@ -169,6 +169,7 @@ export default function API() {
         case Action.Song.prepend.type:
         case Action.Song.append.type:
         case Action.Song.remove.type:
+        case Action.Song.move.type:
           await sendUpnext(state, prevState)
           break
         case Action.Song.ended.type:

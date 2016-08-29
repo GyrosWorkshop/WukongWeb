@@ -47,7 +47,7 @@ export default class List extends Component {
     if (!list) return -1
     const item = list.childNodes.item(0)
     if (!item) return -1
-    const count = Math.floor(list.offsetWidth / item.offsetWidth)
+    const count = Math.round(list.offsetWidth / item.offsetWidth)
     const row = Math.floor(position[1] / item.offsetHeight)
     const column = Math.floor(position[0] / item.offsetWidth)
     const index = row * count + column
@@ -58,6 +58,11 @@ export default class List extends Component {
     const list = findDOMNode(this.refs.list)
     const item = list.childNodes.item(index)
     return [item.offsetLeft, item.offsetTop]
+  }
+
+  snapshotPosition() {
+    const {position, offset} = this.state
+    return this.position(position, '+', offset)
   }
 
   onMoveGesture(state, position) {
@@ -116,8 +121,14 @@ export default class List extends Component {
   }
 
   isValidMouseEvent(event) {
-    return event.button == 0
-      && !event.ctrlKey && !event.shiftKey && !event.altKey && !event.metaKey
+    if (event.button != 0) return false
+    if (event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        event.metaKey) return false
+    if (event.target.parentNode.parentNode.parentNode
+        != event.currentTarget) return false
+    return true
   }
 
   convertMousePosition(event) {
@@ -133,23 +144,36 @@ export default class List extends Component {
   }
 
   onMouseMove = (event) => {
-    event.preventDefault()
     this.onMoveGesture('change', this.convertMousePosition(event))
   }
 
   onMouseUp = (event) => {
-    event.preventDefault()
     this.onMoveGesture('end', this.convertMousePosition(event))
   }
 
   onMouseLeave = (event) => {
-    event.preventDefault()
     this.onMoveGesture('cancel', this.convertMousePosition(event))
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.gestureRunning && !this.state.gestureRunning) {
       const list = findDOMNode(this.refs.list)
+      const item = list.childNodes.item(prevState.toIndex)
+      const position = this.itemPositionForIndex(prevState.toIndex)
+      const snapshotPosition = this.snapshotPosition()
+      const translate = this.position(snapshotPosition, '-', position)
+      item.style.transform = `translate(${translate[0]}px, ${translate[1]}px)`
+      item.style.zIndex = '1'
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        item.style.transition = 'transform 250ms ease'
+        item.style.transform = ''
+      }))
+      const cleanup = event => {
+        item.style.transition = ''
+        item.style.zIndex = ''
+        item.removeEventListener('transitionend', cleanup)
+      }
+      item.addEventListener('transitionend', cleanup)
     }
   }
 
@@ -194,6 +218,7 @@ export default class List extends Component {
   }
 
   generateStyle() {
+    const snapshotPosition = this.snapshotPosition()
     return {
       container: {
         boxSizing: 'border-box',
@@ -238,8 +263,8 @@ export default class List extends Component {
       },
       itemSnapshot: {
         position: 'absolute',
-        left: this.state.position[0] + this.state.offset[0],
-        top: this.state.position[1] + this.state.offset[1]
+        left: snapshotPosition[0],
+        top: snapshotPosition[1]
       }
     }
   }
