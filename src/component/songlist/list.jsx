@@ -26,8 +26,11 @@ export default class List extends Component {
 
   sortedItems() {
     const items = this.props.items.slice()
-    const item = items.splice(this.state.fromIndex, 1).pop()
-    items.splice(this.state.toIndex, 0, item)
+    const {fromIndex, toIndex} = this.state
+    if (fromIndex >= 0) {
+      const item = items.splice(fromIndex, 1).pop()
+      items.splice(toIndex, 0, item)
+    }
     return items
   }
 
@@ -41,9 +44,14 @@ export default class List extends Component {
 
   itemIndexAtPosition(position) {
     const list = findDOMNode(this.refs.list)
-    const item = document.elementsFromPoint(...position)
-      .find(node => node.parentNode == list)
-    return Array.prototype.indexOf.call(list.childNodes || [], item)
+    if (!list) return -1
+    const item = list.childNodes.item(0)
+    if (!item) return -1
+    const count = Math.floor(list.offsetWidth / item.offsetWidth)
+    const row = Math.floor(position[1] / item.offsetHeight)
+    const column = Math.floor(position[0] / item.offsetWidth)
+    const index = row * count + column
+    return Math.min(Math.max(index, 0), this.props.items.length - 1)
   }
 
   itemPositionForIndex(index) {
@@ -77,6 +85,7 @@ export default class List extends Component {
         break
       case 'end':
         if (!this.state.gestureRunning) break
+        this.props.onItemMove(this.state.fromIndex, this.state.toIndex)
         this.setState({
           gestureRunning: false,
           fromIndex: -1,
@@ -106,28 +115,42 @@ export default class List extends Component {
   onTouchCancel = (event) => {
   }
 
+  isValidMouseEvent(event) {
+    return event.button == 0
+      && !event.ctrlKey && !event.shiftKey && !event.altKey && !event.metaKey
+  }
+
+  convertMousePosition(event) {
+    const {left, top} = event.currentTarget.getBoundingClientRect()
+    const {clientX, clientY} = event
+    return [clientX - left, clientY - top]
+  }
+
   onMouseDown = (event) => {
-    if (
-      event.button != 0 ||
-      event.ctrlKey || event.shiftKey || event.altKey || event.metaKey
-    ) return
+    if (!this.isValidMouseEvent(event)) return
     event.preventDefault()
-    this.onMoveGesture('begin', [event.clientX, event.clientY])
+    this.onMoveGesture('begin', this.convertMousePosition(event))
   }
 
   onMouseMove = (event) => {
     event.preventDefault()
-    this.onMoveGesture('change', [event.clientX, event.clientY])
+    this.onMoveGesture('change', this.convertMousePosition(event))
   }
 
   onMouseUp = (event) => {
     event.preventDefault()
-    this.onMoveGesture('end', [event.clientX, event.clientY])
+    this.onMoveGesture('end', this.convertMousePosition(event))
   }
 
   onMouseLeave = (event) => {
     event.preventDefault()
-    this.onMoveGesture('cancel', [event.clientX, event.clientY])
+    this.onMoveGesture('cancel', this.convertMousePosition(event))
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.gestureRunning && !this.state.gestureRunning) {
+      const list = findDOMNode(this.refs.list)
+    }
   }
 
   render() {
