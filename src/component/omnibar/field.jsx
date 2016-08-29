@@ -19,7 +19,7 @@ export default class Field extends Component {
   }
 
   onChange = (event) => {
-    this.setValue(event.target.value)
+    this.setValue(event.currentTarget.value)
   }
 
   onClear = (event) => {

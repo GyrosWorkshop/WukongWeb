@@ -27,7 +27,7 @@ export default class Frame extends Component {
 
   onFrameScroll = (event) => {
     const {minHeight, maxHeight} = this.props.muiTheme.appBar
-    const shrink = event.target.scrollTop
+    const shrink = event.currentTarget.scrollTop
     const headerHeight = Math.max(minHeight, maxHeight - shrink)
     this.setState({headerHeight})
   }
