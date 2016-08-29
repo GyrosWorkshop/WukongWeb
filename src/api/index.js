@@ -50,8 +50,7 @@ export default function API() {
         socket.onerror = event => {
           throw new Error('WebSocket failed')
         }
-        socket.onopen = async event => {
-          await sendUpnext(store.getState())
+        socket.onopen = event => {
           emit('ready', event)
         }
         socket.onmessage = event => {
@@ -134,6 +133,9 @@ export default function API() {
       await sendChannel(state)
       api.websocket(({send}) => (event, data) => {
         switch (event) {
+          case 'ready':
+            sendUpnext(state)
+            break
           case 'UserListUpdated':
             next(Action.Channel.status.create({
               members: data.users.map(Codec.User.decode)
@@ -143,9 +145,11 @@ export default function API() {
             next(Action.Song.play.create(data.song && {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
-              time: (Date.now() / 1000) - (data.elapsed || 0),
-              downvote: data.downvote
+              time: (Date.now() / 1000) - (data.elapsed || 0)
             }))
+            if (data.downvote) {
+              next(Action.Song.downvote.create())
+            }
             break
           case 'NextSongUpdate':
             next(Action.Song.preload.create(data.song && {

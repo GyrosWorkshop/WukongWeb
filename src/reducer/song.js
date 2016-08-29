@@ -50,7 +50,7 @@ function preload(state = {}, action) {
 function status(state = {}, action) {
   switch  (action.type) {
     case Action.Song.play.type:
-      return {...state, downvote: action.song.downvote}
+      return {}
     case Action.Song.elapsed.type:
       return {...state, elapsed: action.elapsed}
     case Action.Song.ended.type:
