@@ -1,3 +1,5 @@
+import {omit} from 'lodash'
+
 const kStorageKey = 'wukong'
 
 export default function Storage() {
@@ -24,7 +26,7 @@ export default function Storage() {
       state = {
         user: state.user,
         song: {
-          playlist: state.song.playlist
+          playlist: state.song.playlist.map(song => omit(song, 'lyrics'))
         }
       }
       localStorage.setItem(kStorageKey, JSON.stringify(state))
