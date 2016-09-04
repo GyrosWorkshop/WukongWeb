@@ -107,7 +107,8 @@ export default class Player extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {playing, preload} = this.refs
-    if (this.props.playing.id != prevProps.playing.id) {
+    if (this.props.playing.id != prevProps.playing.id ||
+        Math.abs(this.props.playing.time - prevProps.playing.time) > 10) {
       const {file, time, player} = this.props.playing
       playing.src = file
       playing.currentTime = (Date.now() / 1000) - time
@@ -115,7 +116,7 @@ export default class Player extends Component {
         this.props.onPlayOwn(this.props.playing)
       }
     }
-    if (this.props.preload.id != prevProps.preload.id) {
+    if (this.props.preload != prevProps.preload) {
       const {file} = this.props.preload
       preload.src = file
     }
