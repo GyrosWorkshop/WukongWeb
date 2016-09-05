@@ -174,7 +174,7 @@ export default class List extends Component {
       const position = this.itemPositionForIndex(prevState.toIndex)
       const snapshotPosition = this.snapshotPosition()
       const translate = this.position(snapshotPosition, '-', position)
-      item.style.transform = `translate(${translate[0]}px, ${translate[1]}px)`
+      item.style.transform = this.positionAsTranslate(translate)
       item.style.zIndex = '1'
       requestAnimationFrame(() => requestAnimationFrame(() => {
         item.style.transition = 'transform 250ms ease'
