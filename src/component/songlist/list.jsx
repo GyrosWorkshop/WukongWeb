@@ -42,6 +42,10 @@ export default class List extends Component {
     }
   }
 
+  positionAsTranslate(position) {
+    return `translate(${position.map(value => `${value}px`).join()})`
+  }
+
   itemIndexAtPosition(position) {
     const list = findDOMNode(this.refs.list)
     if (!list) return -1
@@ -155,6 +159,14 @@ export default class List extends Component {
     this.onMoveGesture('cancel', this.convertMousePosition(event))
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props != nextProps) return true
+    if (this.state.toIndex != nextState.toIndex) return true
+    const snapshot = findDOMNode(this.refs.snapshot)
+    snapshot.style.transform = this.positionAsTranslate(this.snapshotPosition())
+    return false
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.gestureRunning && !this.state.gestureRunning) {
       const list = findDOMNode(this.refs.list)
@@ -207,7 +219,10 @@ export default class List extends Component {
           </FlipMove>
           {
             this.state.fromIndex >= 0
-              ? <div style={{...style.item, ...style.itemSnapshot}}>
+              ? <div
+                  style={{...style.item, ...style.itemSnapshot}}
+                  ref='snapshot'
+                >
                   <Item {...this.props.items[this.state.fromIndex]} />
                 </div>
               : null
@@ -218,7 +233,6 @@ export default class List extends Component {
   }
 
   generateStyle() {
-    const snapshotPosition = this.snapshotPosition()
     return {
       container: {
         boxSizing: 'border-box',
@@ -263,8 +277,9 @@ export default class List extends Component {
       },
       itemSnapshot: {
         position: 'absolute',
-        left: snapshotPosition[0],
-        top: snapshotPosition[1]
+        left: 0,
+        top: 0,
+        transform: this.positionAsTranslate(this.snapshotPosition())
       }
     }
   }
