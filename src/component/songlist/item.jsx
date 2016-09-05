@@ -19,6 +19,14 @@ export default class Item extends Component {
     muiTheme: PropTypes.object.isRequired
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.image != nextProps.image
+      || this.props.text != nextProps.text
+      || this.props.detail != nextProps.detail
+      || this.props.extra != nextProps.extra
+      || this.props.actions != nextProps.actions
+  }
+
   render() {
     const style = this.generateStyle()
     return (
