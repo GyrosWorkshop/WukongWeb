@@ -20,7 +20,8 @@ export default class Item extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.image != nextProps.image
+    return this.state != nextState
+      || this.props.image != nextProps.image
       || this.props.text != nextProps.text
       || this.props.detail != nextProps.detail
       || this.props.extra != nextProps.extra
