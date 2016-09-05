@@ -69,6 +69,11 @@ export default class List extends Component {
     return this.position(position, '+', offset)
   }
 
+  updateManually() {
+    const snapshot = findDOMNode(this.refs.snapshot)
+    snapshot.style.transform = this.positionAsTranslate(this.snapshotPosition())
+  }
+
   onMoveGesture(state, position) {
     if (!this.props.canMove) return
     const index = this.itemIndexAtPosition(position)
@@ -160,10 +165,9 @@ export default class List extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props != nextProps) return true
-    if (this.state.toIndex != nextState.toIndex) return true
-    const snapshot = findDOMNode(this.refs.snapshot)
-    snapshot.style.transform = this.positionAsTranslate(this.snapshotPosition())
+    if (this.props != nextProps ||
+        this.state.toIndex != nextState.toIndex) return true
+    this.updateManually()
     return false
   }
 
