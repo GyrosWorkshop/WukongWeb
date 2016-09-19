@@ -24,6 +24,8 @@ function playlist(state = [], action) {
       newState.splice(action.to, 0, item)
       return newState
     }
+    case Action.Song.assign.type:
+      return [...action.songs]
     default:
       return state
   }

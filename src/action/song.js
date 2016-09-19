@@ -18,6 +18,11 @@ export const move = {
   create(from, to) { return {type: this.type, from, to} }
 }
 
+export const assign = {
+  type: 'SongAssign',
+  create(songs) { return {type: this.type, songs} }
+}
+
 export const play = {
   type: 'SongPlay',
   create(song) { return {type: this.type, song} }
