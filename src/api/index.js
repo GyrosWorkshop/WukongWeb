@@ -13,7 +13,7 @@ export default function API() {
         __env.server || 'http://localhost:5000'
       )
       const http = async (method, endpoint, data) => {
-        const response = await fetch(`${server}/api${endpoint}`, {
+        const response = await fetch(`${server}${endpoint}`, {
           method,
           headers: {
             'Accept': 'application/json',
@@ -63,22 +63,33 @@ export default function API() {
       return {http, websocket}
     })()
 
-    const fetchUser = async () => {
-      const user = await api.http('GET', '/user/userinfo')
+    const fetchUser = async (state) => {
+      const user = await api.http('GET', '/api/user/userinfo')
       next(Action.User.profile.create(
         Codec.User.decode(user)
       ))
     }
+    const fetchPlaylist = async (state) => {
+      const url = state && state.user.sync
+      if (!url) return
+      const list = await api.http('POST', '/provider/songListWithUrl', {
+        url
+      })
+      if (!list || !list.songs) return
+      next(Action.Song.assign.create(
+        list.songs.map(Codec.Song.decode)
+      ))
+    }
     const sendChannel = async (state, prevState) => {
       const channel = state && state.user.channel
+      if (!channel) return
       const prevChannel = prevState && prevState.user.channel
-      if (channel && channel != prevChannel) {
-        await api.http('POST', `/channel/join/${channel}`, {
-          previousChannelId: prevChannel
-        })
-      }
+      if (channel == prevChannel) return
+      await api.http('POST', `/api/channel/join/${channel}`)
     }
     const sendUpnext = async (state, prevState) => {
+      const channel = state && state.user.channel
+      if (!channel) return
       const song = Codec.Song.encode(
         state && (
           state.user.listenOnly
@@ -91,32 +102,35 @@ export default function API() {
             ? undefined : prevState.song.playlist[0]
         )
       )
-      if (!prevState || !isEqual(song, prevSong)) {
-        await api.http('POST', `/channel/updateNextSong/${state.user.channel}`,
-          song.songId ? song : null
-        )
-      }
+      if (prevState && isEqual(song, prevSong)) return
+      await api.http('POST', `/api/channel/updateNextSong/${channel}`,
+        song.songId ? song : null
+      )
     }
     const sendSync = async (state, prevState) => {
+      const channel = state && state.user.channel
+      if (!channel) return
       const song = Codec.Song.encode(
         state && state.song.playing
       )
-      await api.http('POST', `/channel/finished/${state.user.channel}`,
+      await api.http('POST', `/api/channel/finished/${channel}`,
         song.songId ? song : null
       )
     }
     const sendDownvote = async (state, prevState) => {
+      const channel = state && state.user.channel
+      if (!channel) return
       const song = Codec.Song.encode(
         state && state.song.playing
       )
-      await api.http('POST', `/channel/downVote/${state.user.channel}`,
+      await api.http('POST', `/api/channel/downVote/${channel}`,
         song.songId ? song : null
       )
     }
     const sendSearch = async (state, prevState) => {
       const keyword = state && state.search.keyword
       if (keyword) {
-        const results = await api.http('POST', '/song/search', {
+        const results = await api.http('POST', '/api/song/search', {
           key: keyword
         })
         next(Action.Search.results.create(
@@ -170,10 +184,14 @@ export default function API() {
           await sendChannel(state, prevState)
           await sendUpnext(state)
           break
+        case Action.User.sync.type:
+          await fetchPlaylist(state)
+          break
         case Action.Song.prepend.type:
         case Action.Song.append.type:
         case Action.Song.remove.type:
         case Action.Song.move.type:
+        case Action.Song.assign.type:
           await sendUpnext(state, prevState)
           break
         case Action.Song.ended.type:
