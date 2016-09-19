@@ -8,6 +8,7 @@ import Heading from './heading'
 import Status from '../status'
 import Player from '../player'
 import Profile from '../profile'
+import Action from '../../action'
 
 const PaperRadium = Radium(Paper)
 
@@ -19,7 +20,11 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    onPlaylistSync() {
+      dispatch(Action.User.sync.create())
+    }
+  }
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -29,6 +34,7 @@ export default class TopBar extends Component {
     avatar: PropTypes.string,
     playing: PropTypes.object,
     height: PropTypes.number.isRequired,
+    onPlaylistSync: PropTypes.func,
     muiTheme: PropTypes.object.isRequired
   }
 
@@ -60,6 +66,10 @@ export default class TopBar extends Component {
     this.setState({profile: false})
   }
 
+  onPlaylistSync = (event) => {
+    this.props.onPlaylistSync()
+  }
+
   render() {
     const expandProgress = this.getExpandProgress()
     const style = this.generateStyle()
@@ -80,6 +90,10 @@ export default class TopBar extends Component {
               key: 'profile',
               title: 'Profile',
               callback: this.onProfileOpen
+            }, {
+              key: 'sync',
+              title: 'Sync',
+              callback: this.onPlaylistSync
             }]}
           >
             <Player />

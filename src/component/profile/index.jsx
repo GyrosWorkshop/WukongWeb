@@ -39,6 +39,7 @@ export default class Profile extends Component {
 
   onConfirm = (event) => {
     this.props.onProfileUpdate({
+      sync: this.refs.sync.input.value,
       channel: this.refs.channel.input.value,
       listenOnly: this.refs.listenOnly.state.switched
     })
@@ -88,6 +89,13 @@ export default class Profile extends Component {
           fullWidth={true}
           value={this.props.user.nickname}
           disabled={true}
+        />
+        <TextField
+          floatingLabelText='Sync'
+          fullWidth={true}
+          defaultValue={this.props.user.sync}
+          hintText='Bring your playlist.'
+          ref='sync'
         />
         <TextField
           floatingLabelText='Channel'
