@@ -26,10 +26,9 @@ export default class Lyrics extends Component {
   }
 
   state = {
-    lineIndex: -1,
     lineContent: '',
-    overflowWidth: '0',
-    scrollDuration: '0'
+    lineDuration: '0',
+    overflowWidth: '0'
   }
 
   componentWillReceiveProps(nextProps) {
@@ -41,22 +40,19 @@ export default class Lyrics extends Component {
     const lineContent = lineIndex >= 0
       ? lyrics[lineIndex].text
       : '没有歌词 o(*≧▽≦)ツ'
-    this.setState({lineIndex, lineContent})
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const {refs: {line}, props: {lyrics}, state: {lineIndex}} = this
-    const overflowWidth = (
-      line.clientWidth - line.scrollWidth
-    ).toFixed(0)
-    const scrollDuration = (
-      !lyrics || lineIndex < 0 ? 0 :
+    const lineDuration = (
+      lineIndex < 0 ? 0 :
         lineIndex == lyrics.length - 1 ? 10 :
           lyrics[lineIndex + 1].time - lyrics[lineIndex].time
     ).toFixed(1)
-    if (overflowWidth == prevState.overflowWidth &&
-        scrollDuration == prevState.scrollDuration) return
-    requestAnimationFrame(() => this.setState({overflowWidth, scrollDuration}))
+    this.setState({lineContent, lineDuration})
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {clientWidth, scrollWidth} = this.refs.line
+    const overflowWidth = (clientWidth - scrollWidth).toFixed(0)
+    if (overflowWidth == prevState.overflowWidth) return
+    requestAnimationFrame(() => this.setState({overflowWidth}))
   }
 
   render() {
@@ -91,7 +87,7 @@ export default class Lyrics extends Component {
           '0%': {transform: 'translate(0, 0)'},
           '100%': {transform: `translate(${this.state.overflowWidth}px, 0)`},
         }, 'marquee'),
-        animationDuration: `${this.state.scrollDuration}s`,
+        animationDuration: `${this.state.lineDuration}s`,
         animationTimingFunction: 'ease',
         animationIterationCount: 'infinite'
       }
