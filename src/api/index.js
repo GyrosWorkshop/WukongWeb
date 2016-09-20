@@ -6,7 +6,7 @@ import Action from '../action'
 import Codec from './codec'
 
 export default function API() {
-  return store => next => {
+  return ({getState, dispatch}) => (next) => {
     const api = (() => {
       const app = `${location.protocol}//${location.host}`
       const server = __env.production ? app : (
@@ -63,14 +63,14 @@ export default function API() {
       return {http, websocket}
     })()
 
-    const fetchUser = async (state) => {
+    const fetchUser = async () => {
       const user = await api.http('GET', '/api/user/userinfo')
       next(Action.User.profile.create(
         Codec.User.decode(user)
       ))
     }
-    const fetchPlaylist = async (state) => {
-      const url = state && state.user.sync
+    const fetchPlaylist = async () => {
+      const url = getState().user.sync
       if (!url) return
       const list = await api.http('POST', '/provider/songListWithUrl', {
         url
@@ -80,55 +80,50 @@ export default function API() {
         list.songs.map(Codec.Song.decode)
       ))
     }
-    const sendChannel = async (state, prevState) => {
-      const channel = state && state.user.channel
+    const sendChannel = async prevState => {
+      const state = getState()
+      const channel = state.user.channel
       if (!channel) return
       const prevChannel = prevState && prevState.user.channel
       if (channel == prevChannel) return
       await api.http('POST', `/api/channel/join/${channel}`)
     }
-    const sendUpnext = async (state, prevState) => {
-      const channel = state && state.user.channel
+    const sendUpnext = async prevState => {
+      const state = getState()
+      const channel = state.user.channel
       if (!channel) return
       const song = Codec.Song.encode(
-        state && (
-          state.user.listenOnly
-            ? undefined : state.song.playlist[0]
-        )
+        state.user.listenOnly ? undefined : state.song.playlist[0]
       )
-      const prevSong = Codec.Song.encode(
-        prevState && (
-          prevState.user.listenOnly
-            ? undefined : prevState.song.playlist[0]
-        )
-      )
+      const prevSong = Codec.Song.encode(prevState && (
+        prevState.user.listenOnly ? undefined : prevState.song.playlist[0]
+      ))
       if (prevState && isEqual(song, prevSong)) return
       await api.http('POST', `/api/channel/updateNextSong/${channel}`,
         song.songId ? song : null
       )
     }
-    const sendSync = async (state, prevState) => {
-      const channel = state && state.user.channel
+    const sendSync = async () => {
+      const state = getState()
+      const channel = state.user.channel
       if (!channel) return
-      const song = Codec.Song.encode(
-        state && state.song.playing
-      )
+      const song = Codec.Song.encode(state.song.playing)
       await api.http('POST', `/api/channel/finished/${channel}`,
         song.songId ? song : null
       )
     }
-    const sendDownvote = async (state, prevState) => {
-      const channel = state && state.user.channel
+    const sendDownvote = async () => {
+      const state = getState()
+      const channel = state.user.channel
       if (!channel) return
-      const song = Codec.Song.encode(
-        state && state.song.playing
-      )
+      const song = Codec.Song.encode(state.song.playing)
       await api.http('POST', `/api/channel/downVote/${channel}`,
         song.songId ? song : null
       )
     }
-    const sendSearch = async (state, prevState) => {
-      const keyword = state && state.search.keyword
+    const sendSearch = async () => {
+      const state = getState()
+      const keyword = state.search.keyword
       if (keyword) {
         const results = await api.http('POST', '/api/song/search', {
           key: keyword
@@ -143,12 +138,11 @@ export default function API() {
 
     (async () => {
       await fetchUser()
-      const state = store.getState()
-      await sendChannel(state)
+      await sendChannel()
       api.websocket(({send}) => (event, data) => {
         switch (event) {
           case 'ready':
-            sendUpnext(state)
+            sendUpnext()
             break
           case 'UserListUpdated':
             next(Action.Channel.status.create({
@@ -175,33 +169,33 @@ export default function API() {
     })()
 
     return async action => {
-      const prevState = store.getState()
+      const prevState = getState()
       next(action)
-      const state = store.getState()
 
       switch (action.type) {
         case Action.User.profile.type:
-          await sendChannel(state, prevState)
-          await sendUpnext(state)
+          await sendChannel(prevState)
+          await sendUpnext()
           break
         case Action.User.sync.type:
-          await fetchPlaylist(state)
+          await fetchPlaylist()
+          await sendUpnext()
           break
         case Action.Song.prepend.type:
         case Action.Song.append.type:
         case Action.Song.remove.type:
         case Action.Song.move.type:
         case Action.Song.assign.type:
-          await sendUpnext(state, prevState)
+          await sendUpnext(prevState)
           break
         case Action.Song.ended.type:
-          await sendSync(state, prevState)
+          await sendSync()
           break
         case Action.Song.downvote.type:
-          await sendDownvote(state, prevState)
+          await sendDownvote()
           break
         case Action.Search.keyword.type:
-          await sendSearch(state, prevState)
+          await sendSearch()
           break
       }
     }
