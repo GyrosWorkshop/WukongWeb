@@ -80,6 +80,11 @@ export default function API() {
         list.songs.map(Codec.Song.decode)
       ))
     }
+    const sendSettings = async (prefState) => {
+      const state = getState()
+      const useCdn = state.user.useCdn
+      await api.http('POST', '/api/user/settings', { useCdn })
+    }
     const sendChannel = async prevState => {
       const state = getState()
       const channel = state.user.channel
@@ -87,11 +92,6 @@ export default function API() {
       const prevChannel = prevState && prevState.user.channel
       if (channel == prevChannel) return
       await api.http('POST', `/api/channel/join/${channel}`)
-    }
-    const sendSettings = async (prefState) => {
-      const state = getState()
-      const useCdn = state.user.useCdn
-      await api.http('POST', '/api/settings', { useCdn })
     }
     const sendUpnext = async prevState => {
       const state = getState()
