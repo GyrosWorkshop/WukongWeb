@@ -88,6 +88,11 @@ export default function API() {
       if (channel == prevChannel) return
       await api.http('POST', `/api/channel/join/${channel}`)
     }
+    const sendSettings = async (prefState) => {
+      const state = getState()
+      const useCdn = state.user.useCdn
+      await api.http('POST', '/api/settings', { useCdn })
+    }
     const sendUpnext = async prevState => {
       const state = getState()
       const channel = state.user.channel
@@ -138,6 +143,7 @@ export default function API() {
 
     (async () => {
       await fetchUser()
+      await sendSettings()
       await sendChannel()
       api.websocket(({send}) => (event, data) => {
         switch (event) {
@@ -174,6 +180,7 @@ export default function API() {
 
       switch (action.type) {
         case Action.User.profile.type:
+          await sendSettings()
           await sendChannel(prevState)
           await sendUpnext()
           break

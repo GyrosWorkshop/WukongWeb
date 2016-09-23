@@ -41,7 +41,8 @@ export default class Profile extends Component {
     this.props.onProfileUpdate({
       sync: this.refs.sync.input.value,
       channel: this.refs.channel.input.value,
-      listenOnly: this.refs.listenOnly.state.switched
+      listenOnly: this.refs.listenOnly.state.switched,
+      useCdn: this.refs.useCdn.state.switched
     })
     this.props.onRequestClose('confirm')
   }
@@ -109,6 +110,12 @@ export default class Profile extends Component {
           label='Listen Only'
           defaultToggled={this.props.user.listenOnly}
           ref='listenOnly'
+        />
+        <Toggle
+          style={style.toggle}
+          label='Always use CDN'
+          defaultToggled={this.props.user.useCdn}
+          ref='useCdn'
         />
       </Dialog>
     )
