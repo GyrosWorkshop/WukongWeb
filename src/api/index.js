@@ -80,10 +80,11 @@ export default function API() {
         list.songs.map(Codec.Song.decode)
       ))
     }
-    const sendSettings = async (prefState) => {
-      const state = getState()
-      const useCdn = state.user.useCdn
-      await api.http('POST', '/api/user/settings', { useCdn })
+    const sendSettings = async () => {
+      const profile = getState().user
+      await api.http('POST', '/api/user/settings', {
+        useCdn: profile.useCdn
+      })
     }
     const sendChannel = async prevState => {
       const state = getState()
