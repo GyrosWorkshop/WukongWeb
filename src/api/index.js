@@ -81,10 +81,8 @@ export default function API() {
       ))
     }
     const sendSettings = async () => {
-      const profile = getState().user
-      await api.http('POST', '/api/user/settings', {
-        useCdn: profile.useCdn
-      })
+      // const profile = getState().user
+      await api.http('POST', '/api/user/settings', {})
     }
     const sendChannel = async prevState => {
       const state = getState()
