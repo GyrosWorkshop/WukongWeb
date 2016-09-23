@@ -16,6 +16,7 @@ function mapStateToProps(state) {
     playing: state.song.playing,
     preload: state.song.preload,
     userId: state.user.id,
+    useCdn: state.user.useCdn,
     downvote: state.song.status.downvote
   }
 }
@@ -44,6 +45,7 @@ export default class Player extends Component {
     playing: PropTypes.object,
     preload: PropTypes.object,
     userId: PropTypes.string,
+    useCdn: PropTypes.bool,
     downvote: PropTypes.bool,
     onPlayOwn: PropTypes.func,
     onElapsed: PropTypes.func,
@@ -109,16 +111,16 @@ export default class Player extends Component {
     const {playing, preload} = this.refs
     if (this.props.playing.id != prevProps.playing.id ||
         Math.abs(this.props.playing.time - prevProps.playing.time) > 10) {
-      const {file, time, player} = this.props.playing
-      playing.src = file
+      const {file, fileCdn, time, player} = this.props.playing
+      playing.src = (this.props.useCdn ? fileCdn : file) || file
       playing.currentTime = (Date.now() / 1000) - time
       if (file && player && player == this.props.userId) {
         this.props.onPlayOwn(this.props.playing)
       }
     }
     if (this.props.preload != prevProps.preload) {
-      const {file} = this.props.preload
-      preload.src = file
+      const {file, fileCdn} = this.props.preload
+      preload.src = (this.props.useCdn ? fileCdn : file) || file
     }
   }
 

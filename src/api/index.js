@@ -80,10 +80,6 @@ export default function API() {
         list.songs.map(Codec.Song.decode)
       ))
     }
-    const sendSettings = async () => {
-      // const profile = getState().user
-      await api.http('POST', '/api/user/settings', {})
-    }
     const sendChannel = async prevState => {
       const state = getState()
       const channel = state.user.channel
@@ -142,7 +138,6 @@ export default function API() {
 
     (async () => {
       await fetchUser()
-      await sendSettings()
       await sendChannel()
       api.websocket(({send}) => (event, data) => {
         switch (event) {
@@ -179,7 +174,6 @@ export default function API() {
 
       switch (action.type) {
         case Action.User.profile.type:
-          await sendSettings()
           await sendChannel(prevState)
           await sendUpnext()
           break
