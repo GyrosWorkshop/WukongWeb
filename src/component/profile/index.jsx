@@ -113,7 +113,7 @@ export default class Profile extends Component {
         />
         <Toggle
           style={style.toggle}
-          label='Always Use CDN'
+          label='Use CDN'
           defaultToggled={this.props.user.useCdn}
           ref='useCdn'
         />
