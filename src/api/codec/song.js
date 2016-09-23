@@ -5,7 +5,7 @@ export function encode(object = {}) {
   }
 }
 
-export function decode(object = {}) {
+export function decode(object = {}, useCdn) {
   const parseLyrics = lyrics => {
     if (!lyrics) return
     const lrcItems = lyrics
@@ -47,7 +47,7 @@ export function decode(object = {}) {
     album: object.album,
     artist: object.artist,
     artwork: object.artwork,
-    file: object.file,
+    file: (useCdn && object.fileViaCdn) ? object.fileViaCdn : object.file,
     length: object.length,
     lyrics: parseLyrics(object.lyrics)
   }
