@@ -5,6 +5,7 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import List from './list'
 import Action from '../../action'
+import Codec from '../../api/codec'
 import artworkImage from '../../resource/artwork.png'
 
 function mapStateToProps(state) {
@@ -58,9 +59,7 @@ export default class SongList extends Component {
     const search = this.isSearch()
     return this.props[search ? 'results' : 'songs'].map(song => ({
       key: song.id,
-      image: song.artwork && this.props.useCdn &&
-        song.artwork.fileViaCdn ||
-        song.artwork.file || artworkImage,
+      image: Codec.File.decode(song.artwork) || artworkImage,
       text: `${song.title}`,
       detail: `${song.artist} - ${song.album}`,
       extra: siteName(song.siteId),

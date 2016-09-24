@@ -8,6 +8,7 @@ import StarIcon from 'material-ui/svg-icons/toggle/star'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
+import Codec from '../../api/codec'
 import artworkImage from '../../resource/artwork.png'
 
 function mapStateToProps(state) {
@@ -133,9 +134,7 @@ export default class Status extends Component {
         width: this.props.height,
         height: this.props.height,
         backgroundImage: `url(${
-          this.props.playing.artwork && this.props.useCdn &&
-          this.props.playing.artwork.fileViaCdn ||
-          this.props.playing.artwork.file || artworkImage})`,
+          Codec.File.decode(this.props.playing.artwork) || artworkImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       },
