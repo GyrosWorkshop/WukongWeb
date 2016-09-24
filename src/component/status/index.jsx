@@ -71,13 +71,21 @@ export default class Status extends Component {
           <div
             title={this.props.playing.title}
           >
-            <a
-              href={this.props.playing.webUrl || ''}
-              target="_blank"
-              style={style.titleText}
-            >
-              {this.props.playing.title}
-            </a>
+            {
+              this.props.playing.webUrl
+                ? <a
+                    href={this.props.playing.webUrl || ''}
+                    target="_blank"
+                    style={style.titleText}
+                  >
+                    {this.props.playing.title}
+                  </a>
+                : <div
+                    style={style.titleText}
+                  >
+                    {this.props.playing.title}
+                  </div>
+            }
           </div>
           <div
             style={style.otherText}
