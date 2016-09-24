@@ -69,10 +69,15 @@ export default class Status extends Component {
             {this.getPlayerNickname()}@{this.props.user.channel}
           </div>
           <div
-            style={style.titleText}
             title={this.props.playing.title}
           >
-            {this.props.playing.title}
+            <a
+              href={this.props.playing.webUrl || ''}
+              target="_blank"
+              style={style.titleText}
+            >
+              {this.props.playing.title}
+            </a>
           </div>
           <div
             style={style.otherText}
@@ -156,7 +161,9 @@ export default class Status extends Component {
       },
       titleText: {
         fontSize: '1.2em',
-        fontWeight: 400
+        fontWeight: 400,
+        textDecoration: 'none',
+        color: this.props.muiTheme.palette.alternateTextColor
       },
       otherText: {
         marginTop: '0.5em'

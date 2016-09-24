@@ -47,6 +47,7 @@ export function decode(object = {}) {
     album: object.album,
     artist: object.artist,
     artwork: object.artwork,
+    webUrl: object.webUrl,
     length: object.length,
     music: object.music,
     lyrics: parseLyrics(object.lyrics)
