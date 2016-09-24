@@ -134,7 +134,8 @@ export default class Status extends Component {
         width: this.props.height,
         height: this.props.height,
         backgroundImage: `url(${
-          Codec.File.decode(this.props.playing.artwork, this.props.useCdn) || artworkImage})`,
+          Codec.File.decode(this.props.playing.artwork, this.props.useCdn)
+          || artworkImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       },

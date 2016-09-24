@@ -1,5 +1,5 @@
 export function encode(object = {}) {
-    return object
+  return object
 }
 
 export function decode(object = {}, useCdn) {
