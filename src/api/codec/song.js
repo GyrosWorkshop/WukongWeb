@@ -48,8 +48,7 @@ export function decode(object = {}) {
     artist: object.artist,
     artwork: object.artwork,
     length: object.length,
-    file: object.file,
-    fileCdn: object.fileViaCdn,
+    music: object.music,
     lyrics: parseLyrics(object.lyrics)
   }
 }

@@ -111,16 +111,17 @@ export default class Player extends Component {
     const {playing, preload} = this.refs
     if (this.props.playing.id != prevProps.playing.id ||
         Math.abs(this.props.playing.time - prevProps.playing.time) > 10) {
-      const {file, fileCdn, time, player} = this.props.playing
-      playing.src = (this.props.useCdn ? fileCdn : file) || file
+      const {time, player} = this.props.playing
+      const {file, fileViaCdn} = this.props.playing.music
+      playing.src = (this.props.useCdn ? fileViaCdn : file) || file
       playing.currentTime = (Date.now() / 1000) - time
       if (file && player && player == this.props.userId) {
         this.props.onPlayOwn(this.props.playing)
       }
     }
     if (this.props.preload != prevProps.preload) {
-      const {file, fileCdn} = this.props.preload
-      preload.src = (this.props.useCdn ? fileCdn : file) || file
+      const {file, fileViaCdn} = this.props.preload.music
+      preload.src = (this.props.useCdn ? fileViaCdn : file) || file
     }
   }
 
@@ -152,7 +153,7 @@ export default class Player extends Component {
             : null
         }
         {
-          this.props.playing.file && !this.state.isPlaying
+          this.props.playing.music && !this.state.isPlaying
             ? <Button
                 icon={PlayArrowIcon}
                 onAction={this.onPlayAction}

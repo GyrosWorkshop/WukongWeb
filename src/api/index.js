@@ -151,7 +151,7 @@ export default function API() {
             break
           case 'Play':
             next(Action.Song.play.create(data.song && {
-              ...Codec.Song.decode(data.song, getState().user.useCdn),
+              ...Codec.Song.decode(data.song),
               player: data.user || '',
               time: (Date.now() / 1000) - (data.elapsed || 0)
             }))
@@ -161,7 +161,7 @@ export default function API() {
             break
           case 'NextSongUpdate':
             next(Action.Song.preload.create(data.song && {
-              ...Codec.Song.decode(data.song, getState().user.useCdn)
+              ...Codec.Song.decode(data.song)
             }))
             break
         }

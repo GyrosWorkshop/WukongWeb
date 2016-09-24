@@ -11,7 +11,8 @@ function mapStateToProps(state) {
   return {
     songs: state.song.playlist,
     results: state.search.results,
-    keyword: state.search.keyword
+    keyword: state.search.keyword,
+    useCdn: state.user.useCdn
   }
 }
 
@@ -35,6 +36,7 @@ export default class SongList extends Component {
     songs: PropTypes.arrayOf(PropTypes.object),
     results: PropTypes.arrayOf(PropTypes.object),
     keyword: PropTypes.string,
+    useCdn: PropTypes.bool,
     onSongUpNext: PropTypes.func,
     onSongDelete: PropTypes.func,
     onSongMove: PropTypes.func
@@ -56,7 +58,9 @@ export default class SongList extends Component {
     const search = this.isSearch()
     return this.props[search ? 'results' : 'songs'].map(song => ({
       key: song.id,
-      image: song.artwork || artworkImage,
+      image: song.artwork && (this.props.useCdn ?
+        song.artwork.fileViaCdn :
+        song.artwork.file) || artworkImage,
       text: `${song.title}`,
       detail: `${song.artist} - ${song.album}`,
       extra: siteName(song.siteId),

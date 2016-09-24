@@ -14,7 +14,8 @@ function mapStateToProps(state) {
   return {
     user: state.user,
     members: state.channel.members,
-    playing: state.song.playing
+    playing: state.song.playing,
+    useCdn: state.user.useCdn
   }
 }
 
@@ -29,6 +30,7 @@ export default class Status extends Component {
     user: PropTypes.object,
     members: PropTypes.arrayOf(PropTypes.object),
     playing: PropTypes.object,
+    useCdn: PropTypes.bool,
     height: PropTypes.number.isRequired,
     muiTheme: PropTypes.object.isRequired
   }
@@ -130,7 +132,10 @@ export default class Status extends Component {
       image: {
         width: this.props.height,
         height: this.props.height,
-        backgroundImage: `url(${this.props.playing.artwork || artworkImage})`,
+        backgroundImage: `url(${
+          this.props.playing.artwork && (this.props.useCdn ?
+          this.props.playing.artwork.fileViaCdn :
+          this.props.playing.artwork.file) || artworkImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       },
