@@ -74,7 +74,7 @@ export default class Status extends Component {
             {
               this.props.playing.webUrl
                 ? <a
-                    href={this.props.playing.webUrl || ''}
+                    href={this.props.playing.webUrl}
                     target="_blank"
                     style={style.titleText}
                   >
