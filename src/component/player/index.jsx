@@ -106,11 +106,12 @@ export default class Player extends Component {
       this.props.onEnded()
     })
     playing.addEventListener('error', event => {
-      console.warn('player error', event)
+      console.warn('player error, set up reload', event)
       const oldSrc = playing.src
       setTimeout(() => {
         if (oldSrc === playing.src) {
           // trigger hard reload
+          console.log('player error reload')
           playing.src = ''
           playing.src = oldSrc
           const {time} = this.props.playing
