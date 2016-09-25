@@ -118,7 +118,7 @@ export default class Player extends Component {
           const {time} = this.props.playing
           playing.currentTime = (Date.now() / 1000) - time
         }
-      }, 500)
+      }, 2500)
     })
   }
 
