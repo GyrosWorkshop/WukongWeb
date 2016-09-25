@@ -105,6 +105,18 @@ export default class Player extends Component {
       playing.src = ''
       this.props.onEnded()
     })
+    playing.addEventListener('error', event => {
+      const oldSrc = playing.src
+      setTimeout(() => {
+        if (oldSrc === playing.src) {
+          // trigger hard reload
+          playing.src = ''
+          playing.src = oldSrc
+          const {time} = this.props.playing
+          playing.currentTime = (Date.now() / 1000) - time
+        }
+      }, 500)
+    })
   }
 
   componentDidUpdate(prevProps, prevState) {
