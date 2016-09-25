@@ -106,6 +106,7 @@ export default class Player extends Component {
       this.props.onEnded()
     })
     playing.addEventListener('error', event => {
+      console.warn(event)
       const oldSrc = playing.src
       setTimeout(() => {
         if (oldSrc === playing.src) {
