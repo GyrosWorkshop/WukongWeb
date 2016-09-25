@@ -107,6 +107,7 @@ export default class Player extends Component {
     })
     playing.addEventListener('error', event => {
       if (playing.src == '' ||
+        !event.target.error ||
         event.target.error.code ===
         event.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED) return
       console.warn('player error, set up reload', event)
