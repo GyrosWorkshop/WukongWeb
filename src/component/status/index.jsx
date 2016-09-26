@@ -55,43 +55,33 @@ export default class Status extends Component {
     this.setState({popover: false, popoverAnchor: null})
   }
 
+  onOpenLink = (event) => {
+    const {url} = this.props.playing
+    if (url) {
+      open(url)
+    }
+  }
+
   render() {
     const style = this.generateStyle()
     return (
       <div style={style.container}>
         <Paper style={style.image} />
         <div style={style.textContainer}>
-          <div
-            style={style.playerText}
-            onTouchTap={this.onPopoverOpen}
-          >
-            {this.getPlayerNickname()}@{this.props.user.channel}
+          <div style={style.playerText}>
+            <span style={style.actionText} onTouchTap={this.onPopoverOpen}>
+              {this.getPlayerNickname()}@{this.props.user.channel}
+            </span>
           </div>
-          <div
-            style={style.titleText}
-            title={this.props.playing.title}
-          >
-            {
-              this.props.playing.url
-                ? <a
-                    href={this.props.playing.url}
-                    target="_blank"
-                  >
-                    {this.props.playing.title}
-                  </a>
-                : this.props.playing.title
-            }
+          <div style={style.titleText} title={this.props.playing.title}>
+            <span style={style.actionText} onTouchTap={this.onOpenLink}>
+              {this.props.playing.title}
+            </span>
           </div>
-          <div
-            style={style.otherText}
-            title={this.props.playing.album}
-          >
+          <div style={style.otherText} title={this.props.playing.album}>
             {this.props.playing.album}
           </div>
-          <div
-            style={style.otherText}
-            title={this.props.playing.artist}
-          >
+          <div style={style.otherText} title={this.props.playing.artist}>
             {this.props.playing.artist}
           </div>
         </div>
@@ -161,7 +151,6 @@ export default class Status extends Component {
       },
       playerText: {
         marginBottom: '0.5em',
-        cursor: 'pointer'
       },
       titleText: {
         fontSize: '1.2em',
@@ -169,6 +158,9 @@ export default class Status extends Component {
       },
       otherText: {
         marginTop: '0.5em'
+      },
+      actionText: {
+        cursor: 'pointer'
       },
       memberItem: {
         paddingTop: 12,
