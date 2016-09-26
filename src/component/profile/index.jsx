@@ -42,7 +42,7 @@ export default class Profile extends Component {
       sync: this.refs.sync.input.value,
       channel: this.refs.channel.input.value,
       listenOnly: this.refs.listenOnly.state.switched,
-      useCdn: this.refs.useCdn.state.switched
+      fileIndex: this.refs.fileIndex.state.switched ? 1 : 0
     })
     this.props.onRequestClose('confirm')
   }
@@ -114,8 +114,8 @@ export default class Profile extends Component {
         <Toggle
           style={style.toggle}
           label='Use CDN'
-          defaultToggled={this.props.user.useCdn}
-          ref='useCdn'
+          defaultToggled={this.props.user.fileIndex > 0}
+          ref='fileIndex'
         />
       </Dialog>
     )

@@ -16,7 +16,7 @@ function mapStateToProps(state) {
     playing: state.song.playing,
     preload: state.song.preload,
     userId: state.user.id,
-    useCdn: state.user.useCdn,
+    fileIndex: state.user.fileIndex,
     downvote: state.song.status.downvote
   }
 }
@@ -45,7 +45,7 @@ export default class Player extends Component {
     playing: PropTypes.object,
     preload: PropTypes.object,
     userId: PropTypes.string,
-    useCdn: PropTypes.bool,
+    fileIndex: PropTypes.number,
     downvote: PropTypes.bool,
     onPlayOwn: PropTypes.func,
     onElapsed: PropTypes.func,
@@ -68,8 +68,22 @@ export default class Player extends Component {
     remainingTime: 0
   }
 
+  setAudioState(audio, file, time) {
+    if (file) {
+      audio.src = file[this.props.fileIndex]
+      if (time) {
+        audio.currentTime = (Date.now() / 1000) - time
+      }
+    } else {
+      audio.src = ''
+    }
+  }
+
   onPlayAction = (event) => {
     const {playing} = this.refs
+    const {file, time} = this.props.playing
+    this.setAudioState(playing, null)
+    this.setAudioState(playing, file, time)
     playing.play()
   }
 
@@ -102,26 +116,11 @@ export default class Player extends Component {
       this.props.onElapsed(playing.currentTime)
     })
     playing.addEventListener('ended', event => {
-      playing.src = ''
+      this.setAudioState(playing, null)
       this.props.onEnded()
     })
     playing.addEventListener('error', event => {
-      if (playing.src == '' ||
-        !event.target.error ||
-        event.target.error.code ===
-        event.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED) return
-      console.warn('player error, set up reload', event)
-      const oldSrc = playing.src
-      setTimeout(() => {
-        if (oldSrc === playing.src) {
-          // trigger hard reload
-          console.log('player error reload')
-          playing.src = ''
-          playing.src = oldSrc
-          const {time} = this.props.playing
-          playing.currentTime = (Date.now() / 1000) - time
-        }
-      }, 2500)
+      this.setAudioState(playing, null)
     })
   }
 
@@ -129,17 +128,15 @@ export default class Player extends Component {
     const {playing, preload} = this.refs
     if (this.props.playing.id != prevProps.playing.id ||
         Math.abs(this.props.playing.time - prevProps.playing.time) > 10) {
-      const {time, player} = this.props.playing
-      const {file, fileViaCdn} = this.props.playing.music
-      playing.src = (this.props.useCdn ? fileViaCdn : file) || file
-      playing.currentTime = (Date.now() / 1000) - time
+      const {file, time, player} = this.props.playing
+      this.setAudioState(playing, file, time)
       if (file && player && player == this.props.userId) {
         this.props.onPlayOwn(this.props.playing)
       }
     }
     if (this.props.preload != prevProps.preload) {
-      const {file, fileViaCdn} = this.props.preload.music
-      preload.src = (this.props.useCdn ? fileViaCdn : file) || file
+      const {file} = this.props.preload
+      this.setAudioState(preload, file)
     }
   }
 
@@ -171,7 +168,7 @@ export default class Player extends Component {
             : null
         }
         {
-          this.props.playing.music && !this.state.isPlaying
+          this.props.playing.file && !this.state.isPlaying
             ? <Button
                 icon={PlayArrowIcon}
                 onAction={this.onPlayAction}

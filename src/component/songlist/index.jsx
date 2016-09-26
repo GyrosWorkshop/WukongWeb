@@ -5,7 +5,6 @@ import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import List from './list'
 import Action from '../../action'
-import Codec from '../../api/codec'
 import artworkImage from '../../resource/artwork.png'
 
 function mapStateToProps(state) {
@@ -13,7 +12,7 @@ function mapStateToProps(state) {
     songs: state.song.playlist,
     results: state.search.results,
     keyword: state.search.keyword,
-    useCdn: state.user.useCdn
+    fileIndex: state.user.fileIndex
   }
 }
 
@@ -37,7 +36,7 @@ export default class SongList extends Component {
     songs: PropTypes.arrayOf(PropTypes.object),
     results: PropTypes.arrayOf(PropTypes.object),
     keyword: PropTypes.string,
-    useCdn: PropTypes.bool,
+    fileIndex: PropTypes.number,
     onSongUpNext: PropTypes.func,
     onSongDelete: PropTypes.func,
     onSongMove: PropTypes.func
@@ -59,7 +58,7 @@ export default class SongList extends Component {
     const search = this.isSearch()
     return this.props[search ? 'results' : 'songs'].map(song => ({
       key: song.id,
-      image: Codec.File.decode(song.artwork, this.props.useCdn) || artworkImage,
+      image: song.artwork[this.props.fileIndex] || artworkImage,
       text: `${song.title}`,
       detail: `${song.artist} - ${song.album}`,
       extra: siteName(song.siteId),

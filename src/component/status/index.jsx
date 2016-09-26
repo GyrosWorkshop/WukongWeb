@@ -8,7 +8,6 @@ import StarIcon from 'material-ui/svg-icons/toggle/star'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
-import Codec from '../../api/codec'
 import artworkImage from '../../resource/artwork.png'
 
 function mapStateToProps(state) {
@@ -16,7 +15,7 @@ function mapStateToProps(state) {
     user: state.user,
     members: state.channel.members,
     playing: state.song.playing,
-    useCdn: state.user.useCdn
+    fileIndex: state.user.fileIndex
   }
 }
 
@@ -31,7 +30,7 @@ export default class Status extends Component {
     user: PropTypes.object,
     members: PropTypes.arrayOf(PropTypes.object),
     playing: PropTypes.object,
-    useCdn: PropTypes.bool,
+    fileIndex: PropTypes.number,
     height: PropTypes.number.isRequired,
     muiTheme: PropTypes.object.isRequired
   }
@@ -69,22 +68,18 @@ export default class Status extends Component {
             {this.getPlayerNickname()}@{this.props.user.channel}
           </div>
           <div
+            style={style.titleText}
             title={this.props.playing.title}
           >
             {
-              this.props.playing.webUrl
+              this.props.playing.url
                 ? <a
-                    href={this.props.playing.webUrl}
+                    href={this.props.playing.url}
                     target="_blank"
-                    style={style.titleText}
                   >
                     {this.props.playing.title}
                   </a>
-                : <div
-                    style={style.titleText}
-                  >
-                    {this.props.playing.title}
-                  </div>
+                : this.props.playing.title
             }
           </div>
           <div
@@ -147,8 +142,8 @@ export default class Status extends Component {
         width: this.props.height,
         height: this.props.height,
         backgroundImage: `url(${
-          Codec.File.decode(this.props.playing.artwork, this.props.useCdn)
-          || artworkImage})`,
+          this.props.playing.artwork[this.props.fileIndex] || artworkImage
+        })`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       },
@@ -169,9 +164,7 @@ export default class Status extends Component {
       },
       titleText: {
         fontSize: '1.2em',
-        fontWeight: 400,
-        textDecoration: 'none',
-        color: this.props.muiTheme.palette.alternateTextColor
+        fontWeight: 400
       },
       otherText: {
         marginTop: '0.5em'
