@@ -1,7 +1,17 @@
+#node
 node_modules
 build
 *.log
+
+#vim
 *.swp
+
+#webstorm
 .idea
+
+#vscode
 .vscode
+jsconfig.json
+
+#macos
 .DS_Store
