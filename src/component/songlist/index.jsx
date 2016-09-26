@@ -58,7 +58,10 @@ export default class SongList extends Component {
     const search = this.isSearch()
     return this.props[search ? 'results' : 'songs'].map(song => ({
       key: song.id,
-      image: song.artwork[this.props.fileIndex] || artworkImage,
+      image: (
+        song.artwork &&
+        song.artwork[this.props.fileIndex]
+      ) || artworkImage,
       text: `${song.title}`,
       detail: `${song.artist} - ${song.album}`,
       extra: siteName(song.siteId),
