@@ -23,6 +23,9 @@ function mapDispatchToProps(dispatch) {
   return {
     onPlaylistSync() {
       dispatch(Action.User.sync.create())
+    },
+    onPlaylistShuffle() {
+      dispatch(Action.Song.shuffle.create())
     }
   }
 }
@@ -35,6 +38,7 @@ export default class TopBar extends Component {
     playing: PropTypes.object,
     height: PropTypes.number.isRequired,
     onPlaylistSync: PropTypes.func,
+    onPlaylistShuffle: PropTypes.func,
     muiTheme: PropTypes.object.isRequired
   }
 
@@ -70,6 +74,10 @@ export default class TopBar extends Component {
     this.props.onPlaylistSync()
   }
 
+  onPlaylistShuffle = (event) => {
+    this.props.onPlaylistShuffle()
+  }
+
   render() {
     const expandProgress = this.getExpandProgress()
     const style = this.generateStyle()
@@ -94,6 +102,10 @@ export default class TopBar extends Component {
               key: 'sync',
               title: 'Sync',
               callback: this.onPlaylistSync
+            }, {
+              key: 'shuffle',
+              title: 'Shuffle',
+              callback: this.onPlaylistShuffle
             }]}
           >
             <Player />

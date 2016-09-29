@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import {shuffle} from 'lodash'
 
 import Action from '../action'
 
@@ -26,6 +27,8 @@ function playlist(state = [], action) {
     }
     case Action.Song.assign.type:
       return [...action.songs]
+    case Action.Song.shuffle.type:
+      return shuffle(state)
     default:
       return state
   }

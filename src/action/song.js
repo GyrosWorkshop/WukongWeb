@@ -23,6 +23,11 @@ export const assign = {
   create(songs) { return {type: this.type, songs} }
 }
 
+export const shuffle = {
+  type: 'SongShuffle',
+  create() { return {type: this.type} }
+}
+
 export const play = {
   type: 'SongPlay',
   create(song) { return {type: this.type, song} }
