@@ -55,13 +55,6 @@ export default class Status extends Component {
     this.setState({popover: false, popoverAnchor: null})
   }
 
-  onOpenLink = (event) => {
-    const {url} = this.props.playing
-    if (url) {
-      open(url)
-    }
-  }
-
   render() {
     const style = this.generateStyle()
     return (
@@ -69,20 +62,27 @@ export default class Status extends Component {
         <Paper style={style.image} />
         <div style={style.textContainer}>
           <div style={style.playerText}>
-            <span style={style.actionText} onTouchTap={this.onPopoverOpen}>
+            <span
+              style={style.actionText}
+              onTouchTap={this.onPopoverOpen}
+            >
               {this.getPlayerNickname()}@{this.props.user.channel}
             </span>
           </div>
           <div style={style.titleText} title={this.props.playing.title}>
-            <span style={style.actionText} onTouchTap={this.onOpenLink}>
+            <a
+              style={style.actionText}
+              href={this.props.playing.url}
+              target='_blank'
+            >
               {this.props.playing.title}
-            </span>
+            </a>
           </div>
           <div style={style.otherText} title={this.props.playing.album}>
-            {this.props.playing.album}
+            <span>{this.props.playing.album}</span>
           </div>
           <div style={style.otherText} title={this.props.playing.artist}>
-            {this.props.playing.artist}
+            <span>{this.props.playing.artist}</span>
           </div>
         </div>
         <Popover
@@ -160,6 +160,8 @@ export default class Status extends Component {
         marginTop: '0.5em'
       },
       actionText: {
+        color: 'inherit',
+        textDecoration: 'inherit',
         cursor: 'pointer'
       },
       memberItem: {
