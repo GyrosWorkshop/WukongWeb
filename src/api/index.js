@@ -181,12 +181,12 @@ export default function API() {
           await fetchPlaylist()
           await sendUpnext()
           break
-        case Action.Song.shuffle.type:
         case Action.Song.prepend.type:
         case Action.Song.append.type:
         case Action.Song.remove.type:
         case Action.Song.move.type:
         case Action.Song.assign.type:
+        case Action.Song.shuffle.type:
           await sendUpnext(prevState)
           break
         case Action.Song.ended.type:
