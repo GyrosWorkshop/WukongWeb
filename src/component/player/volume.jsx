@@ -17,6 +17,7 @@ export default class Volume extends Component {
 
   state = {
     value: this.props.initialValue,
+    lastValue: this.props.initialValue,
     popover: false,
     popoverAnchor: null
   }
@@ -37,6 +38,12 @@ export default class Volume extends Component {
   }
 
   onVolumeChange = (event, value) => {
+    this.setState({value, lastValue: value})
+    this.props.onChange(value)
+  }
+
+  onVolumeMute = (event) => {
+    let value = this.state.value ? 0 : this.state.lastValue
     this.setState({value})
     this.props.onChange(value)
   }
@@ -57,6 +64,13 @@ export default class Volume extends Component {
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           onRequestClose={this.onPopoverClose}
         >
+          <IconButton
+            touchRippleColor={this.props.muiTheme.appBar.textColor}
+            onTouchTap={this.onVolumeMute}
+            style={style.mute}
+          >
+            <VolumeMuteIcon color={this.props.muiTheme.appBar.color} />
+          </IconButton>
           <Slider
             style={style.slider}
             sliderStyle={style.sliderInner}
@@ -71,14 +85,19 @@ export default class Volume extends Component {
   generateStyle() {
     return {
       slider: {
+        display: 'inline-block',
         width: this.props.muiTheme.slider.recommendedWidth,
-        marginTop: this.props.muiTheme.slider.handleSizeActive / 2,
-        marginBottom: this.props.muiTheme.slider.handleSizeActive / 2,
-        marginLeft: this.props.muiTheme.slider.handleSizeActive,
-        marginRight: this.props.muiTheme.slider.handleSizeActive
+        marginTop: 0,
+        marginRight: this.props.muiTheme.slider.handleSizeActive,
+        marginBottom: 3,
+        marginLeft: 0
       },
       sliderInner: {
         margin: 0
+      },
+      mute: {
+        width: 'auto',
+        paddingRight: 5
       }
     }
   }
