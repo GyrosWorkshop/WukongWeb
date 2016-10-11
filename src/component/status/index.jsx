@@ -77,6 +77,18 @@ export default class Status extends Component {
             >
               {this.props.playing.title}
             </a>
+            {
+              this.props.playing.mvWebUrl
+                ? <a
+                    style={style.actionText}
+                    href={this.props.playing.mvWebUrl}
+                    target='_blank'
+                    title='查看歌曲 MV'
+                  >
+                    <i className="fa fa-play-circle" aria-hidden="true"></i>
+                  </a>
+                : null
+            }
           </div>
           <div style={style.otherText} title={this.props.playing.album}>
             <span>{this.props.playing.album}</span>
@@ -162,7 +174,8 @@ export default class Status extends Component {
       actionText: {
         color: 'inherit',
         textDecoration: 'inherit',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        marginRight: 6
       },
       memberItem: {
         paddingTop: 12,
