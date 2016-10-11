@@ -6,6 +6,7 @@ import {List, ListItem} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import StarIcon from 'material-ui/svg-icons/toggle/star'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
+import MusicVideoIcon from 'material-ui/svg-icons/av/music-video'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
 import artworkImage from '../../resource/artwork.png'
@@ -78,14 +79,16 @@ export default class Status extends Component {
               {this.props.playing.title}
             </a>
             {
-              this.props.playing.mvWebUrl
+              this.props.playing.mvUrl
                 ? <a
                     style={style.actionText}
-                    href={this.props.playing.mvWebUrl}
+                    href={this.props.playing.mvUrl}
                     target='_blank'
-                    title='查看歌曲 MV'
                   >
-                    <i className="fa fa-play-circle" aria-hidden="true"></i>
+                    <MusicVideoIcon
+                      color={this.props.muiTheme.appBar.textColor}
+                      style={style.actionIcon}
+                    />
                   </a>
                 : null
             }
@@ -176,6 +179,9 @@ export default class Status extends Component {
         textDecoration: 'inherit',
         cursor: 'pointer',
         marginRight: 6
+      },
+      actionIcon: {
+        verticalAlign: '-0.2em'
       },
       memberItem: {
         paddingTop: 12,
