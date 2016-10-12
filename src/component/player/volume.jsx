@@ -5,6 +5,7 @@ import Slider from 'material-ui/Slider'
 import VolumeUpIcon from 'material-ui/svg-icons/av/volume-up'
 import VolumeDownIcon from 'material-ui/svg-icons/av/volume-down'
 import VolumeMuteIcon from 'material-ui/svg-icons/av/volume-mute'
+import VolumeOffIcon from 'material-ui/svg-icons/av/volume-off'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
 @muiThemeable()
@@ -43,20 +44,20 @@ export default class Volume extends Component {
   }
 
   onVolumeMute = (event) => {
-    let value = this.state.value ? 0 : this.state.lastValue
+    const value = this.state.value ? 0 : this.state.lastValue
     this.setState({value})
     this.props.onChange(value)
   }
 
   render() {
-    const AvVolume = this.getVolumeIcon()
+    const VolumeIcon = this.getVolumeIcon()
     const style = this.generateStyle()
     return (
       <IconButton
         touchRippleColor={this.props.muiTheme.appBar.textColor}
         onTouchTap={this.onPopoverOpen}
       >
-        <AvVolume color={this.props.muiTheme.appBar.textColor} />
+        <VolumeIcon color={this.props.muiTheme.appBar.textColor} />
         <Popover
           open={this.state.popover}
           anchorEl={this.state.popoverAnchor}
@@ -65,11 +66,11 @@ export default class Volume extends Component {
           onRequestClose={this.onPopoverClose}
         >
           <IconButton
-            touchRippleColor={this.props.muiTheme.appBar.textColor}
+            touchRippleColor={this.props.muiTheme.appBar.color}
             onTouchTap={this.onVolumeMute}
-            style={style.mute}
+            style={style.sliderButton}
           >
-            <VolumeMuteIcon color={this.props.muiTheme.appBar.color} />
+            <VolumeOffIcon color={this.props.muiTheme.appBar.color} />
           </IconButton>
           <Slider
             style={style.slider}
@@ -83,21 +84,31 @@ export default class Volume extends Component {
   }
 
   generateStyle() {
+    const fullHeight = 36
+    const iconHeight = 24
+    const sliderHeight = this.props.muiTheme.slider.handleSizeActive
     return {
       slider: {
         display: 'inline-block',
         width: this.props.muiTheme.slider.recommendedWidth,
-        marginTop: 0,
-        marginRight: this.props.muiTheme.slider.handleSizeActive,
-        marginBottom: 3,
-        marginLeft: 0
+        paddingTop: (iconHeight - sliderHeight) / 2,
+        paddingBottom: (iconHeight - sliderHeight) / 2,
+        marginLeft: 6,
+        marginRight: 18
       },
       sliderInner: {
         margin: 0
       },
-      mute: {
-        width: 'auto',
-        paddingRight: 5
+      sliderButton: {
+        width: fullHeight,
+        height: fullHeight,
+        padding: (fullHeight - iconHeight) / 2,
+        marginLeft: 6,
+        marginRight: 0
+      },
+      sliderButtonIcon: {
+        width: iconHeight,
+        height: iconHeight
       }
     }
   }
