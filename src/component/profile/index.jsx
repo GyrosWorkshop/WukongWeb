@@ -39,10 +39,10 @@ export default class Profile extends Component {
 
   onConfirm = (event) => {
     this.props.onProfileUpdate({
-      sync: this.refs.sync.input.value,
-      channel: this.refs.channel.input.value,
-      listenOnly: this.refs.listenOnly.state.switched,
-      fileIndex: this.refs.fileIndex.state.switched ? 1 : 0
+      sync: this.refs.sync.getValue(),
+      channel: this.refs.channel.getValue(),
+      listenOnly: this.refs.listenOnly.isToggled(),
+      fileIndex: this.refs.fileIndex.isToggled() ? 1 : 0
     })
     this.props.onRequestClose('confirm')
   }
@@ -94,6 +94,9 @@ export default class Profile extends Component {
         <TextField
           floatingLabelText='Sync'
           fullWidth={true}
+          multiLine={true}
+          rows={1}
+          rowsMax={3}
           defaultValue={this.props.user.sync}
           hintText='Bring your playlist.'
           ref='sync'
