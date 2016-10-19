@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {findDOMNode} from 'react-dom'
 import Radium from 'radium'
 import FlipMove from 'react-flip-move'
-import LazyLoad from 'react-lazyload'
+import LazyLoad, {forceCheck} from 'react-lazyload'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
 import Item from './item'
@@ -215,6 +215,7 @@ export default class List extends Component {
             easing='ease'
             duration={250}
             ref='list'
+            onFinishAll={forceCheck}
           >
             {this.sortedItems().map(({key, ...props}, index) => (
               <div style={style.item} key={key}>
@@ -222,6 +223,7 @@ export default class List extends Component {
                   height={this.props.muiTheme.gridTile.boxHeight}
                   offset={this.props.muiTheme.gridTile.boxHeight}
                   overflow={true}
+                  once={true}
                 >
                   {this.state.toIndex != index ? <Item {...props} /> : null}
                 </LazyLoad>
