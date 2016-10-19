@@ -70,14 +70,18 @@ export default function API() {
       ))
     }
     const fetchPlaylist = async () => {
-      const url = getState().user.sync
-      if (!url) return
-      const list = await api.http('POST', '/provider/songListWithUrl', {
-        url
-      })
-      if (!list || !list.songs) return
+      const sync = getState().user.sync
+      if (!sync) return
+      const urls = sync.split('\n').filter(line => line)
+      if (!urls.length) return
+      const lists = await Promise.all(urls.map(url =>
+        api.http('POST', '/provider/songListWithUrl', {
+          url
+        })
+      ))
+      const songs = [].concat(...lists.map(list => list.songs || []))
       next(Action.Song.assign.create(
-        list.songs.map(Codec.Song.decode)
+        songs.map(Codec.Song.decode)
       ))
     }
     const sendChannel = async prevState => {
