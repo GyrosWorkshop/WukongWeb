@@ -84,10 +84,17 @@ export default class SongList extends Component {
     }))
   }
 
+  getPlaceholder() {
+    return {
+      image: artworkImage
+    }
+  }
+
   render() {
     return (
       <List
         items={this.getItems()}
+        placeholder={this.getPlaceholder()}
         canMove={!this.isSearch()}
         onItemMove={this.props.onSongMove}
       />

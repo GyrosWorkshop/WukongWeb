@@ -12,6 +12,7 @@ import Item from './item'
 export default class List extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(PropTypes.object),
+    placeholder: PropTypes.object,
     canMove: PropTypes.bool,
     onItemMove: PropTypes.func,
     muiTheme: PropTypes.object.isRequired
@@ -220,10 +221,11 @@ export default class List extends Component {
             {this.sortedItems().map(({key, ...props}, index) => (
               <div style={style.item} key={key}>
                 <LazyLoad
+                  once={true}
+                  overflow={true}
                   height={this.props.muiTheme.gridTile.boxHeight}
                   offset={this.props.muiTheme.gridTile.boxHeight}
-                  overflow={true}
-                  once={true}
+                  placeholder={<Item {...this.props.placeholder} />}
                 >
                   {this.state.toIndex != index ? <Item {...props} /> : null}
                 </LazyLoad>
