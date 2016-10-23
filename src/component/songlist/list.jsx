@@ -225,7 +225,10 @@ export default class List extends Component {
                   overflow={true}
                   height={this.props.muiTheme.gridTile.boxHeight}
                   offset={this.props.muiTheme.gridTile.boxHeight}
-                  placeholder={<Item {...this.props.placeholder} />}
+                  placeholder={<Item {...{
+                    ...props,
+                    ...this.props.placeholder
+                  }} />}
                 >
                   {this.state.toIndex != index ? <Item {...props} /> : null}
                 </LazyLoad>
