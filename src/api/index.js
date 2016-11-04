@@ -13,7 +13,7 @@ export default function API() {
         __env.server || 'http://localhost:5000'
       )
       const http = async (method, endpoint, data) => {
-        const response = await fetch(`${server}${endpoint}`, {
+        const response = await fetch(server + endpoint, {
           method,
           headers: {
             'Accept': 'application/json',
@@ -39,8 +39,8 @@ export default function API() {
           throw new Error(`${method} ${endpoint}: ${response.statusText}`)
         }
       }
-      const websocket = (handler) => {
-        const socket = new WebSocket(server.replace(/^http/i, 'ws') + '/api/ws')
+      const websocket = (endpoint, handler) => {
+        const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
         const emit = handler({
           send(data) {
             socket.send(JSON.stringify(data))
@@ -143,7 +143,7 @@ export default function API() {
     (async () => {
       await fetchUser()
       await sendChannel()
-      api.websocket(({send}) => (event, data) => {
+      api.websocket('/api/ws', ({send}) => (event, data) => {
         switch (event) {
           case 'ready':
             sendUpnext()
@@ -175,7 +175,6 @@ export default function API() {
     return async action => {
       const prevState = getState()
       next(action)
-
       switch (action.type) {
         case Action.User.profile.type:
           await sendChannel(prevState)
