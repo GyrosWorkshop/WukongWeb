@@ -40,7 +40,7 @@ export default function API() {
         }
       }
       const websocket = (handler) => {
-        const socket = new WebSocket(server.replace(/^http/i, 'ws'))
+        const socket = new WebSocket(server.replace(/^http/i, 'ws') + '/api')
         const emit = handler({
           send(data) {
             socket.send(JSON.stringify(data))
