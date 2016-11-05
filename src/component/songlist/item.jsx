@@ -15,6 +15,7 @@ export default class Item extends Component {
     text: PropTypes.string,
     detail: PropTypes.string,
     extra: PropTypes.string,
+    link: PropTypes.string,
     actions: PropTypes.arrayOf(PropTypes.object),
     muiTheme: PropTypes.object.isRequired
   }
@@ -25,6 +26,7 @@ export default class Item extends Component {
       || this.props.text != nextProps.text
       || this.props.detail != nextProps.detail
       || this.props.extra != nextProps.extra
+      || this.props.link != nextProps.link
       || this.props.actions != nextProps.actions
   }
 
@@ -39,16 +41,16 @@ export default class Item extends Component {
         </div>
         <div style={style.bottomOverlay}>
           <div style={style.textContainer}>
-            <div
-              style={style.textLabel}
-              title={this.props.text}
-            >
-              {this.props.text}
+            <div style={style.textLabel} title={this.props.text}>
+              <a
+                style={style.actionText}
+                href={this.props.link}
+                target='_blank'
+              >
+                {this.props.text}
+              </a>
             </div>
-            <div
-              style={style.detailLabel}
-              title={this.props.detail}
-            >
+            <div style={style.detailLabel} title={this.props.detail}>
               {this.props.detail}
             </div>
           </div>
@@ -141,6 +143,11 @@ export default class Item extends Component {
         overflow: 'hidden',
         whiteSpace: 'nowrap',
         textOverflow: 'ellipsis'
+      },
+      actionText: {
+        color: 'inherit',
+        textDecoration: 'inherit',
+        cursor: 'pointer'
       }
     }
   }

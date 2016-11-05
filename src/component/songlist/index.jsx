@@ -65,6 +65,7 @@ export default class SongList extends Component {
       text: `${song.title}`,
       detail: `${song.artist} - ${song.album}`,
       extra: siteName(song.siteId),
+      link: song.url,
       actions: search ? [{
         key: 'up-next',
         title: 'Up Next',
