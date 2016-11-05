@@ -46,7 +46,9 @@ export default function API() {
             socket.send(JSON.stringify(data))
           }
         })
-        socket.onclose = event => setTimeout(() => websocket(handler), 5000)
+        socket.onclose = event => {
+          setTimeout(() => websocket(endpoint, handler), 5000)
+        }
         socket.onerror = event => {
           throw new Error('WebSocket failed')
         }
