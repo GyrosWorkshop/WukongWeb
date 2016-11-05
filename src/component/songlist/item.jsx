@@ -28,6 +28,7 @@ export default class Item extends Component {
       || this.props.extra != nextProps.extra
       || this.props.link != nextProps.link
       || this.props.actions != nextProps.actions
+      || this.props.muiTheme != nextProps.muiTheme
   }
 
   render() {

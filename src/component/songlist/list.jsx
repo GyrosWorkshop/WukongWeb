@@ -222,9 +222,7 @@ export default class List extends Component {
               <div style={style.item} key={key}>
                 <LazyLoad
                   once={true}
-                  overflow={true}
                   height={this.props.muiTheme.gridTile.boxHeight}
-                  offset={this.props.muiTheme.gridTile.boxHeight}
                   placeholder={<Item {...{
                     ...props,
                     ...this.props.placeholder

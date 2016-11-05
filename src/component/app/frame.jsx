@@ -12,22 +12,12 @@ export default class Frame extends Component {
   }
 
   state = {
-    size: this.getWindowSize(),
     headerHeight: this.props.muiTheme.appBar.maxHeight
   }
 
-  getWindowSize() {
-    return {width: window.innerWidth, height: window.innerHeight}
-  }
-
-  onWindowResize = (event) => {
-    const size = this.getWindowSize()
-    this.setState({size})
-  }
-
-  onFrameScroll = (event) => {
+  onWindowScroll = (event) => {
     const {minHeight, maxHeight} = this.props.muiTheme.appBar
-    const shrink = event.currentTarget.scrollTop
+    const shrink = event.currentTarget.scrollY
     const headerHeight = Math.max(minHeight, maxHeight - shrink)
     this.setState({headerHeight})
   }
@@ -35,8 +25,8 @@ export default class Frame extends Component {
   render() {
     const style = this.generateStyle()
     return (
-      <div style={style.frame} onScroll={this.onFrameScroll}>
-        <EventListener target={window} onResize={this.onWindowResize} />
+      <div>
+        <EventListener target={window} onScroll={this.onWindowScroll} />
         <div style={style.header}>
           {cloneElement(this.props.header, {
             height: this.state.headerHeight
@@ -56,12 +46,6 @@ export default class Frame extends Component {
 
   generateStyle() {
     return {
-      frame: {
-        width: this.state.size.width,
-        height: this.state.size.height,
-        overflowX: 'hidden',
-        overflowY: 'auto'
-      },
       header: {
         position: 'fixed',
         width: '100%',
