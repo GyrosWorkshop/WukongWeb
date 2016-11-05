@@ -36,7 +36,7 @@ export default function Storage() {
     const store = createStore(reducer, open(merge({
       user: {
         listenOnly: false,
-        fileIndex: 0
+        connection: 0,
       }
     }, initialState)), enhancer)
     store.subscribe(() => save(store.getState()))

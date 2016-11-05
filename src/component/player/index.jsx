@@ -16,7 +16,7 @@ function mapStateToProps(state) {
     playing: state.song.playing,
     preload: state.song.preload,
     userId: state.user.id,
-    fileIndex: state.user.fileIndex,
+    connection: state.user.connection,
     downvote: state.song.status.downvote
   }
 }
@@ -45,7 +45,7 @@ export default class Player extends Component {
     playing: PropTypes.object,
     preload: PropTypes.object,
     userId: PropTypes.string,
-    fileIndex: PropTypes.number,
+    connection: PropTypes.number,
     downvote: PropTypes.bool,
     onPlayOwn: PropTypes.func,
     onElapsed: PropTypes.func,
@@ -70,7 +70,7 @@ export default class Player extends Component {
 
   setAudioState(audio, file, time) {
     if (file) {
-      audio.src = file[this.props.fileIndex]
+      audio.src = file[this.props.connection]
       if (time) {
         audio.currentTime = (Date.now() / 1000) - time
       }

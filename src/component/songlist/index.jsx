@@ -12,7 +12,7 @@ function mapStateToProps(state) {
     songs: state.song.playlist,
     results: state.search.results,
     keyword: state.search.keyword,
-    fileIndex: state.user.fileIndex
+    connection: state.user.connection
   }
 }
 
@@ -36,7 +36,7 @@ export default class SongList extends Component {
     songs: PropTypes.arrayOf(PropTypes.object),
     results: PropTypes.arrayOf(PropTypes.object),
     keyword: PropTypes.string,
-    fileIndex: PropTypes.number,
+    connection: PropTypes.number,
     onSongUpNext: PropTypes.func,
     onSongDelete: PropTypes.func,
     onSongMove: PropTypes.func
@@ -60,7 +60,7 @@ export default class SongList extends Component {
       key: song.id,
       image: (
         song.artwork &&
-        song.artwork[this.props.fileIndex]
+        song.artwork[this.props.connection]
       ) || artworkImage,
       text: `${song.title}`,
       detail: `${song.artist} - ${song.album}`,
