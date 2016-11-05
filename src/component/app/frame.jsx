@@ -1,5 +1,6 @@
 import React, {Component, PropTypes, cloneElement} from 'react'
 import EventListener from 'react-event-listener'
+import {Style} from 'radium'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
 @muiThemeable()
@@ -40,6 +41,11 @@ export default class Frame extends Component {
             height: this.props.muiTheme.footer.height
           })}
         </div>
+        <Style rules={{
+          body: {
+            backgroundColor: this.props.muiTheme.palette.canvasColor
+          }
+        }}/>
       </div>
     )
   }
