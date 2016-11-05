@@ -37,6 +37,7 @@ export default function Storage() {
       user: {
         listenOnly: false,
         connection: 0,
+        theme: 0
       }
     }, initialState)), enhancer)
     store.subscribe(() => save(store.getState()))

@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import Toggle from 'material-ui/Toggle'
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
@@ -49,6 +51,10 @@ export default class Profile extends Component {
 
   onCancel = (event) => {
     this.props.onRequestClose('cancel')
+  }
+
+  onThemeChange = (event, index, value) => {
+    this.props.onProfileUpdate({theme: value})
   }
 
   render() {
@@ -120,6 +126,15 @@ export default class Profile extends Component {
           defaultToggled={this.props.user.connection > 0}
           ref='connection'
         />
+        <SelectField
+          floatingLabelText='Theme'
+          fullWidth={true}
+          value={this.props.user.theme}
+          onChange={this.onThemeChange}
+        >
+          <MenuItem value={0} primaryText='Light' />
+          <MenuItem value={1} primaryText='Dark' />
+        </SelectField>
       </Dialog>
     )
   }

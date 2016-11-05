@@ -9,7 +9,7 @@ import lightTheme from './light'
 import darkTheme from './dark'
 
 function getTheme(theme) {
-  theme = merge(baseTheme, theme)
+  theme = merge({}, baseTheme, theme)
   return getMuiTheme(theme, {
     fontFamily: [
       'Roboto',
@@ -85,7 +85,7 @@ function getTheme(theme) {
   })
 }
 
-export default {
-  'Light': getTheme(lightTheme),
-  'Dark': getTheme(darkTheme)
-}
+export default [
+  lightTheme,
+  darkTheme
+].map(getTheme)
