@@ -8,8 +8,7 @@ import TopBar from '../topbar'
 import Lyrics from '../lyrics'
 import OmniBar from '../omnibar'
 import SongList from '../songlist'
-import getTheme from '../../theme'
-import lightTheme from '../../theme/light'
+import Theme from '../../theme'
 
 injectTapEventPlugin()
 
@@ -17,7 +16,7 @@ export default class App extends Component {
   render() {
     return (
       <StyleRoot>
-        <MuiThemeProvider muiTheme={getTheme(lightTheme)}>
+        <MuiThemeProvider muiTheme={Theme['Dark']}>
           <Frame
             header={<TopBar />}
             footer={<Lyrics />}

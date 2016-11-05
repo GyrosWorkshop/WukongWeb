@@ -1,9 +1,15 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import transitions from 'material-ui/styles/transitions'
 import typography from 'material-ui/styles/typography'
+import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import {fade} from 'material-ui/utils/colorManipulator'
+import {merge} from 'lodash'
 
-export default function getTheme(theme) {
+import lightTheme from './light'
+import darkTheme from './dark'
+
+function getTheme(theme) {
+  theme = merge(baseTheme, theme)
   return getMuiTheme(theme, {
     fontFamily: [
       'Roboto',
@@ -77,4 +83,9 @@ export default function getTheme(theme) {
       recommendedWidth: 120
     }
   })
+}
+
+export default {
+  'Light': getTheme(lightTheme),
+  'Dark': getTheme(darkTheme)
 }
