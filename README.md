@@ -37,4 +37,4 @@ WUKONG_SERVER=http://localhost:5000
 npm run build
 ```
 
-输出生产环境需要的文件到 `build` 目录下。
+输出生产环境文件到 `build` 目录下。
