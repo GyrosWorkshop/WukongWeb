@@ -51,13 +51,14 @@ export default class OmniBar extends Component {
     return {
       container: {
         width: 'auto',
+        backgroundColor: this.props.muiTheme.omniBar.backgroundColor,
         marginLeft: this.props.muiTheme.appBar.padding,
         marginRight: this.props.muiTheme.appBar.padding,
         marginTop: this.props.muiTheme.spacing.desktopGutterMini,
         marginBottom: this.props.muiTheme.spacing.desktopGutterMini,
         padding: 0,
         [this.props.muiTheme.responsive.tablet.mediaQuery]: {
-          width: this.props.muiTheme.searchField.recommendedWidth,
+          width: this.props.muiTheme.omniBar.recommendedWidth,
           marginLeft: 'auto',
           marginRight: 'auto',
           marginTop: this.props.muiTheme.spacing.desktopGutterLess,

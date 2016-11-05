@@ -5,8 +5,9 @@ import baseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import {fade} from 'material-ui/utils/colorManipulator'
 import {merge} from 'lodash'
 
-import lightTheme from './light'
-import darkTheme from './dark'
+import wukongTheme from './wukong'
+import materialTheme from './material'
+import nightTheme from './night'
 
 function getTheme(theme) {
   theme = merge({}, baseTheme, theme)
@@ -52,7 +53,7 @@ function getTheme(theme) {
     },
     footer: {
       backgroundColor: theme.palette.footerColor,
-      boxShadow: '0px -2px 5px rgba(0, 0, 0, 0.3)',
+      boxShadow: `0px -2px 5px ${fade(theme.palette.shadowColor, 0.3)}`,
       textColor: theme.palette.alternateTextColor,
       height: 50
     },
@@ -67,13 +68,14 @@ function getTheme(theme) {
         ${fade(theme.palette.shadowColor, 0.7)} 0%,
         ${fade(theme.palette.shadowColor, 0.3)} 70%,
         ${fade(theme.palette.shadowColor, 0.0)} 100%)`,
-      bottomOverlayBackground: 'rgba(0, 0, 0, 0.4)',
+      bottomOverlayBackground: fade(theme.palette.shadowColor, 0.4),
       boxHeight: 180,
       overlayHeight: 48,
       textSize: 16,
       overlayTransition: transitions.easeOut(undefined, 'opacity')
     },
-    searchField: {
+    omniBar: {
+      backgroundColor: fade(theme.palette.alternateTextColor, 0.1),
       recommendedWidth: 480
     },
     dialog: {
@@ -86,6 +88,7 @@ function getTheme(theme) {
 }
 
 export default [
-  lightTheme,
-  darkTheme
+  wukongTheme,
+  materialTheme,
+  nightTheme
 ].map(getTheme)

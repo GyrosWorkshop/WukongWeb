@@ -132,8 +132,9 @@ export default class Profile extends Component {
           value={this.props.user.theme}
           onChange={this.onThemeChange}
         >
-          <MenuItem value={0} primaryText='Light' />
-          <MenuItem value={1} primaryText='Dark' />
+          <MenuItem value={0} primaryText='Wukong' />
+          <MenuItem value={1} primaryText='Material' />
+          <MenuItem value={2} primaryText='Night' />
         </SelectField>
       </Dialog>
     )
