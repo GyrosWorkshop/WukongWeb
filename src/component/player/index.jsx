@@ -79,12 +79,39 @@ export default class Player extends Component {
     }
   }
 
+  onAudioEvent = (event) => {
+    const {playing} = this.refs
+    switch (event.type) {
+      case 'playing':
+        this.setState({isPlaying: true})
+        break
+      case 'pause':
+        this.setState({isPlaying: false})
+        break
+      case 'timeupdate':
+        this.setState({remainingTime: playing.duration - playing.currentTime})
+        this.props.onElapsed(playing.currentTime)
+        break
+      case 'ended':
+        this.setAudioState(playing, null)
+        this.props.onEnded()
+        break
+      case 'error':
+        this.setAudioState(playing, null)
+        break
+    }
+  }
+
   onPlayAction = (event) => {
     const {playing} = this.refs
     const {file, time} = this.props.playing
     this.setAudioState(playing, null)
     this.setAudioState(playing, file, time)
     playing.play()
+  }
+
+  onDownvoteAction = (event) => {
+    this.props.onDownvote()
   }
 
   onVolumeChange = (() => {
@@ -98,30 +125,20 @@ export default class Player extends Component {
     }
   })()
 
-  onDownvoteAction = (event) => {
-    this.props.onDownvote()
-  }
-
   componentDidMount() {
     const {playing} = this.refs
+    for (const type of [
+      'playing', 'pause', 'timeupdate', 'ended', 'error'
+    ]) playing.addEventListener(type, this.onAudioEvent)
     playing.volume = this.state.initialVolume
-    playing.addEventListener('playing', event => {
-      this.setState({isPlaying: true})
-    })
-    playing.addEventListener('pause', event => {
-      this.setState({isPlaying: false})
-    })
-    playing.addEventListener('timeupdate', event => {
-      this.setState({remainingTime: playing.duration - playing.currentTime})
-      this.props.onElapsed(playing.currentTime)
-    })
-    playing.addEventListener('ended', event => {
-      this.setAudioState(playing, null)
-      this.props.onEnded()
-    })
-    playing.addEventListener('error', event => {
-      this.setAudioState(playing, null)
-    })
+    this.onPlayAction()
+  }
+
+  componentWillUnmount() {
+    const {playing} = this.refs
+    for (const type of [
+      'playing', 'pause', 'timeupdate', 'ended', 'error'
+    ]) playing.removeEventListener(type, this.onAudioEvent)
   }
 
   componentDidUpdate(prevProps, prevState) {
