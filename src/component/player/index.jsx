@@ -8,6 +8,7 @@ import {debounce} from 'lodash'
 import Volume from './volume'
 import Button from './button'
 import Action from '../../action'
+import unavailableSong from '../../resource/unavailable.mp3'
 
 const kVolumeKey = 'volume'
 
@@ -106,7 +107,7 @@ export default class Player extends Component {
     const {playing} = this.refs
     const {file, time} = this.props.playing
     this.setAudioState(playing, null)
-    this.setAudioState(playing, file, time)
+    this.setAudioState(playing, file || unavailableSong, time)
     playing.play()
   }
 

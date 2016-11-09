@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const production = process.env.NODE_ENV == 'production'
 const sourcePath = path.join(__dirname, 'src')
@@ -23,12 +22,7 @@ const config = {
       test: /\.(js|jsx)$/, include: sourcePath,
       loader: 'babel'
     }, {
-      test: /\.(sass)$/, include: sourcePath,
-      loader: ExtractTextPlugin.extract('style', [
-        'css?sourceMap&modules', 'sass?sourceMap'
-      ])
-    }, {
-      test: /\.(png)$/, include: sourcePath,
+      test: /\.(png|mp3)$/, include: sourcePath,
       loader: 'url?limit=10000'
     }]
   },
@@ -57,10 +51,6 @@ config.plugins.push(
       removeRedundantAttributes: true,
       removeComments: true
     }
-  }),
-  new ExtractTextPlugin('style.css', {
-    allChunks: true,
-    disable: !production
   })
 )
 
