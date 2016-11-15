@@ -22,7 +22,7 @@ const config = {
       test: /\.(js|jsx)$/, include: sourcePath,
       loader: 'babel'
     }, {
-      test: /\.(png|mp3)$/, include: sourcePath,
+      test: /\.(png)$/, include: sourcePath,
       loader: 'url?limit=10000'
     }]
   },
