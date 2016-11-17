@@ -78,7 +78,8 @@ export default function API() {
       if (!urls.length) return
       const lists = await Promise.all(urls.map(url =>
         api.http('POST', '/provider/songListWithUrl', {
-          url
+          url,
+          withCookie: state.user.withCookie
         })
       ))
       const songs = [].concat(...lists.map(list => list.songs || []))
@@ -105,9 +106,10 @@ export default function API() {
         prevState.user.listenOnly ? undefined : prevState.song.playlist[0]
       ))
       if (prevState && isEqual(song, prevSong)) return
-      await api.http('POST', `/api/channel/updateNextSong/${channel}`,
-        song.songId ? song : null
-      )
+      await api.http('POST', `/api/channel/updateNextSong/${channel}`, {
+        ...song,
+        withCookie: state.user.withCookie
+      })
     }
     const sendSync = async () => {
       const state = getState()
@@ -132,7 +134,8 @@ export default function API() {
       const keyword = state.search.keyword
       if (keyword) {
         const results = await api.http('POST', '/api/song/search', {
-          key: keyword
+          key: keyword,
+          withCookie: state.user.withCookie
         })
         next(Action.Search.results.create(
           results.map(Codec.Song.decode)

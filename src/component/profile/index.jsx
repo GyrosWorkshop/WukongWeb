@@ -41,8 +41,9 @@ export default class Profile extends Component {
 
   onConfirm = (event) => {
     this.props.onProfileUpdate({
-      sync: this.refs.sync.getValue(),
       channel: this.refs.channel.getValue(),
+      sync: this.refs.sync.getValue(),
+      withCookie: this.refs.withCookie.getValue(),
       listenOnly: this.refs.listenOnly.isToggled(),
       connection: this.refs.connection.isToggled() ? 1 : 0
     })
@@ -98,6 +99,13 @@ export default class Profile extends Component {
           disabled={true}
         />
         <TextField
+          floatingLabelText='Channel'
+          fullWidth={true}
+          defaultValue={this.props.user.channel}
+          hintText='With your friends!'
+          ref='channel'
+        />
+        <TextField
           floatingLabelText='Sync'
           fullWidth={true}
           multiLine={true}
@@ -108,11 +116,14 @@ export default class Profile extends Component {
           ref='sync'
         />
         <TextField
-          floatingLabelText='Channel'
+          floatingLabelText='Upstream Cookie'
           fullWidth={true}
-          defaultValue={this.props.user.channel}
-          hintText='With your friends!'
-          ref='channel'
+          multiLine={true}
+          rows={1}
+          rowsMax={3}
+          defaultValue={this.props.user.withCookie}
+          hintText='Cookie used to be sent to upstream sites by the provider.'
+          ref='withCookie'
         />
         <Toggle
           style={style.toggle}
