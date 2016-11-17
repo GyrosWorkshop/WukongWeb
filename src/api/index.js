@@ -72,6 +72,7 @@ export default function API() {
       ))
     }
     const fetchPlaylist = async () => {
+      const state = getState()
       const sync = getState().user.sync
       if (!sync) return
       const urls = sync.split('\n').filter(line => line)
