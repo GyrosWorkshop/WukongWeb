@@ -43,7 +43,7 @@ export default class Profile extends Component {
     this.props.onProfileUpdate({
       channel: this.refs.channel.getValue(),
       sync: this.refs.sync.getValue(),
-      withCookie: this.refs.withCookie.getValue(),
+      cookie: this.refs.cookie.getValue(),
       listenOnly: this.refs.listenOnly.isToggled(),
       connection: this.refs.connection.isToggled() ? 1 : 0
     })
@@ -102,7 +102,7 @@ export default class Profile extends Component {
           floatingLabelText='Channel'
           fullWidth={true}
           defaultValue={this.props.user.channel}
-          hintText='With your friends!'
+          hintText='With your friends.'
           ref='channel'
         />
         <TextField
@@ -116,14 +116,14 @@ export default class Profile extends Component {
           ref='sync'
         />
         <TextField
-          floatingLabelText='Upstream Cookie'
+          floatingLabelText='Cookie'
           fullWidth={true}
           multiLine={true}
           rows={1}
           rowsMax={3}
-          defaultValue={this.props.user.withCookie}
-          hintText='Cookie used to be sent to upstream sites by the provider.'
-          ref='withCookie'
+          defaultValue={this.props.user.cookie}
+          hintText='Open sesame.'
+          ref='cookie'
         />
         <Toggle
           style={style.toggle}
