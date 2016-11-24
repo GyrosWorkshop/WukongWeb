@@ -75,7 +75,7 @@ export default class Player extends Component {
         audio.currentTime = (Date.now() / 1000) - time
       }
     } else {
-      audio.src = ''
+      if (audio.src) audio.src = ''
     }
   }
 
