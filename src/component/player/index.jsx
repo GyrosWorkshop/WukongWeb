@@ -71,9 +71,7 @@ export default class Player extends Component {
   setAudioState(audio, file, time) {
     if (file) {
       audio.src = file[this.props.connection]
-      if (time) {
-        audio.currentTime = (Date.now() / 1000) - time
-      }
+      if (time) audio.currentTime = (Date.now() / 1000) - time
     } else {
       if (audio.src) audio.src = ''
     }
