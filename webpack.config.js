@@ -11,7 +11,7 @@ const config = {
   entry: './entry',
   output: {
     path: buildPath,
-    filename: 'bundle.js',
+    filename: 'bundle~[hash].js',
     publicPath: ''
   },
   resolve: {
