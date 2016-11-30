@@ -151,7 +151,8 @@ export default class Player extends Component {
     }
     if (this.props.preload != prevProps.preload) {
       const {file} = this.props.preload
-      this.setAudioState(preload, file)
+      // delay preload, ensure playing first
+      setTimeout(() => this.setAudioState(preload, file), 5000)
     }
   }
 
