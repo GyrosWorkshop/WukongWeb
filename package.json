@@ -38,8 +38,8 @@
     "redux-devtools-filter-actions": "^1.2.0",
     "redux-devtools-log-monitor": "^1.1.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.3",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^v2.1.0-beta.27",
+    "webpack-dev-server": "v2.1.0-beta.12"
   },
   "scripts": {
     "start": "env NODE_ENV=development webpack-dev-server --colors --progress --inline --hot",

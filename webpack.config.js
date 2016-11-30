@@ -11,19 +11,19 @@ const config = {
   entry: './entry',
   output: {
     path: buildPath,
-    filename: 'bundle~[hash].js',
+    filename: 'bundle~[chunkhash].js',
     publicPath: ''
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   module: {
     loaders: [{
       test: /\.(js|jsx)$/, include: sourcePath,
-      loader: 'babel'
+      loader: 'babel-loader'
     }, {
       test: /\.(png)$/, include: sourcePath,
-      loader: 'url?limit=1000'
+      loader: 'url-loader?limit=1000'
     }]
   },
   plugins: [],
@@ -55,7 +55,6 @@ config.plugins.push(
 )
 
 if (production) config.plugins.push(
-  new webpack.optimize.DedupePlugin(),
   new webpack.optimize.OccurrenceOrderPlugin(true),
   new webpack.optimize.UglifyJsPlugin()
 )
