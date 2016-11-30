@@ -11,7 +11,7 @@ const config = {
   entry: './entry',
   output: {
     path: buildPath,
-    filename: 'bundle~[chunkhash].js',
+    filename: production ? 'bundle~[chunkhash].js' : 'bundle.js',
     publicPath: ''
   },
   resolve: {
