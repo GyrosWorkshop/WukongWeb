@@ -23,7 +23,7 @@ const config = {
       loader: 'babel'
     }, {
       test: /\.(png)$/, include: sourcePath,
-      loader: 'url?limit=10000'
+      loader: 'url?limit=1000'
     }]
   },
   plugins: [],
