@@ -12,6 +12,9 @@ export default function API() {
       const server = __env.production ? app : (
         __env.server || 'http://localhost:5000'
       )
+      const auth = () => location.href = `${server}/oauth/google?redirectUri=${
+        encodeURIComponent(app)
+      }`
       const http = async (method, endpoint, data) => {
         const response = await fetch(server + endpoint, {
           method,
@@ -32,15 +35,19 @@ export default function API() {
             return JSON.parse(data)
           }
         } else if (response.status == 401) {
-          location.href = `${server}/oauth/google?redirectUri=${
-            encodeURIComponent(app)
-          }`
+          auth()
         } else {
           throw new Error(`${method} ${endpoint}: ${response.statusText}`)
         }
       }
       const websocket = (endpoint, handler) => {
-        const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
+        let socket
+        try {
+          socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
+        } catch (e) {
+          auth()
+          throw e
+        }
         const emit = handler({
           send(data) {
             socket.send(JSON.stringify(data))
