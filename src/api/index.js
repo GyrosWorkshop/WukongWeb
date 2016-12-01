@@ -41,13 +41,7 @@ export default function API() {
         }
       }
       const websocket = (endpoint, handler) => {
-        let socket
-        try {
-          socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
-        } catch (e) {
-          auth()
-          throw e
-        }
+        const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
         const emit = handler({
           send(data) {
             socket.send(JSON.stringify(data))
@@ -57,6 +51,7 @@ export default function API() {
           setTimeout(() => websocket(endpoint, handler), 5000)
         }
         socket.onerror = event => {
+          auth()
           throw new Error('WebSocket failed')
         }
         socket.onopen = event => {
