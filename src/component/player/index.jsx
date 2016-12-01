@@ -141,7 +141,7 @@ export default class Player extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {playing, preload} = this.refs
-    if (playing.paused || playing.ended || playing.error ||
+    if (!this.state.isPlaying ||
         this.props.playing.id != prevProps.playing.id ||
         Math.abs(this.props.playing.time - prevProps.playing.time) > 10) {
       const {file, time, player} = this.props.playing
@@ -152,7 +152,6 @@ export default class Player extends Component {
     }
     if (this.props.preload != prevProps.preload) {
       const {file} = this.props.preload
-      // delay preload, ensure playing first
       setTimeout(() => this.setAudioState(preload, file), 5000)
     }
   }

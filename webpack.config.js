@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
-const WebpackMd5Hash = require('webpack-md5-hash')
+const Md5HashPlugin = require('webpack-md5-hash')
 
 const production = process.env.NODE_ENV == 'production'
 const sourcePath = path.join(__dirname, 'src')
@@ -56,8 +56,7 @@ config.plugins.push(
 )
 
 if (production) config.plugins.push(
-  new WebpackMd5Hash(),
-  new webpack.optimize.OccurrenceOrderPlugin(true),
+  new Md5HashPlugin(),
   new webpack.optimize.UglifyJsPlugin()
 )
 
