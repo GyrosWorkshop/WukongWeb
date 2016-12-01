@@ -12,9 +12,11 @@ export default function API() {
       const server = __env.production ? app : (
         __env.server || 'http://localhost:5000'
       )
-      const auth = () => location.href = `${server}/oauth/google?redirectUri=${
-        encodeURIComponent(app)
-      }`
+      const auth = () => {
+        location.href = `${server}/oauth/google?redirectUri=${
+          encodeURIComponent(app)
+        }`
+      }
       const http = async (method, endpoint, data) => {
         const response = await fetch(server + endpoint, {
           method,
@@ -43,19 +45,21 @@ export default function API() {
       const websocket = (endpoint, handler) => {
         const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
         const emit = handler({
+          connect() {
+            websocket(endpoint, handler)
+          },
           send(data) {
             socket.send(JSON.stringify(data))
           }
         })
+        socket.onopen = event => {
+          emit('open', event)
+        }
         socket.onclose = event => {
-          emit('reconnect')
-          setTimeout(() => websocket(endpoint, handler), 5000)
+          emit('close', event)
         }
         socket.onerror = event => {
           throw new Error('WebSocket failed')
-        }
-        socket.onopen = event => {
-          emit('ready', event)
         }
         socket.onmessage = event => {
           if (event.data) {
@@ -151,13 +155,14 @@ export default function API() {
     (async () => {
       await fetchUser()
       await sendChannel()
-      api.websocket('/api/ws', ({send}) => (event, data) => {
+      api.websocket('/api/ws', ({connect, send}) => (event, data) => {
         switch (event) {
-          case 'reconnect':
-            sendChannel()
-            break
-          case 'ready':
+          case 'open':
             sendUpnext()
+            break
+          case 'close':
+            sendChannel()
+            setTimeout(connect, 5000)
             break
           case 'UserListUpdated':
             next(Action.Channel.status.create({
