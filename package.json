@@ -33,6 +33,7 @@
     "file-loader": "0.9.0",
     "html-webpack-plugin": "2.24.1",
     "react-addons-perf": "15.4.1",
+    "react-hot-loader": "3.0.0-beta.2",
     "redux-devtools": "3.3.1",
     "redux-devtools-dock-monitor": "1.1.1",
     "redux-devtools-filter-actions": "1.2.0",
@@ -43,7 +44,7 @@
     "webpack-md5-hash": "0.0.5"
   },
   "scripts": {
-    "start": "env NODE_ENV=development webpack-dev-server --colors --progress --inline --hot",
+    "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
     "build": "env NODE_ENV=production webpack --colors --progress",
     "lint": "eslint --ext .js --ext .jsx .",
     "test": "npm run lint && npm run build"

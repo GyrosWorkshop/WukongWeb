@@ -2,7 +2,6 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {StyleRoot, Style} from 'radium'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import Frame from './frame'
 import TopBar from '../topbar'
@@ -10,8 +9,6 @@ import Lyrics from '../lyrics'
 import OmniBar from '../omnibar'
 import SongList from '../songlist'
 import Theme from '../../theme'
-
-injectTapEventPlugin()
 
 function mapStateToProps(state) {
   return {

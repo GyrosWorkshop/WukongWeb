@@ -10,7 +10,7 @@ export default function Store() {
     connectStorage()
   ]
   if (!__env.production) {
-    const DevTools = require('../component/devtools').default
+    const DevTools = require('../devtools').default
     enhancers.push(DevTools.instrument())
   }
   return createStore(reducer, compose(...enhancers))
