@@ -48,10 +48,8 @@ export default function API() {
           }
         })
         socket.onclose = event => {
-          setTimeout(() => {
-            emit('reconnect')
-            websocket(endpoint, handler)
-          }, 5000)
+          emit('reconnect')
+          setTimeout(() => websocket(endpoint, handler), 5000)
         }
         socket.onerror = event => {
           throw new Error('WebSocket failed')
