@@ -48,10 +48,12 @@ export default function API() {
           }
         })
         socket.onclose = event => {
-          setTimeout(() => websocket(endpoint, handler), 5000)
+          setTimeout(() => {
+            emit('reconnect')
+            websocket(endpoint, handler)
+          }, 5000)
         }
         socket.onerror = event => {
-          location.reload()
           throw new Error('WebSocket failed')
         }
         socket.onopen = event => {
@@ -153,6 +155,9 @@ export default function API() {
       await sendChannel()
       api.websocket('/api/ws', ({send}) => (event, data) => {
         switch (event) {
+          case 'reconnect':
+            sendChannel()
+            break
           case 'ready':
             sendUpnext()
             break
