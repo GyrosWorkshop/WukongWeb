@@ -51,7 +51,7 @@ export default function API() {
           setTimeout(() => websocket(endpoint, handler), 5000)
         }
         socket.onerror = event => {
-          auth()
+          location.reload()
           throw new Error('WebSocket failed')
         }
         socket.onopen = event => {
