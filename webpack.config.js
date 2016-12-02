@@ -79,7 +79,7 @@ if (production) {
   config.entry.unshift(
     'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
-    'webpack-dev-server/client'
+    `webpack-dev-server/client?http://${devHost}:${devPort}`
   )
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
