@@ -12,11 +12,6 @@ export default function API() {
       const server = __env.production ? app : (
         __env.server || 'http://localhost:5000'
       )
-      const auth = () => {
-        location.href = `${server}/oauth/google?redirectUri=${
-          encodeURIComponent(app)
-        }`
-      }
       const http = async (method, endpoint, data) => {
         const response = await fetch(server + endpoint, {
           method,
@@ -37,9 +32,11 @@ export default function API() {
             return JSON.parse(data)
           }
         } else if (response.status == 401) {
-          auth()
+          location.href = `${server}/oauth/google?redirectUri=${
+            encodeURIComponent(app)
+          }`
         } else {
-          throw new Error(`${method} ${endpoint}: ${response.statusText}`)
+          throw new Error(`${response.statusText}: ${method} ${endpoint}`)
         }
       }
       const websocket = (endpoint, handler) => {
@@ -52,15 +49,9 @@ export default function API() {
             socket.send(JSON.stringify(data))
           }
         })
-        socket.onopen = event => {
-          emit('open', event)
-        }
-        socket.onclose = event => {
-          emit('close', event)
-        }
-        socket.onerror = event => {
-          throw new Error('WebSocket failed')
-        }
+        socket.onopen = event => emit('open', event)
+        socket.onclose = event => emit('close', event)
+        socket.onerror = event => emit('error', event)
         socket.onmessage = event => {
           if (event.data) {
             const {eventName, ...eventData} = JSON.parse(event.data)
@@ -151,39 +142,61 @@ export default function API() {
         next(Action.Search.results.create([]))
       }
     }
+    const notifyError = (error, action, callback) => {
+      next(Action.Misc.notification.create({
+        message: error.toString(),
+        action,
+        callback
+      }))
+    }
+    const reloadApp = () => {
+      location.reload(true)
+    }
 
     (async () => {
-      await fetchUser()
-      await sendChannel()
-      api.websocket('/api/ws', ({connect, send}) => (event, data) => {
-        switch (event) {
-          case 'open':
-            sendUpnext()
-            break
-          case 'close':
-            sendChannel()
-            setTimeout(connect, 5000)
-            break
-          case 'UserListUpdated':
-            next(Action.Channel.status.create({
-              members: data.users.map(Codec.User.decode)
-            }))
-            break
-          case 'Play':
-            next(Action.Song.play.create(data.song && {
-              ...Codec.Song.decode(data.song),
-              player: data.user || '',
-              time: (Date.now() / 1000) - (data.elapsed || 0)
-            }))
-            if (data.downvote) {
-              next(Action.Song.downvote.create())
-            }
-            break
-          case 'NextSongUpdate':
-            next(Action.Song.preload.create(data.song && {
-              ...Codec.Song.decode(data.song)
-            }))
-            break
+      try {
+        await fetchUser()
+        await sendChannel()
+      } catch (error) {
+        notifyError(error, 'Reload', reloadApp)
+        return
+      }
+      api.websocket('/api/ws', ({connect, send}) => async (event, data) => {
+        try {
+          switch (event) {
+            case 'open':
+              await sendUpnext()
+              break
+            case 'close':
+              await sendChannel()
+              setTimeout(connect, 5000)
+              break
+            case 'error':
+              notifyError('Connection lost. Reconnecting...')
+              break
+            case 'UserListUpdated':
+              next(Action.Channel.status.create({
+                members: data.users.map(Codec.User.decode)
+              }))
+              break
+            case 'Play':
+              next(Action.Song.play.create(data.song && {
+                ...Codec.Song.decode(data.song),
+                player: data.user || '',
+                time: (Date.now() / 1000) - (data.elapsed || 0)
+              }))
+              if (data.downvote) {
+                next(Action.Song.downvote.create())
+              }
+              break
+            case 'NextSongUpdate':
+              next(Action.Song.preload.create(data.song && {
+                ...Codec.Song.decode(data.song)
+              }))
+              break
+          }
+        } catch (error) {
+          notifyError(error)
         }
       })
     })()
@@ -191,32 +204,36 @@ export default function API() {
     return async action => {
       const prevState = getState()
       next(action)
-      switch (action.type) {
-        case Action.User.profile.type:
-          await sendChannel(prevState)
-          await sendUpnext()
-          break
-        case Action.User.sync.type:
-          await fetchPlaylist()
-          await sendUpnext()
-          break
-        case Action.Song.prepend.type:
-        case Action.Song.append.type:
-        case Action.Song.remove.type:
-        case Action.Song.move.type:
-        case Action.Song.assign.type:
-        case Action.Song.shuffle.type:
-          await sendUpnext(prevState)
-          break
-        case Action.Song.ended.type:
-          await sendSync()
-          break
-        case Action.Song.downvote.type:
-          await sendDownvote()
-          break
-        case Action.Search.keyword.type:
-          await sendSearch()
-          break
+      try {
+        switch (action.type) {
+          case Action.User.profile.type:
+            await sendChannel(prevState)
+            await sendUpnext()
+            break
+          case Action.User.sync.type:
+            await fetchPlaylist()
+            await sendUpnext()
+            break
+          case Action.Song.prepend.type:
+          case Action.Song.append.type:
+          case Action.Song.remove.type:
+          case Action.Song.move.type:
+          case Action.Song.assign.type:
+          case Action.Song.shuffle.type:
+            await sendUpnext(prevState)
+            break
+          case Action.Song.ended.type:
+            await sendSync()
+            break
+          case Action.Song.downvote.type:
+            await sendDownvote()
+            break
+          case Action.Search.keyword.type:
+            await sendSearch()
+            break
+        }
+      } catch (error) {
+        notifyError(error)
       }
     }
   }
