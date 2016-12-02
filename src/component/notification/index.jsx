@@ -25,6 +25,11 @@ export default class SongList extends Component {
     onNotify: PropTypes.func
   }
 
+  onAction = (event) => {
+    this.props.notification.callback()
+    this.onDismiss()
+  }
+
   onDismiss = (event) => {
     this.props.onNotify({})
   }
@@ -42,9 +47,9 @@ export default class SongList extends Component {
         open={!!this.props.notification.message}
         message={this.props.notification.message || ''}
         action={this.props.notification.action}
-        onActionTouchTap={this.props.notification.callback}
+        autoHideDuration={this.props.notification.action ? 0 : 4000}
+        onActionTouchTap={this.onAction}
         onRequestClose={this.onDismiss}
-        autoHideDuration={4000}
       />
     )
   }

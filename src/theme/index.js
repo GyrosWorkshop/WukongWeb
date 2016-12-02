@@ -55,7 +55,7 @@ function getTheme(theme) {
       backgroundColor: theme.palette.footerColor,
       boxShadow: `0px -2px 5px ${fade(theme.palette.shadowColor, 0.3)}`,
       textColor: theme.palette.alternateTextColor,
-      height: 50
+      height: 48
     },
     avatar: {
       size: 40,
