@@ -29,15 +29,22 @@ export default class SongList extends Component {
     this.props.onNotify({})
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.state != nextState
+      || this.props.notification.message != nextProps.notification.message
+      || this.props.notification.action != nextProps.notification.action
+      || this.props.notification.callback != nextProps.notification.callback
+  }
+
   render() {
     return (
       <Snackbar
         open={!!this.props.notification.message}
-        message={this.props.notification.message}
+        message={this.props.notification.message || ''}
         action={this.props.notification.action}
         onActionTouchTap={this.props.notification.callback}
         onRequestClose={this.onDismiss}
-        autoHideDuration={this.props.notification.action ? 0 : 4000}
+        autoHideDuration={4000}
       />
     )
   }
