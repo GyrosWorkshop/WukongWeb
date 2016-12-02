@@ -8,6 +8,7 @@ import TopBar from '../topbar'
 import Lyrics from '../lyrics'
 import OmniBar from '../omnibar'
 import SongList from '../songlist'
+import Notification from '../notification'
 import Theme from '../../theme'
 
 function mapStateToProps(state) {
@@ -52,6 +53,7 @@ export default class App extends Component {
           >
             <OmniBar />
             <SongList />
+            <Notification />
           </Frame>
         </MuiThemeProvider>
         <Style rules={{
