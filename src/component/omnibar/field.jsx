@@ -6,7 +6,8 @@ import ClearIcon from 'material-ui/svg-icons/content/clear'
 export default class Field extends Component {
   static propTypes = {
     name: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    onCommit: PropTypes.func
   }
 
   state = {
@@ -27,8 +28,13 @@ export default class Field extends Component {
   }
 
   onKeyDown = (event) => {
-    if (event.key == 'Escape') {
-      this.setValue('')
+    switch (event.key) {
+      case 'Escape':
+        this.setValue('')
+        break
+      case 'Enter':
+        this.props.onCommit(this.state.value)
+        break
     }
   }
 
