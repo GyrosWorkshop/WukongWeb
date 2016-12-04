@@ -6,34 +6,34 @@ import ClearIcon from 'material-ui/svg-icons/content/clear'
 export default class Field extends Component {
   static propTypes = {
     name: PropTypes.string,
-    onChange: PropTypes.func,
-    onCommit: PropTypes.func
+    needsConfirmation: PropTypes.bool,
+    onChange: PropTypes.func
   }
 
   state = {
     value: ''
   }
 
-  setValue(value) {
+  setValue(value, emitCallback) {
     this.setState({value})
-    this.props.onChange(value)
+    if (emitCallback) this.props.onChange(value)
   }
 
   onChange = (event) => {
-    this.setValue(event.currentTarget.value)
+    this.setValue(event.currentTarget.value, !this.props.needsConfirmation)
   }
 
   onClear = (event) => {
-    this.setValue('')
+    this.setValue('', true)
   }
 
   onKeyDown = (event) => {
     switch (event.key) {
       case 'Escape':
-        this.setValue('')
+        this.setValue('', true)
         break
       case 'Enter':
-        this.props.onCommit(this.state.value)
+        this.setValue(this.state.value, true)
         break
     }
   }

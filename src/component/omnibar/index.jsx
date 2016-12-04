@@ -30,7 +30,7 @@ export default class OmniBar extends Component {
     muiTheme: PropTypes.object.isRequired
   }
 
-  onKeywordCommit = (() => {
+  onKeywordChange = (() => {
     const debouncedSearch = debounce(this.props.onSearch, 500)
     return value => debouncedSearch(value)
   })()
@@ -41,7 +41,8 @@ export default class OmniBar extends Component {
       <PaperRadium style={style.container}>
         <Field
           name='Add Song'
-          onCommit={this.onKeywordCommit}
+          needsConfirmation={true}
+          onChange={this.onKeywordChange}
         />
       </PaperRadium>
     )
