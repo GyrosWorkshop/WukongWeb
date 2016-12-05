@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const Md5HashPlugin = require('webpack-md5-hash')
 
 const sourcePath = path.join(__dirname, 'src')
@@ -22,6 +23,12 @@ const config = {
     rules: [{
       test: /\.(js|jsx)$/, include: sourcePath,
       loader: 'babel-loader'
+    }, {
+      test: /\.(sass)$/, include: sourcePath,
+      loader: ExtractTextPlugin.extract({
+        loader: 'css-loader?modules&sourceMap!sass-loader?sourceMap',
+        fallbackLoader: 'style-loader'
+      })
     }, {
       test: /\.(png)$/, include: sourcePath,
       loader: 'url-loader?limit=1000'
@@ -65,6 +72,11 @@ config.plugins.push(
       removeRedundantAttributes: true,
       removeComments: true
     }
+  }),
+  new ExtractTextPlugin({
+    filename: '[contenthash].css',
+    allChunks: true,
+    disable: !production
   })
 )
 
