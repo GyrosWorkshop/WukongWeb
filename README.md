@@ -11,7 +11,7 @@ npm install
 ## 开发
 
 ```
-npm run start
+npm start
 ```
 
 启动本地服务器，会监听文件改动自动刷新。
