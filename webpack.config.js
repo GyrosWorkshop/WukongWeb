@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const Md5HashPlugin = require('webpack-md5-hash')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
@@ -56,10 +57,12 @@ config.plugins.push(
       context: __dirname
     }
   }),
+  new FaviconsWebpackPlugin('./resource/icon-merge.png'),
   new HtmlPlugin({
     template: './index.html',
     minify: !production ? undefined : {
       collapseWhitespace: true,
+      preserveLineBreaks: true,
       collapseBooleanAttributes: true,
       removeEmptyAttributes: true,
       removeRedundantAttributes: true,
