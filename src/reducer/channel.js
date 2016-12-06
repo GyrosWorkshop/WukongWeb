@@ -1,10 +1,16 @@
+import {combineReducers} from 'redux'
+
 import Action from '../action'
 
-export default function channel(state = {}, action) {
+function members(state = [], action) {
   switch (action.type) {
-    case Action.Channel.status.type:
-      return {...action.status}
+    case Action.Channel.members.type:
+      return action.members
     default:
       return state
   }
 }
+
+export default combineReducers({
+  members
+})

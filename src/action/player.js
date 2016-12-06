@@ -18,6 +18,11 @@ export const downvote = {
   create() { return {type: this.type} }
 }
 
+export const volume = {
+  type: 'PlayerVolume',
+  create(volume) { return {type: this.type, volume} }
+}
+
 export const reset = {
   type: 'PlayerReset',
   create() { return {type: this.type} }

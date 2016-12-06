@@ -46,9 +46,19 @@ function downvote(state = false, action) {
   }
 }
 
+function volume(state = 0.5, action) {
+  switch (action.type) {
+    case Action.Player.volume.type:
+      return action.volume
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   running,
   elapsed,
   ended,
-  downvote
+  downvote,
+  volume
 })

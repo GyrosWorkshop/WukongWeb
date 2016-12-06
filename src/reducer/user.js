@@ -1,10 +1,26 @@
+import {combineReducers} from 'redux'
+
 import Action from '../action'
 
-export default function user(state = {}, action) {
+function profile(state = {}, action) {
   switch (action.type) {
     case Action.User.profile.type:
-      return {...state, ...action.profile}
+      return action.profile
     default:
       return state
   }
 }
+
+function preferences(state = {}, action) {
+  switch (action.type) {
+    case Action.User.preferences.type:
+      return action.preferences
+    default:
+      return state
+  }
+}
+
+export default combineReducers({
+  profile,
+  preferences
+})

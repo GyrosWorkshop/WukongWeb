@@ -207,12 +207,8 @@ export default function API() {
       next(action)
       try {
         switch (action.type) {
-          case Action.User.profile.type:
+          case Action.User.preferences.type:
             await sendChannel(prevState)
-            await sendUpnext()
-            break
-          case Action.User.sync.type:
-            await fetchPlaylist()
             await sendUpnext()
             break
           case Action.Song.prepend.type:
@@ -222,6 +218,10 @@ export default function API() {
           case Action.Song.assign.type:
           case Action.Song.shuffle.type:
             await sendUpnext(prevState)
+            break
+          case Action.Song.sync.type:
+            await fetchPlaylist()
+            await sendUpnext()
             break
           case Action.Player.ended.type:
             await sendSync()

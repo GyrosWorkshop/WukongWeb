@@ -28,6 +28,11 @@ export const shuffle = {
   create() { return {type: this.type} }
 }
 
+export const sync = {
+  type: 'SongSync',
+  create() { return {type: this.type} }
+}
+
 export const play = {
   type: 'SongPlay',
   create(song) { return {type: this.type, song} }

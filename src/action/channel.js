@@ -1,4 +1,4 @@
-export const status = {
-  type: 'ChannelStatus',
-  create(status) { return {type: this.type, status} }
+export const members = {
+  type: 'ChannelMembers',
+  create(members) { return {type: this.type, members} }
 }
