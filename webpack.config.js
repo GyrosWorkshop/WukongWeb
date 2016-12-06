@@ -21,10 +21,10 @@ const config = {
   },
   module: {
     rules: [{
-      test: /\.(js|jsx)$/, include: sourcePath,
+      test: /\.js$/, include: sourcePath,
       loader: 'babel-loader'
     }, {
-      test: /\.(sass)$/, include: sourcePath,
+      test: /\.scss$/, include: sourcePath,
       loader: ExtractTextPlugin.extract({
         loader: 'css-loader?modules&sourceMap!sass-loader?sourceMap',
         fallbackLoader: 'style-loader'

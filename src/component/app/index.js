@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import CSSModules from 'react-css-modules'
-import stylesheet from './app.sass'
+import stylesheet from './app.scss'
 
 @CSSModules(stylesheet)
 export default class App extends Component {
