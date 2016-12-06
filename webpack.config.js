@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const FaviconsPlugin = require('favicons-webpack-plugin')
 const Md5HashPlugin = require('webpack-md5-hash')
 
 const sourcePath = path.join(__dirname, 'src')
@@ -77,6 +78,10 @@ config.plugins.push(
     filename: '[contenthash].css',
     allChunks: true,
     disable: !production
+  }),
+  new FaviconsPlugin({
+    logo: './resource/icon.png',
+    title: 'Wukong'
   })
 )
 
