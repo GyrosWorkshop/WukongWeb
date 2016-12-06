@@ -185,8 +185,9 @@ export default function API() {
                 player: data.user || '',
                 time: (Date.now() / 1000) - (data.elapsed || 0)
               }))
+              next(Action.Player.reset.create())
               if (data.downvote) {
-                next(Action.Song.downvote.create())
+                next(Action.Player.downvote.create())
               }
               break
             case 'NextSongUpdate':
@@ -222,10 +223,10 @@ export default function API() {
           case Action.Song.shuffle.type:
             await sendUpnext(prevState)
             break
-          case Action.Song.ended.type:
+          case Action.Player.ended.type:
             await sendSync()
             break
-          case Action.Song.downvote.type:
+          case Action.Player.downvote.type:
             await sendDownvote()
             break
           case Action.Search.keyword.type:

@@ -52,24 +52,8 @@ function preload(state = {}, action) {
   }
 }
 
-function status(state = {}, action) {
-  switch  (action.type) {
-    case Action.Song.play.type:
-      return {}
-    case Action.Song.elapsed.type:
-      return {...state, elapsed: action.elapsed}
-    case Action.Song.ended.type:
-      return {...state, ended: true}
-    case Action.Song.downvote.type:
-      return {...state, downvote: true}
-    default:
-      return state
-  }
-}
-
 export default combineReducers({
   playlist,
   playing,
-  preload,
-  status
+  preload
 })
