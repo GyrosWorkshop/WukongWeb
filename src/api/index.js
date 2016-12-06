@@ -70,14 +70,14 @@ export default function API() {
     }
     const fetchPlaylist = async () => {
       const state = getState()
-      const sync = state.user.sync
+      const sync = state.user.preferences.sync
       if (!sync) return
       const urls = sync.split('\n').filter(line => line)
       if (!urls.length) return
       const lists = await Promise.all(urls.map(url =>
         api.http('POST', '/provider/songListWithUrl', {
           url,
-          withCookie: state.user.cookie
+          withCookie: state.user.preferences.cookie
         })
       ))
       const songs = [].concat(...lists.map(list => list.songs || []))
@@ -87,31 +87,35 @@ export default function API() {
     }
     const sendChannel = async prevState => {
       const state = getState()
-      const channel = state.user.channel
+      const channel = state.channel.name
       if (!channel) return
-      const prevChannel = prevState && prevState.user.channel
+      const prevChannel = prevState && prevState.channel.name
       if (channel == prevChannel) return
       await api.http('POST', `/api/channel/join/${channel}`)
     }
     const sendUpnext = async prevState => {
       const state = getState()
-      const channel = state.user.channel
+      const channel = state.channel.name
       if (!channel) return
       const song = Codec.Song.encode(
-        state.user.listenOnly ? undefined : state.song.playlist[0]
+        state.user.preferences.listenOnly
+          ? undefined
+          : state.song.playlist[0]
       )
       const prevSong = Codec.Song.encode(prevState && (
-        prevState.user.listenOnly ? undefined : prevState.song.playlist[0]
+        prevState.user.preferences.listenOnly
+          ? undefined
+          : prevState.song.playlist[0]
       ))
       if (prevState && isEqual(song, prevSong)) return
       await api.http('POST', `/api/channel/updateNextSong/${channel}`, {
         ...song,
-        withCookie: state.user.cookie
+        withCookie: state.user.preferences.cookie
       })
     }
     const sendSync = async () => {
       const state = getState()
-      const channel = state.user.channel
+      const channel = state.channel.name
       if (!channel) return
       const song = Codec.Song.encode(state.song.playing)
       await api.http('POST', `/api/channel/finished/${channel}`,
@@ -120,7 +124,7 @@ export default function API() {
     }
     const sendDownvote = async () => {
       const state = getState()
-      const channel = state.user.channel
+      const channel = state.channel.name
       if (!channel) return
       const song = Codec.Song.encode(state.song.playing)
       await api.http('POST', `/api/channel/downVote/${channel}`,
@@ -133,7 +137,7 @@ export default function API() {
       if (keyword) {
         const results = await api.http('POST', '/api/song/search', {
           key: keyword,
-          withCookie: state.user.cookie
+          withCookie: state.user.preferences.cookie
         })
         next(Action.Search.results.create(
           results.map(Codec.Song.decode)
