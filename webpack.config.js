@@ -57,7 +57,10 @@ config.plugins.push(
       context: __dirname
     }
   }),
-  new FaviconsWebpackPlugin('./resource/icon-merge.png'),
+  new FaviconsWebpackPlugin({
+    logo: './resource/icon-merge.png',
+    title: 'Wukong'
+  }),
   new HtmlPlugin({
     template: './index.html',
     minify: !production ? undefined : {
