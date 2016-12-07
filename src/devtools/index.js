@@ -4,7 +4,7 @@ import LogMonitor from 'redux-devtools-log-monitor'
 import DockMonitor from 'redux-devtools-dock-monitor'
 import FilteredMonitor from 'redux-devtools-filter-actions'
 
-import Action from './action'
+import Action from '../action'
 
 export default createDevTools(
   <DockMonitor
