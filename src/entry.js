@@ -5,7 +5,7 @@ import {render} from 'react-dom'
 import {Provider} from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
-import {store, history} from './store'
+import store from './store'
 import App from './component/app'
 
 const renderApp = () => {
@@ -13,21 +13,21 @@ const renderApp = () => {
     if (__env.production) {
       return (
         <Provider store={store}>
-          <App history={history} />
+          <App />
         </Provider>
       )
     } else {
       const {AppContainer} = require('react-hot-loader')
       const Devtool = require('./devtool').default
       return (
-        <AppContainer>
-          <Provider store={store}>
-            <div>
-              <App history={history} />
-              <Devtool />
-            </div>
-          </Provider>
-        </AppContainer>
+        <Provider store={store}>
+          <div>
+            <AppContainer>
+              <App />
+            </AppContainer>
+            <Devtool />
+          </div>
+        </Provider>
       )
     }
   })(), document.getElementById('app'))

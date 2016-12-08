@@ -1,17 +1,17 @@
 import React, {Component} from 'react'
-import {Router, Route} from 'react-router'
+import {HashRouter, Match} from 'react-router'
 
 import Root from './root'
-import About from './about'
 
 export default class App extends Component {
   render() {
     return (
-      <Router {...this.props}>
-        <Route path='/' component={Root}>
-          <Route path='about' component={About} />
-        </Route>
-      </Router>
+      <HashRouter>
+        <Root>
+          <Match pattern='/' exactly component={() => <div>Home</div>} />
+          <Match pattern='/about' component={() => <div>About</div>} />
+        </Root>
+      </HashRouter>
     )
   }
 }
