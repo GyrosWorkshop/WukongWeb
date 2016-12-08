@@ -17,9 +17,6 @@ const config = {
     path: buildPath,
     filename: production ? '[chunkhash].js' : 'bundle.js'
   },
-  resolve: {
-    extensions: ['.js', '.jsx']
-  },
   module: {
     rules: [{
       test: /\.js$/, include: sourcePath,
