@@ -30,14 +30,9 @@ const enhancers = [
   connectStorage()
 ]
 if (!__env.production) {
-  const DevTools = require('../devtools').default
-  enhancers.push(DevTools.instrument())
+  const Devtool = require('../devtool').default
+  enhancers.push(Devtool.instrument())
 }
 
-const store = createStore(fullReducer, compose(...enhancers))
-const history = syncHistoryWithStore(hashHistory, store)
-
-export default {
-  store,
-  history
-}
+export const store = createStore(fullReducer, compose(...enhancers))
+export const history = syncHistoryWithStore(hashHistory, store)
