@@ -1,6 +1,7 @@
 #node
 node_modules
-build
+/build
+/release
 *.log
 
 #vim

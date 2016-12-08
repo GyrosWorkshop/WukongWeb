@@ -47,8 +47,11 @@
   "scripts": {
     "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
     "build": "env NODE_ENV=production webpack --colors --progress",
+    "clean": "rm -rf build release",
+    "rebuild": "npm run clean && npm run build",
+    "release": "npm run rebuild && mkdir -p release && cp -rv build release/wukong-web && cd release && tar czvf wukong-web.tar.gz wukong-web && rm -rf wukong-web",
     "lint": "eslint --ext .js --ext .jsx .",
-    "test": "npm run lint && npm run build"
+    "test": "npm run lint && npm run release"
   },
   "repository": {
     "type": "git",
