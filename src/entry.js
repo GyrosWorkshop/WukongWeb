@@ -3,42 +3,46 @@ import 'babel-polyfill'
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-import {Router, hashHistory} from 'react-router'
-import {syncHistoryWithStore} from 'react-router-redux'
+import {Router} from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
-import createStore from './store'
-import createRoutes from './routes'
+import {store, history} from './store'
+const component = require.context('./component', true, /\.js$/)
 
-const store = createStore()
-const routes = createRoutes()
-const history = syncHistoryWithStore(hashHistory, store)
+const routes = {
+  path: '/',
+  component: component('./root'),
+  childRoutes: [{
+    path: 'about',
+    component: component('./about')
+  }]
+}
 const app = () => {
   if (__env.production) {
     return (
       <Provider store={store}>
-        <Router routes={routes} history={history} />
+        <Router history={history} routes={routes} />
       </Provider>
     )
   } else {
     const {AppContainer} = require('react-hot-loader')
-    const DevTools = require('./devtools').default
+    const Devtool = require('./devtool').default
     return (
       <AppContainer>
         <Provider store={store}>
           <div>
-            <Router routes={routes} history={history} />
-            <DevTools />
+            <Router history={history} routes={routes} />
+            <Devtool />
           </div>
         </Provider>
       </AppContainer>
     )
   }
 }
-const renderApp = () => render(app(), document.getElementById('app'))
 
+const renderApp = () => render(app(), document.getElementById('app'))
 injectTapEventPlugin()
 renderApp()
 if (!__env.production && module.hot) {
-  module.hot.accept('./component/home', renderApp)
+  module.hot.accept(component.id, renderApp)
 }
