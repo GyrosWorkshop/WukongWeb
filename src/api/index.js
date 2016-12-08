@@ -8,8 +8,8 @@ import Codec from './codec'
 export default function API() {
   return ({getState, dispatch}) => (next) => {
     const api = (() => {
-      const app = `${location.protocol}//${location.host}`
-      const server = __env.production ? app : (
+      const origin = `${location.protocol}//${location.host}`
+      const server = __env.production ? origin : (
         __env.server || 'http://localhost:5000'
       )
       const http = async (method, endpoint, data) => {
@@ -33,7 +33,7 @@ export default function API() {
           }
         } else if (response.status == 401) {
           location.href = `${server}/oauth/google?redirectUri=${
-            encodeURIComponent(app)
+            encodeURIComponent(origin)
           }`
         } else {
           throw new Error(`${response.statusText}: ${method} ${endpoint}`)
