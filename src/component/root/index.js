@@ -1,9 +1,9 @@
 import React, {Component, PropTypes} from 'react'
 import CSSModules from 'react-css-modules'
 
-import stylesheet from './root.scss'
+import style from './style.scss'
 
-@CSSModules(stylesheet)
+@CSSModules(style)
 export default class Root extends Component {
   static propTypes = {
     children: PropTypes.node
