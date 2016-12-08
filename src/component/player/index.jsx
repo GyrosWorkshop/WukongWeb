@@ -72,8 +72,9 @@ export default class Player extends Component {
     if (file) {
       audio.src = file[this.props.connection]
       if (time) audio.currentTime = (Date.now() / 1000) - time
-    } else {
-      if (audio.src) audio.src = ''
+    } else if (audio.src) {
+      audio.removeAttribute('src')
+      audio.load()
     }
   }
 
