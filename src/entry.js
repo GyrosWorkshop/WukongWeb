@@ -21,12 +21,11 @@ const renderApp = () => {
       const Devtool = require('./devtool').default
       return (
         <Provider store={store}>
-          <div>
-            <AppContainer>
-              <App />
-            </AppContainer>
-            <Devtool />
-          </div>
+          <AppContainer>
+            <App>
+              <Devtool />
+            </App>
+          </AppContainer>
         </Provider>
       )
     }
