@@ -135,7 +135,7 @@ export default function API() {
       const state = getState()
       const keyword = state.search.keyword
       if (keyword) {
-        const results = await api.http('POST', '/api/song/search', {
+        const results = await api.http('POST', '/provider/searchSongs', {
           key: keyword,
           withCookie: state.user.preferences.cookie
         })
