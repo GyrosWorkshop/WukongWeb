@@ -32,17 +32,17 @@
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "0.9.0",
     "html-webpack-plugin": "2.24.1",
-    "node-sass": "3.13.0",
+    "postcss-loader": "1.2.0",
     "react-addons-perf": "15.4.1",
     "react-hot-loader": "3.0.0-beta.6",
     "redux-devtools": "3.3.1",
     "redux-devtools-dock-monitor": "1.1.1",
     "redux-devtools-filter-actions": "1.2.0",
     "redux-devtools-log-monitor": "1.1.1",
-    "sass-loader": "4.0.2",
     "style-loader": "0.13.1",
     "stylelint": "7.6.0",
     "stylelint-config-standard": "15.0.0",
+    "sugarss": "0.2.0",
     "url-loader": "0.5.7",
     "webpack": "2.1.0-beta.27",
     "webpack-dev-server": "2.1.0-beta.12",
@@ -51,7 +51,7 @@
   "scripts": {
     "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
     "build": "env NODE_ENV=production webpack --colors --progress",
-    "lint": "eslint *.js src && stylelint src/**/*.scss",
+    "lint": "eslint *.js src && stylelint src/**/*.sss",
     "test": "npm run lint && npm run build"
   },
   "repository": {

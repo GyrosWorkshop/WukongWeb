@@ -19,17 +19,69 @@ const config = {
   },
   module: {
     rules: [{
-      test: /\.js$/, include: sourcePath,
-      loader: 'babel-loader'
+      resource: {
+        include: sourcePath,
+        test: /\.js$/
+      },
+      use: [{
+        loader: 'babel-loader'
+      }]
     }, {
-      test: /\.scss$/, include: sourcePath,
-      loader: ExtractTextPlugin.extract({
-        loader: 'css-loader?modules&sourceMap!sass-loader?sourceMap',
-        fallbackLoader: 'style-loader'
-      })
+      resource: {
+        include: sourcePath,
+        test: /\.global\.sss$/
+      },
+      use: ExtractTextPlugin.extract({
+        loader: [{
+          loader: 'css-loader',
+          query: {
+            sourceMap: true
+          }
+        }, {
+          loader: 'postcss-loader',
+          query: {
+            parser: 'sugarss'
+          }
+        }],
+        fallbackLoader: [{
+          loader: 'style-loader'
+        }]
+      }).split('!')
     }, {
-      test: /\.(png)$/, include: sourcePath,
-      loader: 'url-loader?limit=1000'
+      resource: {
+        include: sourcePath,
+        test: /\.sss$/,
+        not: [/\.global\.sss$/]
+      },
+      use: ExtractTextPlugin.extract({
+        loader: [{
+          loader: 'css-loader',
+          query: {
+            sourceMap: true,
+            modules: true,
+            importLoaders: 1
+          }
+        }, {
+          loader: 'postcss-loader',
+          query: {
+            parser: 'sugarss'
+          }
+        }],
+        fallbackLoader: [{
+          loader: 'style-loader'
+        }]
+      }).split('!')
+    }, {
+      resource: {
+        test: /\.(png)$/,
+        include: sourcePath
+      },
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 1000
+        }
+      }]
     }]
   },
   entry: [],
@@ -58,7 +110,8 @@ config.plugins.push(
     debug: !production,
     minimize: production,
     options: {
-      context: __dirname
+      context: sourcePath,
+      postcss: () => []
     }
   }),
   new HtmlPlugin({
