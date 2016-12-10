@@ -3,6 +3,8 @@ import {HashRouter, Match} from 'react-router'
 
 import Root from './root'
 import Background from './background'
+import Welcome from './welcome'
+import Channel from './channel'
 import './style.global.sss'
 
 export default class App extends Component {
@@ -15,7 +17,8 @@ export default class App extends Component {
       <HashRouter>
         <Root>
           <Background />
-          <Match pattern='/' exactly component={() => <div>Home</div>} />
+          <Match pattern='/' exactly component={Welcome} />
+          <Match pattern='/:channel' component={Channel} />
           {this.props.children}
         </Root>
       </HashRouter>
