@@ -34,7 +34,6 @@ const renderApp = () => {
 
 injectTapEventPlugin()
 renderApp()
-
 if (!__env.production && module.hot) {
   module.hot.accept('./component/app', renderApp)
 }
