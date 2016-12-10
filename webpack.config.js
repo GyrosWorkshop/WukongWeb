@@ -111,7 +111,9 @@ config.plugins.push(
     minimize: production,
     options: {
       context: sourcePath,
-      postcss: () => []
+      postcss: () => [
+        require('postcss-cssnext')()
+      ]
     }
   }),
   new HtmlPlugin({
