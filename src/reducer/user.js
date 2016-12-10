@@ -14,7 +14,12 @@ function profile(state = {}, action) {
 function preferences(state = {}, action) {
   switch (action.type) {
     case Action.User.preferences.type:
-      return action.preferences
+      return {
+        listenOnly: false,
+        connection: 0,
+        theme: 0,
+        ...action.preferences
+      }
     default:
       return state
   }

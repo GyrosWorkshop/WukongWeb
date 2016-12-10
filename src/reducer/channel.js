@@ -2,7 +2,7 @@ import {combineReducers} from 'redux'
 
 import Action from '../action'
 
-function name(state = [], action) {
+function name(state = '', action) {
   switch (action.type) {
     case Action.Channel.name.type:
       return action.name
