@@ -7,7 +7,10 @@ import style from './style.sss'
 export default class Welcome extends Component {
   render() {
     return (
-      <div />
+      <div styleName='container'>
+        <input />
+        <button />
+      </div>
     )
   }
 }
