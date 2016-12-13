@@ -17,6 +17,7 @@ function mapStateToProps(state) {
     preload: state.song.preload,
     userId: state.user.id,
     connection: state.user.connection,
+    quality: state.user.audioQuality,
     downvote: state.song.status.downvote
   }
 }
@@ -46,6 +47,7 @@ export default class Player extends Component {
     preload: PropTypes.object,
     userId: PropTypes.string,
     connection: PropTypes.number,
+    quality: PropTypes.number,
     downvote: PropTypes.bool,
     onPlayOwn: PropTypes.func,
     onElapsed: PropTypes.func,
@@ -68,7 +70,15 @@ export default class Player extends Component {
     remainingTime: 0
   }
 
-  setAudioState(audio, file, time) {
+  setAudioState(audio, files, time) {
+    let file = null
+    if (files)
+      file = files.filter(it => it[2] <= this.props.quality)
+        .sort((a, b) => b[2] - a[2])[0]
+        || files.sort((a, b) =>
+          Math.abs(a[2] - this.props.quality)
+          - Math.abs(b[2] - this.props.quality)
+        )[0]
     if (file) {
       audio.src = file[this.props.connection]
       if (time) audio.currentTime = (Date.now() / 1000) - time
@@ -103,9 +113,9 @@ export default class Player extends Component {
 
   onPlayAction = (event) => {
     const {playing} = this.refs
-    const {file, time} = this.props.playing
+    const {files, time} = this.props.playing
     this.setAudioState(playing, null)
-    this.setAudioState(playing, file, time)
+    this.setAudioState(playing, files, time)
     playing.play()
   }
 
@@ -145,15 +155,15 @@ export default class Player extends Component {
     if (!this.state.isPlaying ||
         this.props.playing.id != prevProps.playing.id ||
         Math.abs(this.props.playing.time - prevProps.playing.time) > 10) {
-      const {file, time, player} = this.props.playing
-      this.setAudioState(playing, file, time)
-      if (file && player && player == this.props.userId) {
+      const {files, time, player} = this.props.playing
+      this.setAudioState(playing, files, time)
+      if (files && player && player == this.props.userId) {
         this.props.onPlayOwn(this.props.playing)
       }
     }
     if (this.props.preload != prevProps.preload) {
-      const {file} = this.props.preload
-      setTimeout(() => this.setAudioState(preload, file), 5000)
+      const {files} = this.props.preload
+      setTimeout(() => this.setAudioState(preload, files), 5000)
     }
   }
 

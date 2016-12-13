@@ -6,7 +6,10 @@ import Toggle from 'material-ui/Toggle'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
+import Slider from 'material-ui/Slider'
 import muiThemeable from 'material-ui/styles/muiThemeable'
+
+import * as Quality from '../../api/codec/quality'
 
 import Action from '../../action'
 
@@ -35,6 +38,10 @@ export default class Profile extends Component {
     muiTheme: PropTypes.object.isRequired
   }
 
+  state = {
+    audioQuality: this.props.user.audioQuality || 3
+  }
+
   isOpenRequired() {
     return !this.props.user.channel
   }
@@ -45,7 +52,8 @@ export default class Profile extends Component {
       sync: this.refs.sync.getValue(),
       cookie: this.refs.cookie.getValue(),
       listenOnly: this.refs.listenOnly.isToggled(),
-      connection: this.refs.connection.isToggled() ? 1 : 0
+      connection: this.refs.connection.isToggled() ? 1 : 0,
+      audioQuality: this.state.audioQuality
     })
     this.props.onRequestClose('confirm')
   }
@@ -56,6 +64,10 @@ export default class Profile extends Component {
 
   onThemeChange = (event, index, value) => {
     this.props.onProfileUpdate({theme: value})
+  }
+
+  onAudioQualityChange = (event, value) => {
+    this.setState({audioQuality: value})
   }
 
   render() {
@@ -130,6 +142,16 @@ export default class Profile extends Component {
           label='Listen Only'
           defaultToggled={this.props.user.listenOnly}
           ref='listenOnly'
+        />
+        <p>Audio Quality: {Quality.encode(this.state.audioQuality)}</p>
+        <Slider
+          step={1}
+          min={1}
+          max={4}
+          defaultValue={3}
+          value={this.state.audioQuality}
+          onChange={this.onAudioQualityChange}
+          ref='audioQuality'
         />
         <Toggle
           style={style.toggle}

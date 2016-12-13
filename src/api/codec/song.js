@@ -1,3 +1,5 @@
+import * as quality from './quality'
+
 export function encode(object = {}) {
   return {
     siteId: object.siteId,
@@ -11,7 +13,9 @@ export function decode(object = {}) {
     if (!file.file) return
     return [
       file.file,
-      file.fileViaCdn || file.file
+      file.fileViaCdn || file.file,
+      file.quality,
+      file.format
     ]
   }
   const parseLyrics = lyrics => {
@@ -47,6 +51,10 @@ export function decode(object = {}) {
     lines.sort((line1, line2) => line1.time - line2.time)
     return lines
   }
+  const files = object.musics
+    .map(it => Object.assign(it, {quality: quality.decode(it.audioQuality)}))
+    .sort((a, b) => b.quality - a.quality)
+
   return {
     id: `${object.siteId}.${object.songId}`,
     siteId: object.siteId,
@@ -57,7 +65,7 @@ export function decode(object = {}) {
     artwork: parseFile(object.artwork),
     length: object.length,
     url: object.webUrl,
-    file: parseFile(object.music),
+    files: files.map(parseFile),
     mvUrl: object.mvWebUrl,
     mvFile: parseFile(object.mv),
     lyrics: parseLyrics(object.lyrics)
