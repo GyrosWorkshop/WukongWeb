@@ -51,7 +51,7 @@ export function decode(object = {}) {
     lines.sort((line1, line2) => line1.time - line2.time)
     return lines
   }
-  const files = object.musics
+  const files = object.musics && object.musics
     .map(it => Object.assign(it, {quality: quality.decode(it.audioQuality)}))
     .sort((a, b) => b.quality - a.quality)
 
