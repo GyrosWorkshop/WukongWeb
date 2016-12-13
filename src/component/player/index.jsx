@@ -87,7 +87,6 @@ export default class Player extends Component {
 
   onAudioEvent = (event) => {
     const {playing} = this.refs
-    if (event.type !== 'timeupdate') console.log(event.type, event)
     switch (event.type) {
       case 'playing':
         this.setState({isPlaying: true})
