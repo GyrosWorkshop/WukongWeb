@@ -87,18 +87,17 @@ export default class Player extends Component {
 
   onAudioEvent = (event) => {
     const {playing} = this.refs
+    if (event.type !== 'timeupdate') console.log(event.type, event)
     switch (event.type) {
       case 'playing':
         this.setState({isPlaying: true})
-        break
-      case 'pause':
-        this.setState({isPlaying: false})
         break
       case 'timeupdate':
         this.setState({remainingTime: playing.duration - playing.currentTime})
         this.props.onElapsed(playing.currentTime)
         break
       case 'ended':
+      case 'pause':   // fix for firefox
         this.setAudioState(playing, null)
         this.props.onEnded()
         break
