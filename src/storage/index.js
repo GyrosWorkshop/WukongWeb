@@ -37,7 +37,8 @@ export default function Storage() {
       user: {
         listenOnly: false,
         connection: 0,
-        theme: 0
+        theme: 0,
+        audioQuality: 3   // 'high'
       }
     }, initialState)), enhancer)
     store.subscribe(() => save(store.getState()))
