@@ -54,6 +54,7 @@ export function decode(object = {}) {
   const files = object.musics && object.musics
     .map(it => Object.assign(it, {quality: quality.decode(it.audioQuality)}))
     .sort((a, b) => b.quality - a.quality)
+    .map(parseFile)
 
   return {
     id: `${object.siteId}.${object.songId}`,
@@ -65,7 +66,7 @@ export function decode(object = {}) {
     artwork: parseFile(object.artwork),
     length: object.length,
     url: object.webUrl,
-    files: files.map(parseFile),
+    files,
     mvUrl: object.mvWebUrl,
     mvFile: parseFile(object.mv),
     lyrics: parseLyrics(object.lyrics)
