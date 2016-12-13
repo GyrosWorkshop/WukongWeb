@@ -75,10 +75,7 @@ export default class Player extends Component {
     if (files)
       file = files.filter(it => it[2] <= this.props.quality)
         .sort((a, b) => b[2] - a[2])[0]
-        || files.sort((a, b) =>
-          Math.abs(a[2] - this.props.quality)
-          - Math.abs(b[2] - this.props.quality)
-        )[0]
+        || files.sort((a, b) => a[2] - b[2])[0]
     if (file) {
       audio.src = file[this.props.connection]
       if (time) audio.currentTime = (Date.now() / 1000) - time
