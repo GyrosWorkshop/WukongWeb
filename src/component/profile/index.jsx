@@ -39,7 +39,7 @@ export default class Profile extends Component {
   }
 
   state = {
-    audioQuality: this.props.user.audioQuality || 3
+    audioQuality: this.props.user.audioQuality
   }
 
   isOpenRequired() {
