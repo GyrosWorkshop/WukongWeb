@@ -15,7 +15,8 @@ export function decode(object = {}) {
       file.file,
       file.fileViaCdn || file.file,
       file.quality,
-      file.format
+      file.format,
+      file.audioBitrate
     ]
   }
   const parseLyrics = lyrics => {

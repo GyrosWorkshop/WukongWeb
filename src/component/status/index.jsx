@@ -7,6 +7,7 @@ import Avatar from 'material-ui/Avatar'
 import StarIcon from 'material-ui/svg-icons/toggle/star'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
 import MusicVideoIcon from 'material-ui/svg-icons/av/music-video'
+import * as Quality from '../../api/codec/quality'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
 import artworkImage from '../../resource/artwork.png'
@@ -45,6 +46,14 @@ export default class Status extends Component {
     const player = (this.props.members || []).find(member =>
       member.id == this.props.playing.player) || {}
     return player.nickname
+  }
+
+  getAudio() {
+    const {files} = this.props.playing
+    const file = files.filter(it => it[2] <= this.props.quality)
+        .sort((a, b) => b[2] - a[2])[0]
+        || files.sort((a, b) => a[2] - b[2])[0]
+    return file
   }
 
   onPopoverOpen = (event) => {
@@ -99,6 +108,13 @@ export default class Status extends Component {
           <div style={style.otherText} title={this.props.playing.artist}>
             <span>{this.props.playing.artist}</span>
           </div>
+          {
+            this.props.playing.files
+              ? <div style={style.remarkText}>
+                  <span>Audio Quality: {Quality.encode(this.getAudio()[2])} ({this.getAudio()[4] / 1000}kbps, {this.getAudio()[3]} format)</span>
+                </div>
+              : null
+          }
         </div>
         <Popover
           open={this.state.popover}
@@ -173,6 +189,10 @@ export default class Status extends Component {
       },
       otherText: {
         marginTop: '0.5em'
+      },
+      remarkText: {
+        marginTop: '1em',
+        fontSize: '0.8em'
       },
       actionText: {
         color: 'inherit',
