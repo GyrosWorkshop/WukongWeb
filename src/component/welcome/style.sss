@@ -2,4 +2,28 @@
   position: absolute
   top: 50%
   left: 50%
-  transform: translate(-50%, -50%)
+  transform: translate(-50%,-50%)
+  font-size: 24px
+
+.channel-field
+  display: block
+  outline: none
+  border: 1px solid rgba(0,0,0,0.16)
+  padding: 0.5em
+  margin: 0.5em
+  transition: transform 200ms ease
+  &:hover,
+  &:focus
+    transform: scale(1.05,1.05)
+
+.start-button
+  display: block
+  border: 1px solid black
+  padding: 0.5em
+  margin: 0.5em
+  text-align: center
+  transition: transform 200ms ease
+  &:hover
+    transform: scale(1.05,1.05)
+  &:active
+    transform: scale(0.95,0.95)

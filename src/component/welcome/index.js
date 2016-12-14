@@ -8,8 +8,8 @@ export default class Welcome extends Component {
   render() {
     return (
       <div styleName='container'>
-        <input />
-        <button />
+        <input styleName='channel-field' />
+        <a styleName='start-button'>Start</a>
       </div>
     )
   }
