@@ -122,7 +122,7 @@ export default class Status extends Component {
                   <span>
                     Audio Quality:
                     {' ' + Quality.encode(this.getAudio()[2])}
-                    ({this.getAudio()[4] / 1000}kbps,
+                    {' '}({this.getAudio()[4] / 1000}kbps,
                     {' ' + this.getAudio()[3]} format).
                     {
                       this.getAvailBestAudio() != this.getAudio()
