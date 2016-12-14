@@ -17,7 +17,8 @@ function mapStateToProps(state) {
     user: state.user,
     members: state.channel.members,
     playing: state.song.playing,
-    connection: state.user.connection
+    connection: state.user.connection,
+    quality: state.user.audioQuality
   }
 }
 
@@ -33,6 +34,7 @@ export default class Status extends Component {
     members: PropTypes.arrayOf(PropTypes.object),
     playing: PropTypes.object,
     connection: PropTypes.number,
+    quality: PropTypes.number,
     height: PropTypes.number.isRequired,
     muiTheme: PropTypes.object.isRequired
   }
@@ -53,6 +55,12 @@ export default class Status extends Component {
     const file = files.filter(it => it[2] <= this.props.quality)
         .sort((a, b) => b[2] - a[2])[0]
         || files.sort((a, b) => a[2] - b[2])[0]
+    return file
+  }
+
+  getAvailBestAudio() {
+    const {files} = this.props.playing
+    const file = files.sort((a, b) => b[2] - a[2])[0]
     return file
   }
 
@@ -111,7 +119,18 @@ export default class Status extends Component {
           {
             this.props.playing.files
               ? <div style={style.remarkText}>
-                  <span>Audio Quality: {Quality.encode(this.getAudio()[2])} ({this.getAudio()[4] / 1000}kbps, {this.getAudio()[3]} format)</span>
+                  <span>
+                    Audio Quality:
+                    {' ' + Quality.encode(this.getAudio()[2])}
+                    ({this.getAudio()[4] / 1000}kbps,
+                    {' ' + this.getAudio()[3]} format).
+                    {
+                      this.getAvailBestAudio() != this.getAudio()
+                        ? ' Alternative: ' +
+                        Quality.encode(this.getAvailBestAudio()[2])
+                        : null
+                    }
+                  </span>
                 </div>
               : null
           }
