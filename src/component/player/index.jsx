@@ -91,12 +91,19 @@ export default class Player extends Component {
       case 'playing':
         this.setState({isPlaying: true})
         break
+      case 'pause':
+        this.setState({isPlaying: false})
+        break
       case 'timeupdate':
         this.setState({remainingTime: playing.duration - playing.currentTime})
         this.props.onElapsed(playing.currentTime)
+        // workaround for firefox
+        if (this.state.remainingTime < 1) {
+          this.setAudioState(playing, null)
+          this.props.onEnded()
+        }
         break
       case 'ended':
-      case 'pause':   // fix for firefox
         this.setAudioState(playing, null)
         this.props.onEnded()
         break
