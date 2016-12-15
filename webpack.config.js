@@ -73,13 +73,12 @@ const config = {
       }).split('!')
     }, {
       resource: {
-        test: /\.(png)$/,
-        include: sourcePath
+        test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)$/
       },
       use: [{
         loader: 'url-loader',
         options: {
-          limit: 1000
+          limit: 10000
         }
       }]
     }]
