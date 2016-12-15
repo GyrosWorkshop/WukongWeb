@@ -15,6 +15,7 @@ const config = {
   context: sourcePath,
   output: {
     path: buildPath,
+    publicPath: '/',
     filename: production ? '[chunkhash].js' : 'bundle.js'
   },
   module: {
@@ -73,7 +74,7 @@ const config = {
       }).split('!')
     }, {
       resource: {
-        test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)$/
+        test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
       },
       use: [{
         loader: 'url-loader',
