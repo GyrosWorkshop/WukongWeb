@@ -13,7 +13,7 @@ const renderApp = () => {
     if (__env.production) {
       return (
         <Provider store={store}>
-          <App />
+          <App/>
         </Provider>
       )
     } else {
@@ -23,7 +23,7 @@ const renderApp = () => {
         <Provider store={store}>
           <AppContainer>
             <App>
-              <Devtool />
+              <Devtool/>
             </App>
           </AppContainer>
         </Provider>

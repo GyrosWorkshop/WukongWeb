@@ -7,7 +7,7 @@ import style from './style.sss'
 export default class Channel extends Component {
   render() {
     return (
-      <div />
+      <div/>
     )
   }
 }

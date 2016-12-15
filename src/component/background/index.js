@@ -7,7 +7,7 @@ import style from './style.sss'
 export default class Background extends Component {
   render() {
     return (
-      <canvas styleName='canvas' />
+      <canvas styleName='canvas'/>
     )
   }
 }

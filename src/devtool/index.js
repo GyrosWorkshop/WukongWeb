@@ -19,7 +19,7 @@ export default createDevTools(
         Action.Song.preload.type
       ]}
     >
-      <LogMonitor theme='tomorrow' />
+      <LogMonitor theme='tomorrow'/>
     </FilteredMonitor>
   </DockMonitor>
 )

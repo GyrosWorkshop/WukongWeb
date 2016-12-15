@@ -16,9 +16,9 @@ export default class App extends Component {
     return (
       <HashRouter>
         <Root>
-          <Background />
-          <Match pattern='/' exactly component={Welcome} />
-          <Match pattern='/:channel' component={Channel} />
+          <Background/>
+          <Match pattern='/' exactly component={Welcome}/>
+          <Match pattern='/:channel' component={Channel}/>
           {this.props.children}
         </Root>
       </HashRouter>

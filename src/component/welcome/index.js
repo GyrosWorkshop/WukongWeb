@@ -15,7 +15,6 @@ export default class Welcome extends Component {
   }
 
   onStartAction = (event) => {
-    console.log(event)
   }
 
   render() {
@@ -23,9 +22,11 @@ export default class Welcome extends Component {
       <div styleName='container'>
         <input styleName='channel-field'
           value={this.state.channel}
-          onChange={this.onChannelChange} />
+          onChange={this.onChannelChange}/>
         <a styleName='start-button'
-          onTouchTap={this.onStartAction}>Start</a>
+          onTouchTap={this.onStartAction}>
+          <i className='fa fa-play'/> Start
+        </a>
       </div>
     )
   }
