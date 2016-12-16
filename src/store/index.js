@@ -1,11 +1,11 @@
 import {createStore, compose, applyMiddleware} from 'redux'
 
 import reducer from '../reducer'
-import connectAPI from '../api'
+import connectService from '../service'
 import connectStorage from '../storage'
 
 const enhancers = [
-  applyMiddleware(connectAPI()),
+  applyMiddleware(connectService()),
   connectStorage()
 ]
 if (!__env.production) {

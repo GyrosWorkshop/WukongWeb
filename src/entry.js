@@ -1,5 +1,4 @@
 import 'babel-polyfill'
-
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
@@ -8,7 +7,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 import store from './store'
 import App from './component/app'
 
-const renderApp = () => {
+function renderApp() {
   render((() => {
     if (__env.production) {
       return (
