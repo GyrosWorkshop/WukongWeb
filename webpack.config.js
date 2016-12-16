@@ -92,7 +92,8 @@ const config = {
   devServer: {
     host: devHost,
     port: devPort,
-    contentBase: false,
+    contentBase: buildPath,
+    historyApiFallback: true,
     hot: true
   }
 }
