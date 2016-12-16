@@ -10,8 +10,7 @@ export default class Welcome extends Component {
   }
 
   onChannelChange = (event) => {
-    const channel = event.target.value
-    this.setState({channel})
+    this.setState({channel: event.target.value})
   }
 
   onStartAction = (event) => {

@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react'
-import {HashRouter, Match} from 'react-router'
+import {BrowserRouter, Match} from 'react-router'
 
 import Root from './root'
 import Background from './background'
@@ -14,14 +14,14 @@ export default class App extends Component {
 
   render() {
     return (
-      <HashRouter>
+      <BrowserRouter>
         <Root>
           <Background/>
           <Match pattern='/' exactly component={Welcome}/>
           <Match pattern='/:channel' component={Channel}/>
           {this.props.children}
         </Root>
-      </HashRouter>
+      </BrowserRouter>
     )
   }
 }
