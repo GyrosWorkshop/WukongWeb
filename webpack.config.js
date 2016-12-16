@@ -10,12 +10,14 @@ const buildPath = path.join(__dirname, 'build')
 const production = process.env.NODE_ENV == 'production'
 const devHost = process.env.DEV_HOST || 'localhost'
 const devPort = parseInt(process.env.DEV_PORT) || 8080
+const devServer = `http://${devHost}:${devPort}`
+const apiServer = process.env.WUKONG_SERVER || 'http://localhost:5000'
 
 const config = {
   context: sourcePath,
   output: {
     path: buildPath,
-    publicPath: '/',
+    publicPath: production ? '/' : `${devServer}/`,
     filename: production ? '[chunkhash].js' : 'bundle.js'
   },
   module: {
@@ -104,7 +106,7 @@ config.plugins.push(
   ]),
   new webpack.DefinePlugin({__env: {
     production: JSON.stringify(production),
-    server: JSON.stringify(process.env.WUKONG_SERVER)
+    server: JSON.stringify(apiServer)
   }}),
   new webpack.LoaderOptionsPlugin({
     debug: !production,
@@ -148,7 +150,7 @@ if (production) {
   config.entry.unshift(
     'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
-    `webpack-dev-server/client?http://${devHost}:${devPort}`
+    `webpack-dev-server/client?${devServer}`
   )
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
