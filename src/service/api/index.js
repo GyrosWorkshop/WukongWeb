@@ -1,10 +1,10 @@
 import {isEqual} from 'lodash'
 
 import Action from '../../action'
-import Codec from '../codec'
 import {http, websocket} from './network'
+import Codec from './codec'
 
-export default function API({getState, dispatch, next}) {
+export default function API(getState, dispatch, next) {
   return {
     async fetchUser() {
       const user = await http('GET', '/api/user/userinfo')
@@ -97,8 +97,42 @@ export default function API({getState, dispatch, next}) {
       }
     },
 
-    receiveMessage(handler) {
-      websocket('/api/ws', handler)
+    receiveMessage(callback) {
+      websocket('/api/ws', ({connect, send}) => async (event, data) => {
+        switch (event) {
+          case 'open':
+            callback(event)
+            break
+          case 'close':
+            setTimeout(connect, 5000)
+            callback(event)
+            break
+          case 'error':
+            callback(event)
+            break
+          case 'UserListUpdated':
+            next(Action.Channel.status.create({
+              members: data.users.map(Codec.User.decode)
+            }))
+            break
+          case 'Play':
+            next(Action.Song.play.create(data.song && {
+              ...Codec.Song.decode(data.song),
+              player: data.user || '',
+              time: (Date.now() / 1000) - (data.elapsed || 0)
+            }))
+            next(Action.Player.reset.create())
+            if (data.downvote) {
+              next(Action.Player.downvote.create())
+            }
+            break
+          case 'NextSongUpdate':
+            next(Action.Song.preload.create(data.song && {
+              ...Codec.Song.decode(data.song)
+            }))
+            break
+        }
+      })
     }
   }
 }
