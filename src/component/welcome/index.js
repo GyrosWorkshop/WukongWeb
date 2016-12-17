@@ -8,6 +8,8 @@ import style from './style.sss'
 
 function mapStateToProps(state) {
   return {
+    nickname: state.user.profile.nickname,
+    avatar: state.user.profile.avatar,
     channel: state.channel.name
   }
 }
@@ -24,6 +26,8 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class Welcome extends Component {
   static propTypes = {
+    nickname: PropTypes.string,
+    avatar: PropTypes.string,
     channel: PropTypes.string,
     joinChannel: PropTypes.func
   }
@@ -37,19 +41,27 @@ export default class Welcome extends Component {
   }
 
   onStartAction = (event) => {
-    this.props.joinChannel(this.state.channel)
+    if (this.state.channel) {
+      this.props.joinChannel(this.state.channel)
+    }
   }
 
   render() {
     return (
       <div styleName='container'>
-        <input styleName='channel-field'
-          value={this.state.channel}
-          onChange={this.onChannelInput}/>
-        <a styleName='start-button'
-          onTouchTap={this.onStartAction}>
-          <i className='fa fa-play'/> Start
-        </a>
+        <div styleName=''>
+          <img/>
+          <span></span>
+        </div>
+        <div styleName='form'>
+          <input styleName='channel-field'
+            value={this.state.channel}
+            onChange={this.onChannelInput}/>
+          <button styleName='start-button'
+            onTouchTap={this.onStartAction}>
+            <i className='fa fa-play'/> Start
+          </button>
+        </div>
         {this.props.channel &&
           <Redirect to={{pathname: `/${this.props.channel}`}}/>}
       </div>

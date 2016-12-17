@@ -5,26 +5,27 @@
   transform: translate(-50%,-50%)
   font-size: 24px
 
-.channel-field
-  display: block
-  padding: 0.5em
-  margin: 0.5em
-  outline: none
-  border: 1px solid rgba(0,0,0,0.16)
-  transition: transform 200ms ease
-  &:hover
-    transform: scale(1.05,1.05)
+.form
+  & input,
+  & button
+    display: block
+    width: fill
+    padding: 0.5em
+    margin: 0.5em
+    background: transparent
+    border: none
+    outline: none
+    font-weight: 300
+    transition: transform 200ms ease
+    &:hover
+      transform: scale(1.05,1.05)
+    &:active
+      transform: scale(0.95,0.95)
 
-.start-button
-  display: block
-  padding: 0.5em
-  margin: 0.5em
-  border: 1px solid black
-  text-align: center
-  cursor: default
-  user-select: none
-  transition: transform 200ms ease
-  &:hover
-    transform: scale(1.05,1.05)
-  &:active
-    transform: scale(0.95,0.95)
+  & .channel-field
+    color: #f09442
+    border: 1px solid #f09442
+
+  & .start-button
+    color: white
+    background: #f09442
