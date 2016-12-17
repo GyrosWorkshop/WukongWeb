@@ -62,6 +62,7 @@ const config = {
           query: {
             sourceMap: true,
             modules: true,
+            localIdentName: production ? '[hash:base64]' : '[path][local]',
             importLoaders: 1
           }
         }, {
