@@ -49,17 +49,15 @@ export default class Welcome extends Component {
   render() {
     return (
       <div styleName='container'>
-        <div styleName=''>
-          <img/>
-          <span></span>
+        <div styleName='profile-view'>
+          <img src={this.props.avatar}/>
+          <p>{this.props.nickname}</p>
         </div>
-        <div styleName='form'>
-          <input styleName='channel-field'
-            value={this.state.channel}
-            onChange={this.onChannelInput}/>
-          <button styleName='start-button'
-            onTouchTap={this.onStartAction}>
-            <i className='fa fa-play'/> Start
+        <div styleName='channel-form'>
+          <input value={this.state.channel} onChange={this.onChannelInput}/>
+          <button onTouchTap={this.onStartAction}>
+            <i className='fa fa-play'/>
+            <span>Wukong</span>
           </button>
         </div>
         {this.props.channel &&

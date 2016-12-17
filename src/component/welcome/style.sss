@@ -1,31 +1,63 @@
 .container
   position: absolute
-  top: 50%
+  width: 300px
+  top: 40%
   left: 50%
   transform: translate(-50%,-50%)
+  font-weight: lighter
+  text-align: center
+
+.profile-view
+  font-size: 18px
+
+  & > *
+    display: block
+    width: max-content
+    padding: 0
+    margin: auto
+
+  & > img
+    width: 96px
+    height: 96px
+    border: 2px solid #f09442
+    border-radius: 48px
+    position: relative
+    top: 12px
+    z-index: -1
+
+  & > p
+    color: #ffffff
+    background: #f09442
+    padding: 4px 8px
+    border-radius: 4px
+
+.channel-form
   font-size: 24px
 
-.form
-  & input,
-  & button
+  & > *
     display: block
     width: fill
-    padding: 0.5em
-    margin: 0.5em
+    padding: 12px
+    margin: 12px 0
     background: transparent
-    border: none
     outline: none
-    font-weight: 300
+    border: none
+    border-radius: 4px
+    font-weight: inherit
+    text-align: inherit
     transition: transform 200ms ease
     &:hover
-      transform: scale(1.05,1.05)
+      transform: scale(1.02,1.02)
     &:active
-      transform: scale(0.95,0.95)
+      transform: scale(0.98,0.98)
 
-  & .channel-field
+  & > input
     color: #f09442
-    border: 1px solid #f09442
+    border: 2px solid #f09442
 
-  & .start-button
-    color: white
+  & > button
+    color: #ffffff
+    border: 2px solid #f09442
     background: #f09442
+    & i + span
+      margin-left: 0.3em

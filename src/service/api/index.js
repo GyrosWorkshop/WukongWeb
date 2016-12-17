@@ -111,9 +111,9 @@ export default function API(getState, dispatch, next) {
             callback(event)
             break
           case 'UserListUpdated':
-            next(Action.Channel.status.create({
-              members: data.users.map(Codec.User.decode)
-            }))
+            next(Action.Channel.members.create(
+              data.users.map(Codec.User.decode)
+            ))
             break
           case 'Play':
             next(Action.Song.play.create(data.song && {
