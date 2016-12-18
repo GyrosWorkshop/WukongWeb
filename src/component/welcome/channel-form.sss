@@ -1,0 +1,30 @@
+.container
+  font-size: 24px
+
+  & > *
+    display: block
+    width: fill
+    padding: 12px
+    margin: 12px 0
+    background: transparent
+    outline: none
+    border: none
+    border-radius: 4px
+    font-weight: inherit
+    text-align: inherit
+    transition: transform 200ms ease
+    &:hover
+      transform: scale(1.02,1.02)
+    &:active
+      transform: scale(0.98,0.98)
+
+  & > input
+    color: #f09442
+    border: 2px solid #f09442
+
+  & > button
+    color: #ffffff
+    border: 2px solid #f09442
+    background: #f09442
+    & i + span
+      margin-left: 0.3em

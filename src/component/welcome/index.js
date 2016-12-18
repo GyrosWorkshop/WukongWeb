@@ -4,6 +4,8 @@ import {Redirect} from 'react-router'
 import CSSModules from 'react-css-modules'
 
 import Action from '../../action'
+import UserView from './user-view'
+import ChannelForm from './channel-form'
 import style from './index.sss'
 
 function mapStateToProps(state) {
@@ -32,34 +34,11 @@ export default class Welcome extends Component {
     joinChannel: PropTypes.func
   }
 
-  state = {
-    channel: ''
-  }
-
-  onChannelInput = (event) => {
-    this.setState({channel: event.target.value})
-  }
-
-  onStartAction = (event) => {
-    if (this.state.channel) {
-      this.props.joinChannel(this.state.channel)
-    }
-  }
-
   render() {
     return (
       <div styleName='container'>
-        <div styleName='profile-view'>
-          <img src={this.props.avatar}/>
-          <p>{this.props.nickname}</p>
-        </div>
-        <div styleName='channel-form'>
-          <input value={this.state.channel} onChange={this.onChannelInput}/>
-          <button onTouchTap={this.onStartAction}>
-            <i className='fa fa-play'/>
-            <span>Wukong</span>
-          </button>
-        </div>
+        <UserView nickname={this.props.nickname} avatar={this.props.avatar}/>
+        <ChannelForm onSubmit={this.props.joinChannel}/>
         {this.props.channel &&
           <Redirect to={{pathname: `/${this.props.channel}`}}/>}
       </div>
