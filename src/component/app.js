@@ -5,7 +5,7 @@ import Root from './root'
 import Background from './background'
 import Welcome from './welcome'
 import Channel from './channel'
-import './style.global.sss'
+import './app.global.sss'
 
 export default class App extends Component {
   static propTypes = {

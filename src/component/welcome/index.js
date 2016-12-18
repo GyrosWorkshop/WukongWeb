@@ -4,7 +4,7 @@ import {Redirect} from 'react-router'
 import CSSModules from 'react-css-modules'
 
 import Action from '../../action'
-import style from './style.sss'
+import style from './index.sss'
 
 function mapStateToProps(state) {
   return {
