@@ -72,7 +72,7 @@ export default class Status extends Component {
 
   getFileUrl() {
     const {files} = this.props.playing
-    return files.sort((a, b) => a[4] - b[4])[0][0]
+    return files.sort((a, b) => b[4] - a[4])[0][0]
   }
 
   onPopoverOpen = (event) => {
@@ -131,6 +131,7 @@ export default class Status extends Component {
                   href={this.getFileUrl()}
                   download={this.getFileName()}
                   type='audio/flac'
+                  target='_blank'
                 >
                   <FileDownloadIcon
                     color={this.props.muiTheme.appBar.textColor}
