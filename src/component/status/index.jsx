@@ -1,12 +1,13 @@
-import React, {Component, PropTypes} from 'react'
-import {connect} from 'react-redux'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import Paper from 'material-ui/Paper'
 import Popover from 'material-ui/Popover'
-import {List, ListItem} from 'material-ui/List'
+import { List, ListItem } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import StarIcon from 'material-ui/svg-icons/toggle/star'
 import PlayArrowIcon from 'material-ui/svg-icons/av/play-arrow'
 import MusicVideoIcon from 'material-ui/svg-icons/av/music-video'
+import FileDownloadIcon from 'material-ui/svg-icons/file/file-download'
 import * as Quality from '../../api/codec/quality'
 import muiThemeable from 'material-ui/styles/muiThemeable'
 
@@ -41,7 +42,8 @@ export default class Status extends Component {
 
   state = {
     popover: false,
-    popoverAnchor: null
+    popoverAnchor: null,
+    download: false
   }
 
   getPlayerNickname() {
@@ -54,7 +56,7 @@ export default class Status extends Component {
     const {files} = this.props.playing
     const file = files.filter(it => it[2] <= this.props.quality)
         .sort((a, b) => b[2] - a[2])[0]
-        || files.sort((a, b) => a[2] - b[2])[0]
+      || files.sort((a, b) => a[2] - b[2])[0]
     return file
   }
 
@@ -62,6 +64,15 @@ export default class Status extends Component {
     const {files} = this.props.playing
     const file = files.sort((a, b) => b[2] - a[2])[0]
     return file
+  }
+
+  getFileName() {
+    return this.props.playing.title + ' - ' + this.props.playing.artist
+  }
+
+  getFileUrl() {
+    const {files} = this.props.playing
+    return files.sort((a, b) => a[4] - b[4])[0][0]
   }
 
   onPopoverOpen = (event) => {
@@ -73,11 +84,15 @@ export default class Status extends Component {
     this.setState({popover: false, popoverAnchor: null})
   }
 
+  onDoubleClick = () => {
+    this.setState({download: true})
+  }
+
   render() {
     const style = this.generateStyle()
     return (
       <div style={style.container}>
-        <Paper style={style.image} />
+        <Paper style={style.image} onDoubleClick={this.onDoubleClick}/>
         <div style={style.textContainer}>
           <div style={style.playerText}>
             <span
@@ -98,15 +113,30 @@ export default class Status extends Component {
             {
               this.props.playing.mvUrl
                 ? <a
-                    style={style.actionText}
-                    href={this.props.playing.mvUrl}
-                    target='_blank'
-                  >
-                    <MusicVideoIcon
-                      color={this.props.muiTheme.appBar.textColor}
-                      style={style.actionIcon}
-                    />
-                  </a>
+                  style={style.actionText}
+                  href={this.props.playing.mvUrl}
+                  target='_blank'
+                >
+                  <MusicVideoIcon
+                    color={this.props.muiTheme.appBar.textColor}
+                    style={style.actionIcon}
+                  />
+                </a>
+                : null
+            }
+            {
+              this.state.download
+                ? <a
+                  style={style.actionText}
+                  href={this.getFileUrl()}
+                  download={this.getFileName()}
+                  type='audio/flac'
+                >
+                  <FileDownloadIcon
+                    color={this.props.muiTheme.appBar.textColor}
+                    style={style.actionIcon}
+                  />
+                </a>
                 : null
             }
           </div>
@@ -131,7 +161,7 @@ export default class Status extends Component {
                         : null
                     }
                   </span>
-                </div>
+              </div>
               : null
           }
         </div>
@@ -157,9 +187,9 @@ export default class Status extends Component {
                 }
                 rightIcon={
                   member.id == this.props.playing.player
-                    ? <PlayArrowIcon style={style.memberIcon} />
+                    ? <PlayArrowIcon style={style.memberIcon}/>
                     : member.id == this.props.user.id
-                      ? <StarIcon style={style.memberIcon} />
+                      ? <StarIcon style={style.memberIcon}/>
                       : null
                 }
                 onTouchTap={this.onPopoverClose}
