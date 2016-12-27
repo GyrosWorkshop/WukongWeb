@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {Component, PropTypes, cloneElement} from 'react'
 import CSSModules from 'react-css-modules'
 
 import style from './member-list.sss'
@@ -6,13 +6,26 @@ import style from './member-list.sss'
 @CSSModules(style)
 export default class MemberList extends Component {
   static propTypes = {
+    highlightIndex: PropTypes.number,
     children: PropTypes.node
   }
 
   render() {
+    const {highlightIndex, children} = this.props
     return (
-      <div styleName='container'>
-        {this.props.children}
+      <div styleName='container' style={{
+        transition: 'transform 800ms ease',
+        transform: 'translateX(50%) translateX(-60px)'
+          + `translateX(-${highlightIndex * 120}px)`
+      }}>
+        {children.map((child, index) => cloneElement(child, {
+          style: {
+            transition: 'transform 800ms ease',
+            transform: highlightIndex == index
+              ? 'scale(1,1)'
+              : 'scale(0.8,0.8)'
+          }
+        }))}
       </div>
     )
   }

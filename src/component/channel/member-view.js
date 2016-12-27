@@ -7,14 +7,16 @@ import style from './member-view.sss'
 export default class MemberView extends Component {
   static propTypes = {
     nickname: PropTypes.string,
-    avatar: PropTypes.string
+    avatar: PropTypes.string,
+    style: PropTypes.object
   }
 
   render() {
+    const {nickname, avatar, style} = this.props
     return (
-      <div styleName='container'>
-        <img src={this.props.avatar}/>
-        <p>{this.props.nickname}</p>
+      <div styleName='container' style={style}>
+        <img src={avatar}/>
+        <p styleName='tooltip'>{nickname}</p>
       </div>
     )
   }
