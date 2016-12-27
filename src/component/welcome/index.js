@@ -35,12 +35,12 @@ export default class Welcome extends Component {
   }
 
   render() {
+    const {nickname, avatar, channel} = this.props
     return (
       <div styleName='container'>
-        <UserView nickname={this.props.nickname} avatar={this.props.avatar}/>
+        <UserView nickname={nickname} avatar={avatar}/>
         <ChannelForm onSubmit={this.props.joinChannel}/>
-        {this.props.channel &&
-          <Redirect to={{pathname: `/${this.props.channel}`}}/>}
+        {channel && <Redirect to={{pathname: `/${channel}`}}/>}
       </div>
     )
   }

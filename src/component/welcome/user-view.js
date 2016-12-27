@@ -11,10 +11,11 @@ export default class UserView extends Component {
   }
 
   render() {
+    const {nickname, avatar} = this.props
     return (
       <div styleName='container'>
-        <img src={this.props.avatar}/>
-        <p>{this.props.nickname}</p>
+        <img src={avatar}/>
+        <p>{nickname}</p>
       </div>
     )
   }

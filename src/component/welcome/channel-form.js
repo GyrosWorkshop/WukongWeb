@@ -14,19 +14,22 @@ export default class ChannelForm extends Component {
   }
 
   onInputChange = (event) => {
-    this.setState({channel: event.target.value})
+    const channel = event.target.value
+    this.setState({channel})
   }
 
   onInputCommit = (event) => {
-    if (this.state.channel) {
-      this.props.onSubmit(this.state.channel)
+    const {channel} = this.state
+    if (channel) {
+      this.props.onSubmit(channel)
     }
   }
 
   render() {
+    const {channel} = this.state
     return (
       <div styleName='container'>
-        <input value={this.state.channel} onChange={this.onInputChange}/>
+        <input value={channel} onChange={this.onInputChange}/>
         <button onTouchTap={this.onInputCommit}>
           <i className='fa fa-play'/>
           <span>Wukong</span>
