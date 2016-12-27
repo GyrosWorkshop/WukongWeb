@@ -6,13 +6,13 @@ import CSSModules from 'react-css-modules'
 import Action from '../../action'
 import MemberList from './member-list'
 import MemberView from './member-view'
+import NowPlaying from './now-playing'
 import style from './index.sss'
 
 function mapStateToProps(state) {
   return {
-    channel: state.channel.name,
-    members: state.channel.members,
-    player: state.song.playing.player
+    channel: state.channel,
+    playing: state.song.playing
   }
 }
 
@@ -28,9 +28,8 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class Channel extends Component {
   static propTypes = {
-    channel: PropTypes.string,
-    members: PropTypes.arrayOf(PropTypes.object),
-    player: PropTypes.string,
+    channel: PropTypes.object,
+    playing: PropTypes.object,
     exitChannel: PropTypes.func
   }
 
@@ -39,7 +38,10 @@ export default class Channel extends Component {
   }
 
   render() {
-    const {channel, members, player} = this.props
+    const {
+      channel: {name: channel, members},
+      playing: {title, album, artist, artwork, player}
+    } = this.props
     return (
       <div styleName='container'>
         <MemberList highlightIndex={
@@ -50,6 +52,8 @@ export default class Channel extends Component {
               nickname={member.nickname} avatar={member.avatar}/>
           ))}
         </MemberList>
+        <NowPlaying title={title} album={album} artist={artist}
+          artwork={artwork}/>
         <p>Channel: {channel}</p>
         <a href='#' onTouchTap={this.onExitAction}>Exit</a>
         {!channel && <Redirect to={{pathname: '/'}}/>}
