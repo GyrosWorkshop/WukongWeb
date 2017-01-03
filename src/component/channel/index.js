@@ -12,7 +12,8 @@ import style from './index.sss'
 function mapStateToProps(state) {
   return {
     channel: state.channel,
-    playing: state.song.playing
+    playing: state.song.playing,
+    connection: state.user.preferences.connection
   }
 }
 
@@ -30,6 +31,7 @@ export default class Channel extends Component {
   static propTypes = {
     channel: PropTypes.object,
     playing: PropTypes.object,
+    connection: PropTypes.number,
     exitChannel: PropTypes.func
   }
 
@@ -40,8 +42,13 @@ export default class Channel extends Component {
   render() {
     const {
       channel: {name: channel, members},
-      playing: {title, album, artist, artwork, player}
+      playing: {/*title, album, artist, artwork,*/ player},
+      connection
     } = this.props
+    const title = '7月の翼'
+    const album = 'Midnight Sun'
+    const artist = 'Aimer'
+    const artwork = ['http://p3.music.126.net/hgdL2g4NLwIA9zn0DtCZXA==/6048413464923983.jpg']
     return (
       <div styleName='container'>
         <MemberList highlightIndex={
@@ -53,7 +60,7 @@ export default class Channel extends Component {
           ))}
         </MemberList>
         <NowPlaying title={title} album={album} artist={artist}
-          artwork={artwork}/>
+          artwork={artwork[connection]}/>
         <p>Channel: {channel}</p>
         <a href='#' onTouchTap={this.onExitAction}>Exit</a>
         {!channel && <Redirect to={{pathname: '/'}}/>}

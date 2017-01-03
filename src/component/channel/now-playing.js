@@ -9,17 +9,17 @@ export default class NowPlaying extends Component {
     title: PropTypes.string,
     album: PropTypes.string,
     artist: PropTypes.string,
-    artwork: PropTypes.arrayOf(PropTypes.string)
+    artwork: PropTypes.string
   }
 
   render() {
     const {title, album, artist, artwork} = this.props
     return (
-      <div>
-        <p>{title}</p>
-        <p>{album}</p>
-        <p>{artist}</p>
-        <p>{artwork.join('\n')}</p>
+      <div styleName='container'>
+        <p styleName='title'>{title}</p>
+        <p styleName='detail'>{album}</p>
+        <p styleName='detail'>{artist}</p>
+        <div styleName='image'><img src={artwork}/></div>
       </div>
     )
   }
