@@ -12,19 +12,24 @@
     border-radius: 4px
     font-weight: inherit
     text-align: inherit
-    transition: transform 200ms ease
-    &:hover
-      transform: scale(1.02,1.02)
-    &:active
-      transform: scale(0.98,0.98)
 
   & > input
     color: #f09442
     border: 2px solid #f09442
+    transition: border-color 200ms ease
+    &:hover
+      border-color: #f19e54
+    &:active
+      border-color: #d8853b
 
   & > button
     color: #ffffff
-    border: 2px solid #f09442
     background: #f09442
-    & i + span
-      margin-left: 0.3em
+    transition: background 200ms ease
+    &:hover
+      background: #f19e54
+    &:active
+      background: #d8853b
+
+    & > i
+      margin-right: 0.3em
