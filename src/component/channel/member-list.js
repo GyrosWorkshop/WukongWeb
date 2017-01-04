@@ -1,34 +1,51 @@
-import React, {Component, PropTypes, cloneElement} from 'react'
+import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
+import MemberListItem from './member-list-item'
 import style from './member-list.sss'
 
+function mapStateToProps(state) {
+  return {
+    members: state.channel.members,
+    player: state.song.playing.player
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {}
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
 export default class MemberList extends Component {
   static propTypes = {
-    highlightIndex: PropTypes.number,
-    children: PropTypes.node
+    members: PropTypes.array,
+    player: PropTypes.string
   }
 
   render() {
-    const {highlightIndex, children} = this.props
+    const {members, player} = this.props
+    const highlight = members.map(member => member.id).indexOf(player)
     return (
       <div styleName='container' style={{
         transition: 'transform 800ms ease',
         transform: 'translateX(50%)' + `translateX(-${
-          children[highlightIndex]
-            ? highlightIndex * 120 + 60
-            : children.length * 60
+          members[highlight]
+            ? highlight * 120 + 60
+            : members.length * 60
         }px)`
       }}>
-        {children.map((child, index) => cloneElement(child, {
-          style: {
-            transition: 'transform 800ms ease',
-            transform: highlightIndex == index
-              ? 'scale(1,1)'
-              : 'scale(0.8,0.8)'
-          }
-        }))}
+        {members.map((member, index) => (
+          <MemberListItem key={member.id}
+            nickname={member.nickname} avatar={member.avatar}
+            style={{
+              transition: 'transform 800ms ease',
+              transform: highlight == index
+                ? 'scale(1,1)'
+                : 'scale(0.8,0.8)'
+            }}/>
+        ))}
       </div>
     )
   }

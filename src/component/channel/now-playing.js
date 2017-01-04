@@ -1,24 +1,43 @@
 import React, {Component, PropTypes} from 'react'
+import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
 import style from './now-playing.sss'
 
+function mapStateToProps(state) {
+  return {
+    title: state.song.playing.title,
+    album: state.song.playing.album,
+    artist: state.song.playing.artist,
+    artwork: state.song.playing.artwork,
+    url: state.song.playing.url,
+    mvUrl: state.song.playing.mvUrl,
+    connection: state.user.preferences.connection
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {}
+}
+
+@connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
 export default class NowPlaying extends Component {
   static propTypes = {
     title: PropTypes.string,
     album: PropTypes.string,
     artist: PropTypes.string,
-    artwork: PropTypes.string,
+    artwork: PropTypes.array,
     url: PropTypes.string,
-    mvUrl: PropTypes.string
+    mvUrl: PropTypes.string,
+    connection: PropTypes.number
   }
 
   render() {
-    const {title, album, artist, artwork, url, mvUrl} = this.props
+    const {title, album, artist, artwork, url, mvUrl, connection} = this.props
     return (
       <div styleName='container'>
-        <img src={artwork}/>
+        <img src={artwork && artwork[connection]}/>
         <p>
           <a href={url} target='_blank'>{title}</a>
           {mvUrl && <a href={mvUrl} target='_blank'>

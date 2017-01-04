@@ -1,69 +1,19 @@
-import React, {Component, PropTypes} from 'react'
-import {connect} from 'react-redux'
-import {Redirect} from 'react-router'
+import React, {Component} from 'react'
 import CSSModules from 'react-css-modules'
 
-import Action from '../../action'
 import MemberList from './member-list'
-import MemberView from './member-view'
 import NowPlaying from './now-playing'
 import PlayerControl from './player-control'
 import style from './index.sss'
 
-function mapStateToProps(state) {
-  return {
-    channel: state.channel,
-    playing: state.song.playing,
-    preload: state.song.preload,
-    connection: state.user.preferences.connection
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    exitChannel() {
-      dispatch(Action.Channel.name.create(''))
-    }
-  }
-}
-
-@connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
 export default class Channel extends Component {
-  static propTypes = {
-    channel: PropTypes.object,
-    playing: PropTypes.object,
-    preload: PropTypes.object,
-    connection: PropTypes.number,
-    exitChannel: PropTypes.func
-  }
-
-  onExitAction = (event) => {
-    this.props.exitChannel()
-  }
-
   render() {
-    const {
-      channel: {name: channel, members},
-      playing: {title, album, artist, artwork, url, mvUrl, player},
-      connection
-    } = this.props
     return (
       <div styleName='container'>
-        <MemberList highlightIndex={
-          members.map(member => member.id).indexOf(player)
-        }>
-          {members.map(member => (
-            <MemberView key={member.id}
-              nickname={member.nickname} avatar={member.avatar}/>
-          ))}
-        </MemberList>
-        <NowPlaying title={title} album={album} artist={artist}
-          artwork={artwork && artwork[connection]} url={url} mvUrl={mvUrl}/>
+        <MemberList/>
+        <NowPlaying/>
         <PlayerControl/>
-        <p>Channel: {channel}</p>
-        <a href='#' onTouchTap={this.onExitAction}>Exit</a>
-        {!channel && <Redirect to={{pathname: '/'}}/>}
       </div>
     )
   }

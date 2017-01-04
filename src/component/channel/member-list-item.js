@@ -1,15 +1,17 @@
 import React, {Component, PropTypes} from 'react'
 import CSSModules from 'react-css-modules'
 
-import style from './member-view.sss'
+import style from './member-list-item.sss'
 
 @CSSModules(style)
-export default class MemberView extends Component {
+export default class MemberListItem extends Component {
   static propTypes = {
     nickname: PropTypes.string,
     avatar: PropTypes.string,
     style: PropTypes.object
   }
+
+  //TODO: should update
 
   render() {
     const {nickname, avatar, style} = this.props
