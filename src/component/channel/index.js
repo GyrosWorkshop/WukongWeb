@@ -7,12 +7,14 @@ import Action from '../../action'
 import MemberList from './member-list'
 import MemberView from './member-view'
 import NowPlaying from './now-playing'
+import PlayerControl from './player-control'
 import style from './index.sss'
 
 function mapStateToProps(state) {
   return {
     channel: state.channel,
     playing: state.song.playing,
+    preload: state.song.preload,
     connection: state.user.preferences.connection
   }
 }
@@ -31,6 +33,7 @@ export default class Channel extends Component {
   static propTypes = {
     channel: PropTypes.object,
     playing: PropTypes.object,
+    preload: PropTypes.object,
     connection: PropTypes.number,
     exitChannel: PropTypes.func
   }
@@ -57,6 +60,7 @@ export default class Channel extends Component {
         </MemberList>
         <NowPlaying title={title} album={album} artist={artist}
           artwork={artwork && artwork[connection]} url={url} mvUrl={mvUrl}/>
+        <PlayerControl/>
         <p>Channel: {channel}</p>
         <a href='#' onTouchTap={this.onExitAction}>Exit</a>
         {!channel && <Redirect to={{pathname: '/'}}/>}
