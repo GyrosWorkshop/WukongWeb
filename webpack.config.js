@@ -100,7 +100,7 @@ const config = {
     hot: true
   },
   performance: {
-    hints: production
+    hints: production && 'warning'
   }
 }
 
