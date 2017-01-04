@@ -16,10 +16,9 @@ export default class NowPlaying extends Component {
     const {title, album, artist, artwork} = this.props
     return (
       <div styleName='container'>
-        <p styleName='title'>{title}</p>
-        <p styleName='detail'>{album}</p>
-        <p styleName='detail'>{artist}</p>
         <div styleName='image'><img src={artwork}/></div>
+        <p styleName='title'>{title}</p>
+        <p styleName='detail'>{artist} — {album}</p>
       </div>
     )
   }

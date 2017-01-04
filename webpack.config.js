@@ -98,6 +98,9 @@ const config = {
     contentBase: buildPath,
     historyApiFallback: true,
     hot: true
+  },
+  performance: {
+    hints: production
   }
 }
 
