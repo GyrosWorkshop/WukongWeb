@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 import MemberList from './member-list'
 import NowPlaying from './now-playing'
 import PlayerControl from './player-control'
-import style from './index.sss'
+import style from './channel.sss'
 
 @CSSModules(style)
 export default class Channel extends Component {
