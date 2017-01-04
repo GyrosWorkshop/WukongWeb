@@ -3,7 +3,7 @@ import CSSModules from 'react-css-modules'
 
 import UserView from './user-view'
 import ChannelForm from './channel-form'
-import style from './index.sss'
+import style from './welcome.sss'
 
 @CSSModules(style)
 export default class Welcome extends Component {

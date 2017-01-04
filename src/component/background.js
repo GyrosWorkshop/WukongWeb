@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import CSSModules from 'react-css-modules'
 
-import style from './index.sss'
+import style from './background.sss'
 
 @CSSModules(style)
 export default class Background extends Component {

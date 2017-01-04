@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Redirect} from 'react-router'
 import CSSModules from 'react-css-modules'
 
-import Action from '../../action'
+import Action from '../action'
 import style from './channel-form.sss'
 
 function mapStateToProps(state) {
