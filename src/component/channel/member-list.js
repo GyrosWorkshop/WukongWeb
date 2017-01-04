@@ -15,8 +15,11 @@ export default class MemberList extends Component {
     return (
       <div styleName='container' style={{
         transition: 'transform 800ms ease',
-        transform: 'translateX(50%) translateX(-60px)'
-          + `translateX(-${highlightIndex * 120}px)`
+        transform: 'translateX(50%)' + `translateX(-${
+          children[highlightIndex]
+            ? highlightIndex * 120 + 60
+            : children.length * 60
+        }px)`
       }}>
         {children.map((child, index) => cloneElement(child, {
           style: {

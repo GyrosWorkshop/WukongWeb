@@ -9,16 +9,24 @@ export default class NowPlaying extends Component {
     title: PropTypes.string,
     album: PropTypes.string,
     artist: PropTypes.string,
-    artwork: PropTypes.string
+    artwork: PropTypes.string,
+    url: PropTypes.string,
+    mvUrl: PropTypes.string
   }
 
   render() {
-    const {title, album, artist, artwork} = this.props
+    const {title, album, artist, artwork, url, mvUrl} = this.props
     return (
       <div styleName='container'>
-        <div styleName='image'><img src={artwork}/></div>
-        <p styleName='title'>{title}</p>
-        <p styleName='detail'>{artist} — {album}</p>
+        <img src={artwork}/>
+        <p>
+          <a href={url} target='_blank'>{title}</a>
+          {mvUrl && <a href={mvUrl} target='_blank'>
+            <i className='fa fa-youtube-play'/></a>}
+        </p>
+        <p>
+          <span>{artist}{artist && album && ' — '}{album}</span>
+        </p>
       </div>
     )
   }

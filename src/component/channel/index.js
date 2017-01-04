@@ -42,13 +42,9 @@ export default class Channel extends Component {
   render() {
     const {
       channel: {name: channel, members},
-      playing: {/*title, album, artist, artwork,*/ player},
+      playing: {title, album, artist, artwork, url, mvUrl, player},
       connection
     } = this.props
-    const title = '7月の翼'
-    const album = 'Midnight Sun'
-    const artist = 'Aimer'
-    const artwork = ['http://p3.music.126.net/hgdL2g4NLwIA9zn0DtCZXA==/6048413464923983.jpg']
     return (
       <div styleName='container'>
         <MemberList highlightIndex={
@@ -60,7 +56,7 @@ export default class Channel extends Component {
           ))}
         </MemberList>
         <NowPlaying title={title} album={album} artist={artist}
-          artwork={artwork[connection]}/>
+          artwork={artwork && artwork[connection]} url={url} mvUrl={mvUrl}/>
         <p>Channel: {channel}</p>
         <a href='#' onTouchTap={this.onExitAction}>Exit</a>
         {!channel && <Redirect to={{pathname: '/'}}/>}
