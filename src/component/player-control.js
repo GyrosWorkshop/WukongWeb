@@ -4,6 +4,8 @@ import CSSModules from 'react-css-modules'
 
 import style from './player-control.sss'
 
+//TODO: adopt reselect
+
 function mapStateToProps(state) {
   return {
     player: state.player,

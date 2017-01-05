@@ -11,7 +11,7 @@ export default class MemberListItem extends Component {
     style: PropTypes.object
   }
 
-  //TODO: should update
+  //TODO: implement should update
 
   render() {
     const {nickname, avatar, style} = this.props
