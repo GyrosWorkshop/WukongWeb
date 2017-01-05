@@ -10,8 +10,8 @@ function mapStateToProps(state) {
     album: state.song.playing.album,
     artist: state.song.playing.artist,
     artwork: state.song.playing.artwork,
-    url: state.song.playing.url,
-    mvUrl: state.song.playing.mvUrl,
+    link: state.song.playing.link,
+    mvLink: state.song.playing.mvLink,
     connection: state.user.preferences.connection
   }
 }
@@ -28,19 +28,19 @@ export default class NowPlaying extends Component {
     album: PropTypes.string,
     artist: PropTypes.string,
     artwork: PropTypes.array,
-    url: PropTypes.string,
-    mvUrl: PropTypes.string,
+    link: PropTypes.string,
+    mvLink: PropTypes.string,
     connection: PropTypes.number
   }
 
   render() {
-    const {title, album, artist, artwork, url, mvUrl, connection} = this.props
+    const {title, album, artist, artwork, link, mvLink, connection} = this.props
     return (
       <div styleName='container'>
         <img src={artwork && artwork[connection]}/>
         <p>
-          <a href={url} target='_blank'>{title}</a>
-          {mvUrl && <a href={mvUrl} target='_blank'>
+          <a href={link} target='_blank'>{title}</a>
+          {mvLink && <a href={mvLink} target='_blank'>
             <i className='fa fa-youtube-play'/></a>}
         </p>
         <p>

@@ -7,7 +7,7 @@ function playlist(state = [], action) {
   const normalize = unary(partialRight(pick, [
     'id', 'siteId', 'songId',
     'title', 'album', 'artist', 'artwork',
-    'url', 'mvUrl'
+    'link', 'mvLink'
   ]))
   switch (action.type) {
     case Action.Song.prepend.type:
