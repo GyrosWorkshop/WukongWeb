@@ -1,4 +1,4 @@
-import {merge, omit} from 'lodash'
+import {merge} from 'lodash'
 
 const kStorageKey = 'wukong'
 
@@ -20,9 +20,7 @@ export function save(state = {}) {
         name: state.channel.name
       },
       song: {
-        playlist: state.song.playlist.map(song => omit(song, [
-          'file', 'lyrics'
-        ]))
+        playlist: state.song.playlist
       },
       player: {
         volume: state.player.volume
