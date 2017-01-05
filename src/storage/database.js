@@ -1,4 +1,4 @@
-import {merge} from 'lodash'
+import {merge, pick} from 'lodash'
 
 const kStorageKey = 'wukong'
 
@@ -12,20 +12,12 @@ export function open(state = {}) {
 
 export function save(state = {}) {
   try {
-    state = {
-      user: {
-        preferences: state.user.preferences
-      },
-      channel: {
-        name: state.channel.name
-      },
-      song: {
-        playlist: state.song.playlist
-      },
-      player: {
-        volume: state.player.volume
-      }
-    }
+    state = pick(state, [
+      'user.preferences',
+      'channel.name',
+      'song.playlist',
+      'player.volume'
+    ])
     localStorage.setItem(kStorageKey, JSON.stringify(state))
   } catch (error) {
     localStorage.removeItem(kStorageKey)

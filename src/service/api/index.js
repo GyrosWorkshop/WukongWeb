@@ -116,15 +116,15 @@ export default function API(getState, dispatch, next) {
             ))
             break
           case 'Play':
+            next(Action.Player.reset.create())
+            if (data.downvote) {
+              next(Action.Player.downvote.create())
+            }
             next(Action.Song.play.create(data.song && {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
               time: (Date.now() / 1000) - (data.elapsed || 0)
             }))
-            next(Action.Player.reset.create())
-            if (data.downvote) {
-              next(Action.Player.downvote.create())
-            }
             break
           case 'NextSongUpdate':
             next(Action.Song.preload.create(data.song && {

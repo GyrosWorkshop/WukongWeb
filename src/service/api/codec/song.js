@@ -16,8 +16,8 @@ export function decode(object = {}) {
     artwork: parseFile(object.artwork),
     length: object.length,
     url: object.webUrl,
-    file: parseFile(object.music),
     mvUrl: object.mvWebUrl,
+    file: parseFile(object.music),
     mvFile: parseFile(object.mv),
     lyrics: parseLyrics(object.lyrics)
   }
