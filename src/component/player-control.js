@@ -6,8 +6,10 @@ import style from './player-control.sss'
 
 function mapStateToProps(state) {
   return {
-    playing: state.song.playing.file,
-    preload: state.song.preload.file,
+    player: state.player,
+    playing: state.song.playing.files,
+    preload: state.song.preload.files,
+    audioQuality: state.user.preferences.audioQuality,
     connection: state.user.preferences.connection
   }
 }
@@ -20,8 +22,10 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class PlayerControl extends Component {
   static propTypes = {
-    playing: PropTypes.object,
-    preload: PropTypes.object,
+    player: PropTypes.object,
+    playing: PropTypes.array,
+    preload: PropTypes.array,
+    audioQuality: PropTypes.number,
     connection: PropTypes.number
   }
 

@@ -15,21 +15,30 @@ export function decode(object = {}) {
     artist: object.artist,
     artwork: parseFile(object.artwork),
     length: object.length,
+    bitrate: object.bitrate,
     link: object.webUrl,
     mvLink: object.mvWebUrl,
-    file: parseFile(object.music),
+    files: parseFile(object.musics, true),
     mvFile: parseFile(object.mv),
     lyrics: parseLyrics(object.lyrics)
   }
 }
 
-function parseFile(file) {
+function parseFile(file, multiple) {
   if (!file) return
+  if (multiple) return file.map(item => parseFile(item))
   if (!file.file) return
-  return [
+  const urls = [
     file.file,
     file.fileViaCdn || file.file
   ]
+  if (!file.format) return urls
+  const format = file.format
+  const quality = file.audioQuality && {
+    level: ['low', 'medium', 'high', 'lossless'].indexOf(file.audioQuality),
+    description: `${file.audioQuality} (${file.audioBitrate / 1000}kbps)`
+  }
+  return {urls, format, quality}
 }
 
 function parseLyrics(lyrics) {

@@ -15,6 +15,7 @@ function profile(state = {}, action) {
 function preferences(state, action) {
   const defaults = {
     listenOnly: false,
+    audioQuality: 0,
     connection: 0,
     theme: 0
   }
