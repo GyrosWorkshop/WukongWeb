@@ -1,17 +1,15 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import CSSModules from 'react-css-modules'
 
 import style from './member-list-item.sss'
 
 @CSSModules(style)
-export default class MemberListItem extends Component {
+export default class MemberListItem extends PureComponent {
   static propTypes = {
     nickname: PropTypes.string,
     avatar: PropTypes.string,
     style: PropTypes.object
   }
-
-  //TODO: implement should update
 
   render() {
     const {nickname, avatar, style} = this.props

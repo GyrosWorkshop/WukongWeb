@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
@@ -22,7 +22,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class NowPlaying extends Component {
+export default class NowPlaying extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     album: PropTypes.string,

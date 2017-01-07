@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import {BrowserRouter, Match} from 'react-router'
 
 import Background from './background'
@@ -6,7 +6,7 @@ import Welcome from './welcome'
 import Channel from './channel'
 import './app.global.sss'
 
-export default class App extends Component {
+export default class App extends PureComponent {
   static propTypes = {
     children: PropTypes.node
   }

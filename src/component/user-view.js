@@ -1,4 +1,4 @@
-import React, {Component, PropTypes} from 'react'
+import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class UserView extends Component {
+export default class UserView extends PureComponent {
   static propTypes = {
     nickname: PropTypes.string,
     avatar: PropTypes.string
