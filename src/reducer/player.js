@@ -66,11 +66,21 @@ function volume(state = 0.5, action) {
   }
 }
 
+function reload(state = false, action) {
+  switch (action.type) {
+    case Action.Player.reload.type:
+      return action.reload
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   running,
   elapsed,
   duration,
   ended,
   downvote,
-  volume
+  volume,
+  reload
 })

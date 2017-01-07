@@ -28,6 +28,11 @@ export const volume = {
   create(volume) { return {type: this.type, volume} }
 }
 
+export const reload = {
+  type: 'PlayerReload',
+  create(reload) { return {type: this.type, reload} }
+}
+
 export const reset = {
   type: 'PlayerReset',
   create() { return {type: this.type} }
