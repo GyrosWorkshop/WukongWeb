@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
+import Selector from '../selector'
 import style from './now-playing.sss'
 
 function mapStateToProps(state) {
@@ -9,10 +10,9 @@ function mapStateToProps(state) {
     title: state.song.playing.title,
     album: state.song.playing.album,
     artist: state.song.playing.artist,
-    artwork: state.song.playing.artwork,
+    artwork: Selector.playingArtwork(state),
     link: state.song.playing.link,
-    mvLink: state.song.playing.mvLink,
-    connection: state.user.preferences.connection
+    mvLink: state.song.playing.mvLink
   }
 }
 
@@ -27,17 +27,16 @@ export default class NowPlaying extends Component {
     title: PropTypes.string,
     album: PropTypes.string,
     artist: PropTypes.string,
-    artwork: PropTypes.array,
+    artwork: PropTypes.string,
     link: PropTypes.string,
-    mvLink: PropTypes.string,
-    connection: PropTypes.number
+    mvLink: PropTypes.string
   }
 
   render() {
-    const {title, album, artist, artwork, link, mvLink, connection} = this.props
+    const {title, album, artist, artwork, link, mvLink} = this.props
     return (
       <div styleName='container'>
-        <img src={artwork && artwork[connection]}/>
+        <img src={artwork}/>
         <p>
           <a href={link} target='_blank'>{title}</a>
           {mvLink && <a href={mvLink} target='_blank'>

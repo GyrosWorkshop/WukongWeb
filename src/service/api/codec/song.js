@@ -32,7 +32,7 @@ function parseFile(file, multiple) {
     file.file,
     file.fileViaCdn || file.file
   ]
-  if (!file.format) return urls
+  if (!file.format) return {urls}
   const format = file.format
   const quality = file.audioQuality && {
     level: ['low', 'medium', 'high', 'lossless'].indexOf(file.audioQuality),
