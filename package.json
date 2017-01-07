@@ -4,7 +4,6 @@
   "description": "Web client of Wukong",
   "dependencies": {
     "font-awesome": "4.7.0",
-    "howler": "2.0.2",
     "lodash": "4.17.4",
     "normalize.css": "5.0.0",
     "react": "15.4.1",
