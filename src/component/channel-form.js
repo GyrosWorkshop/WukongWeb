@@ -14,7 +14,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    joinChannel(channel) {
+    dispatchChannel(channel) {
       dispatch(Action.Channel.name.create(channel))
     }
   }
@@ -25,7 +25,7 @@ function mapDispatchToProps(dispatch) {
 export default class ChannelForm extends PureComponent {
   static propTypes = {
     channel: PropTypes.string,
-    joinChannel: PropTypes.func
+    dispatchChannel: PropTypes.func
   }
 
   state = {
@@ -40,7 +40,7 @@ export default class ChannelForm extends PureComponent {
   onInputCommit = (event) => {
     const {input} = this.state
     if (input) {
-      this.props.joinChannel(input)
+      this.props.dispatchChannel(input)
     }
   }
 
