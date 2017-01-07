@@ -10,9 +10,14 @@ const getValue = property => selector =>
 const setDefaultValue = defaultValue => selector =>
   object => selector(object) || defaultValue
 
+const selectState = property => composeSelector(
+  takeState,
+  getValue(property)
+)
+
 const selectConnection = fileSelector => createSelector(
   setDefaultValue({})(fileSelector),
-  composeSelector(takeState, getValue('user.preferences.connection')),
+  selectState('user.preferences.connection'),
   (file, connection) => {
     const {urls, ...properties} = file
     return {
@@ -24,7 +29,7 @@ const selectConnection = fileSelector => createSelector(
 
 const selectAudioQuality = filesSelector => createSelector(
   setDefaultValue([])(filesSelector),
-  composeSelector(takeState, getValue('user.preferences.audioQuality')),
+  selectState('user.preferences.audioQuality'),
   (files, level) => {
     const results = files.filter(file => file.quality.level <= level)
       .sort((file1, file2) => file2.quality.level - file1.quality.level)
@@ -51,5 +56,10 @@ export default {
     getValue('song.preload.files'),
     selectAudioQuality,
     selectConnection
+  ),
+  playerIndex: createSelector(
+    selectState('channel.members'),
+    selectState('song.playing.player'),
+    (members, player) => members.map(member => member.id).indexOf(player)
   )
 }

@@ -2,13 +2,14 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
+import Selector from '../selector'
 import MemberListItem from './member-list-item'
 import style from './member-list.sss'
 
 function mapStateToProps(state) {
   return {
     members: state.channel.members,
-    player: state.song.playing.player
+    index: Selector.playerIndex(state)
   }
 }
 
@@ -21,27 +22,26 @@ function mapDispatchToProps(dispatch) {
 export default class MemberList extends PureComponent {
   static propTypes = {
     members: PropTypes.array,
-    player: PropTypes.string
+    index: PropTypes.number
   }
 
   render() {
-    const {members, player} = this.props
-    const highlight = members.map(member => member.id).indexOf(player)
+    const {members, index} = this.props
     return (
       <div styleName='container' style={{
         transition: 'transform 800ms ease',
         transform: 'translateX(50%)' + `translateX(-${
-          members[highlight]
-            ? highlight * 120 + 60
+          members[index]
+            ? index * 120 + 60
             : members.length * 60
         }px)`
       }}>
-        {members.map((member, index) => (
+        {members.map((member, i) => (
           <MemberListItem key={member.id}
             nickname={member.nickname} avatar={member.avatar}
             style={{
               transition: 'transform 800ms ease',
-              transform: highlight == index
+              transform: index == i
                 ? 'scale(1,1)'
                 : 'scale(0.8,0.8)'
             }}/>
