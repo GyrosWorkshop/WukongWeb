@@ -9,8 +9,10 @@
     margin: auto
 
   & > img
-    max-width: 100%
-    max-height: 500px
+    width: 500px
+
+    @media (max-width: 500px)
+      width: 100%
 
   & > p
     margin-top: 0.6em
