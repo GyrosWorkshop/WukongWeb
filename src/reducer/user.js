@@ -11,7 +11,7 @@ function profile(state = {}, action) {
   }
 }
 
-function preferences(state, action) {
+function preferences(state = {}, action) {
   switch (action.type) {
     case Action.User.preferences.type:
       return {
