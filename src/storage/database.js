@@ -4,7 +4,16 @@ const kStorageKey = 'wukong'
 
 export function open(state = {}) {
   try {
-    return merge(state, JSON.parse(localStorage.getItem(kStorageKey)))
+    return merge({
+      user: {
+        preferences: {
+          listenOnly: false,
+          connection: 0,
+          audioQuality: 0,
+          theme: 0
+        }
+      }
+    }, JSON.parse(localStorage.getItem(kStorageKey)), state)
   } catch (error) {
     return state
   }

@@ -24,6 +24,17 @@ function elapsed(state = 0, action) {
   }
 }
 
+function duration(state = 0, action) {
+  switch (action.type) {
+    case Action.Player.duration.type:
+      return action.duration
+    case Action.Player.reset.type:
+      return 0
+    default:
+      return state
+  }
+}
+
 function ended(state = false, action) {
   switch (action.type) {
     case Action.Player.ended.type:
@@ -58,6 +69,7 @@ function volume(state = 0.5, action) {
 export default combineReducers({
   running,
   elapsed,
+  duration,
   ended,
   downvote,
   volume

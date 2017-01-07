@@ -1,24 +1,19 @@
 import {combineReducers} from 'redux'
-import {pick, shuffle, unary, partialRight} from 'lodash'
+import {shuffle} from 'lodash'
 
 import Action from '../action'
 
 function playlist(state = [], action) {
-  const normalize = unary(partialRight(pick, [
-    'id', 'siteId', 'songId',
-    'title', 'album', 'artist', 'artwork',
-    'link', 'mvLink'
-  ]))
   switch (action.type) {
     case Action.Song.prepend.type:
       return [
-        normalize(action.song),
+        action.song,
         ...state.filter(song => song.id != action.song.id)
       ]
     case Action.Song.append.type:
       return [
         ...state.filter(song => song.id != action.song.id),
-        normalize(action.song)
+        action.song
       ]
     case Action.Song.remove.type:
       return [
@@ -31,7 +26,7 @@ function playlist(state = [], action) {
       return newState
     }
     case Action.Song.assign.type:
-      return [...action.songs.map(normalize)]
+      return [...action.songs]
     case Action.Song.shuffle.type:
       return shuffle(state)
     default:

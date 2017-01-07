@@ -1,5 +1,4 @@
 import {combineReducers} from 'redux'
-import {isEmpty} from 'lodash'
 
 import Action from '../action'
 
@@ -13,13 +12,6 @@ function profile(state = {}, action) {
 }
 
 function preferences(state, action) {
-  const defaults = {
-    listenOnly: false,
-    connection: 0,
-    audioQuality: 0,
-    theme: 0
-  }
-  if (isEmpty(state)) state = defaults
   switch (action.type) {
     case Action.User.preferences.type:
       return {

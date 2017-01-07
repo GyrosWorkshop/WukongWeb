@@ -8,6 +8,11 @@ export const elapsed = {
   create(elapsed) { return {type: this.type, elapsed} }
 }
 
+export const duration = {
+  type: 'PlayerDuration',
+  create(duration) { return {type: this.type, duration} }
+}
+
 export const ended = {
   type: 'PlayerEnded',
   create() { return {type: this.type} }
