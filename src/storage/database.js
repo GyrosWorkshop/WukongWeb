@@ -21,13 +21,12 @@ export function open(state = {}) {
 
 export function save(state = {}) {
   try {
-    state = pick(state, [
+    localStorage.setItem(kStorageKey, JSON.stringify(pick(state, [
       'user.preferences',
       'channel.name',
       'song.playlist',
       'player.volume'
-    ])
-    localStorage.setItem(kStorageKey, JSON.stringify(state))
+    ])))
   } catch (error) {
     localStorage.removeItem(kStorageKey)
   }
