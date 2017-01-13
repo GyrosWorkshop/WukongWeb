@@ -14,7 +14,7 @@
     width: 96px;
     height: 96px;
     border: 2px solid #f09442;
-    border-radius: 48px;
+    border-radius: 50%;
   }
 
   & > p {
