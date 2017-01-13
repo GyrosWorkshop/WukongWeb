@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
 import Selector from '../selector'
-import MemberListItem from './member-list-item'
+import MemberItem from './member-item'
 import style from './member-list.sss'
 
 function mapStateToProps(state) {
@@ -37,7 +37,7 @@ export default class MemberList extends PureComponent {
         }px)`
       }}>
         {members.map((member, i) => (
-          <MemberListItem key={member.id}
+          <MemberItem key={member.id}
             nickname={member.nickname} avatar={member.avatar}
             style={{
               transition: 'transform 800ms ease',
