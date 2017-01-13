@@ -2,7 +2,7 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
-import style from './user-view.sss'
+import style from './user-view.css'
 
 function mapStateToProps(state) {
   return {

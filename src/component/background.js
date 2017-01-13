@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import CSSModules from 'react-css-modules'
 
-import style from './background.sss'
+import style from './background.css'
 
 @CSSModules(style)
 export default class Background extends PureComponent {

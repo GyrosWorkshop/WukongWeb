@@ -4,7 +4,7 @@ import {Redirect} from 'react-router'
 import CSSModules from 'react-css-modules'
 
 import Action from '../action'
-import style from './channel-form.sss'
+import style from './channel-form.css'
 
 function mapStateToProps(state) {
   return {

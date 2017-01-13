@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
 import Selector from '../selector'
-import style from './now-playing.sss'
+import style from './now-playing.css'
 
 function mapStateToProps(state) {
   return {

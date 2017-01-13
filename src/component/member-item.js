@@ -1,7 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 import CSSModules from 'react-css-modules'
 
-import style from './member-item.sss'
+import style from './member-item.css'
 
 @CSSModules(style)
 export default class MemberItem extends PureComponent {

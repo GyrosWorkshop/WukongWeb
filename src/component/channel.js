@@ -5,7 +5,7 @@ import MemberList from './member-list'
 import NowPlaying from './now-playing'
 import ActionBar from './action-bar'
 import PlayerAudio from './player-audio'
-import style from './channel.sss'
+import style from './channel.css'
 
 @CSSModules(style)
 export default class Channel extends PureComponent {

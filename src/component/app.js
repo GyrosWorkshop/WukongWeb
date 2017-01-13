@@ -4,7 +4,7 @@ import {BrowserRouter, Match} from 'react-router'
 import Background from './background'
 import Welcome from './welcome'
 import Channel from './channel'
-import './app.global.sss'
+import './app.global.css'
 
 export default class App extends PureComponent {
   static propTypes = {

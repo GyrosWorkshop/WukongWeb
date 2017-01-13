@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
 import Action from '../action'
-import style from './volume-slider.sss'
+import style from './volume-slider.css'
 
 function mapStateToProps(state) {
   return {
@@ -30,7 +30,9 @@ export default class VolumeSlider extends PureComponent {
   render() {
     return (
       <div styleName='container'>
+        <i className='fa fa-volume-down'/>
         <input type='range'/>
+        <i className='fa fa-volume-up'/>
       </div>
     )
   }

@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 
 import Selector from '../selector'
 import Action from '../action'
-import style from './player-audio.sss'
+import style from './player-audio.css'
 
 function mapStateToProps(state) {
   return {

@@ -32,7 +32,7 @@ const config = {
     }, {
       resource: {
         include: sourcePath,
-        test: /\.global\.sss$/
+        test: /\.global\.css$/
       },
       use: ExtractTextPlugin.extract({
         loader: [{
@@ -41,10 +41,7 @@ const config = {
             sourceMap: true
           }
         }, {
-          loader: 'postcss-loader',
-          query: {
-            parser: 'sugarss'
-          }
+          loader: 'postcss-loader'
         }],
         fallbackLoader: [{
           loader: 'style-loader'
@@ -53,8 +50,8 @@ const config = {
     }, {
       resource: {
         include: sourcePath,
-        test: /\.sss$/,
-        not: [/\.global\.sss$/]
+        test: /\.css$/,
+        not: [/\.global\.css$/]
       },
       use: ExtractTextPlugin.extract({
         loader: [{
@@ -66,10 +63,7 @@ const config = {
             importLoaders: 1
           }
         }, {
-          loader: 'postcss-loader',
-          query: {
-            parser: 'sugarss'
-          }
+          loader: 'postcss-loader'
         }],
         fallbackLoader: [{
           loader: 'style-loader'

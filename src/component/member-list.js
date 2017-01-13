@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 
 import Selector from '../selector'
 import MemberItem from './member-item'
-import style from './member-list.sss'
+import style from './member-list.css'
 
 function mapStateToProps(state) {
   return {
