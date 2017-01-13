@@ -59,7 +59,7 @@ export default class PlayerControlAudio extends PureComponent {
     dispatchDuration: PropTypes.func,
     dispatchEnded: PropTypes.func,
     dispatchReloaded: PropTypes.func,
-    dispatchPlayOwn: PropTypes.func
+    dispatchSelfPlaying: PropTypes.func
   }
 
   setAudioState(audio, url, time) {
@@ -118,6 +118,7 @@ export default class PlayerControlAudio extends PureComponent {
     if (this.props.reload) {
       this.setAudioState(playing, null)
       this.setAudioState(playing, this.props.playing, this.props.time)
+      this.props.dispatchReloaded()
     } else if (this.props.song != prevProps.song
       || Math.abs(this.props.time - prevProps.time) > 10) {
       this.setAudioState(playing, this.props.playing, this.props.time)
@@ -126,7 +127,7 @@ export default class PlayerControlAudio extends PureComponent {
       this.setAudioState(preload, this.props.preload)
     }
     if (!this.props.isSelf && prevProps.isSelf) {
-      this.props.dispatchPlayOwn()
+      this.props.dispatchSelfPlaying()
     }
   }
 
