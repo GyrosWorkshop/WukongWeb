@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 
 import Selector from '../selector'
 import Action from '../action'
-import style from './player-control-audio.sss'
+import style from './player-audio.sss'
 
 function mapStateToProps(state) {
   return {
@@ -44,7 +44,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class PlayerControlAudio extends PureComponent {
+export default class PlayerAudio extends PureComponent {
   static propTypes = {
     playing: PropTypes.string,
     preload: PropTypes.string,

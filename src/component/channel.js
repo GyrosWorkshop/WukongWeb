@@ -3,7 +3,8 @@ import CSSModules from 'react-css-modules'
 
 import MemberList from './member-list'
 import NowPlaying from './now-playing'
-import PlayerControl from './player-control'
+import ActionBar from './action-bar'
+import PlayerAudio from './player-audio'
 import style from './channel.sss'
 
 @CSSModules(style)
@@ -13,7 +14,8 @@ export default class Channel extends PureComponent {
       <div styleName='container'>
         <MemberList/>
         <NowPlaying/>
-        <PlayerControl/>
+        <ActionBar/>
+        <PlayerAudio/>
       </div>
     )
   }

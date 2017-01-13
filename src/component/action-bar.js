@@ -1,15 +1,15 @@
 import React, {PureComponent} from 'react'
 import CSSModules from 'react-css-modules'
 
-import PlayerControlAudio from './player-control-audio'
-import style from './player-control.sss'
+import VolumeSlider from './volume-slider'
+import style from './action-bar.sss'
 
 @CSSModules(style)
-export default class PlayerControl extends PureComponent {
+export default class ActionBar extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        <PlayerControlAudio/>
+        <VolumeSlider/>
       </div>
     )
   }
