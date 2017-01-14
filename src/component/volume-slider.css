@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  align-items: center;
   color: #000;
   font-size: 20px;
 
@@ -24,8 +25,8 @@
   }
 
   & > input[type=range] {
-    appearance: none;
     flex: 1;
+    appearance: none;
 
     :root {
       --thumb: {
