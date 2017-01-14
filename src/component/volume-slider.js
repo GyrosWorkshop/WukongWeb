@@ -53,12 +53,12 @@ export default class VolumeSlider extends PureComponent {
     const {canSetVolume} = this.state
     return canSetVolume && (
       <div styleName='container'>
-        <button onTouchTap={this.onMinAction}>
+        <button onClick={this.onMinAction}>
           <i className='fa fa-volume-down'/>
         </button>
         <input type='range' min={0} max={1} step={0.01}
           value={volume} onChange={this.onInputChange}/>
-        <button onTouchTap={this.onMaxAction}>
+        <button onClick={this.onMaxAction}>
           <i className='fa fa-volume-up'/>
         </button>
       </div>

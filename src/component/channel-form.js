@@ -50,7 +50,7 @@ export default class ChannelForm extends PureComponent {
     return (
       <div styleName='container'>
         <input value={input} onChange={this.onInputChange}/>
-        <button onTouchTap={this.onInputCommit}>
+        <button onClick={this.onInputCommit}>
           <i className='fa fa-play'/>
           <span>Wukong</span>
         </button>

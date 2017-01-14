@@ -23,8 +23,7 @@ export default class ButtonItem extends PureComponent {
   render() {
     const {icon, hidden, disabled} = this.props
     return !hidden && (
-      <button styleName='button' disabled={disabled}
-        onTouchTap={this.onAction}>
+      <button styleName='button' disabled={disabled} onClick={this.onAction}>
         <i className={`fa fa-${icon}`}/>
         {this.props.children}
       </button>

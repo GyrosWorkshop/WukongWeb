@@ -2,7 +2,6 @@ import 'babel-polyfill'
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import store from './store'
 import App from './component/app'
@@ -31,7 +30,6 @@ function renderApp() {
   })(), document.getElementById('app'))
 }
 
-injectTapEventPlugin()
 renderApp()
 if (!__env.production && module.hot) {
   module.hot.accept('./component/app', renderApp)
