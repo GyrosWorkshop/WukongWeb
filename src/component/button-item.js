@@ -9,7 +9,8 @@ export default class ButtonItem extends PureComponent {
     icon: PropTypes.string,
     hidden: PropTypes.bool,
     disabled: PropTypes.bool,
-    action: PropTypes.func
+    action: PropTypes.func,
+    children: PropTypes.node
   }
 
   onAction = (event) => {
@@ -25,6 +26,7 @@ export default class ButtonItem extends PureComponent {
       <button styleName='button' disabled={disabled}
         onTouchTap={this.onAction}>
         <i className={`fa fa-${icon}`}/>
+        {this.props.children}
       </button>
     )
   }
