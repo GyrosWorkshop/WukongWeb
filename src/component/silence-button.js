@@ -4,38 +4,38 @@ import CSSModules from 'react-css-modules'
 
 import Action from '../action'
 import ButtonItem from './button-item'
-import style from './reload-button.css'
+import style from './silence-button.css'
 
 function mapStateToProps(state) {
   return {
-    running: state.player.running
+    listenOnly: state.user.preferences.listenOnly
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchReload() {
-      dispatch(Action.Player.reload.create(true))
+    dispatchListenOnly(listenOnly) {
+      dispatch(Action.User.preferences.create({listenOnly}))
     }
   }
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class ReloadButton extends PureComponent {
+export default class SilenceButton extends PureComponent {
   static propTypes = {
-    running: PropTypes.bool,
-    dispatchReload: PropTypes.func
+    listenOnly: PropTypes.bool,
+    dispatchListenOnly: PropTypes.func
   }
 
   onButtonAction = (event) => {
-    this.props.dispatchReload()
+    this.props.dispatchListenOnly(!this.props.listenOnly)
   }
 
   render() {
-    const {running} = this.props
+    const {listenOnly} = this.props
     return (
-      <ButtonItem icon='refresh' hidden={running}
+      <ButtonItem icon={listenOnly ? 'microphone-slash' : 'microphone'}
         action={this.onButtonAction}/>
     )
   }

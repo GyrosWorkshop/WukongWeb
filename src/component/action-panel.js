@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import ButtonBar from './button-bar'
 import ReloadButton from './reload-button'
 import DownvoteButton from './downvote-button'
+import SilenceButton from './silence-button'
 import QualityButton from './quality-button'
 import ConnectionButton from './connection-button'
 import VolumeSlider from './volume-slider'
@@ -17,8 +18,9 @@ export default class ActionPanel extends PureComponent {
         <ButtonBar>
           <ReloadButton/>
           <DownvoteButton/>
-          <QualityButton/>
+          <SilenceButton/>
           <ConnectionButton/>
+          <QualityButton/>
         </ButtonBar>
         <VolumeSlider/>
       </div>

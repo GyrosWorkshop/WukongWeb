@@ -28,7 +28,7 @@ export default class DownvoteButton extends PureComponent {
     dispatchDownvote: PropTypes.func
   }
 
-  onAction = (event) => {
+  onButtonAction = (event) => {
     this.props.dispatchDownvote()
   }
 
@@ -36,7 +36,7 @@ export default class DownvoteButton extends PureComponent {
     const {downvote} = this.props
     return (
       <ButtonItem icon='thumbs-o-down' disabled={downvote}
-        action={this.onAction}/>
+        action={this.onButtonAction}/>
     )
   }
 }
