@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
 import Action from '../action'
-import style from './reload-button.css'
+import ButtonItem from './button-item'
+import style from './button-bar.css'
 
 function mapStateToProps(state) {
   return {
@@ -32,11 +33,12 @@ export default class ReloadButton extends PureComponent {
   }
 
   render() {
-    const {running} = this.props
-    return !running && (
-      <button styleName='button' onTouchTap={this.onReloadAction}>
-        <i className='fa fa-refresh'/>
-      </button>
+    return (
+      <div styleName='container'>
+        <ButtonItem icon='refresh'/>
+        <ButtonItem icon='refresh'/>
+        <ButtonItem icon='refresh'/>
+      </div>
     )
   }
 }

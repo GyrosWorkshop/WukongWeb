@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import CSSModules from 'react-css-modules'
 
-import ReloadButton from './reload-button'
+import ButtonBar from './button-bar'
 import VolumeSlider from './volume-slider'
 import style from './action-panel.css'
 
@@ -10,7 +10,7 @@ export default class ActionPanel extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        <ReloadButton/>
+        <ButtonBar/>
         <VolumeSlider/>
       </div>
     )
