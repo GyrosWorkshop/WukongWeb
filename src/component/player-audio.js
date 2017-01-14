@@ -110,25 +110,26 @@ export default class PlayerAudio extends PureComponent {
     ]) playing.removeEventListener(type, this.onAudioEvent)
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  shouldComponentUpdate(nextProps, nextState) {
     const {playing, preload} = this.refs
-    if (this.props.volume != prevProps.volume) {
-      playing.volume = this.props.volume
+    if (this.props.volume != nextProps.volume) {
+      playing.volume = nextProps.volume
     }
-    if (this.props.reload) {
+    if (nextProps.reload) {
       this.setAudioState(playing, null)
-      this.setAudioState(playing, this.props.playing, this.props.time)
-      this.props.dispatchReloaded()
-    } else if (this.props.song != prevProps.song
-      || Math.abs(this.props.time - prevProps.time) > 10) {
-      this.setAudioState(playing, this.props.playing, this.props.time)
+      this.setAudioState(playing, nextProps.playing, nextProps.time)
+      nextProps.dispatchReloaded()
+    } else if (this.props.song != nextProps.song
+      || Math.abs(this.props.time - nextProps.time) > 10) {
+      this.setAudioState(playing, nextProps.playing, nextProps.time)
     }
-    if (this.props.preload != prevProps.preload) {
-      this.setAudioState(preload, this.props.preload)
+    if (this.props.preload != nextProps.preload) {
+      this.setAudioState(preload, nextProps.preload)
     }
-    if (!this.props.isSelf && prevProps.isSelf) {
-      this.props.dispatchSelfPlaying()
+    if (!this.props.isSelf && nextProps.isSelf) {
+      nextProps.dispatchSelfPlaying()
     }
+    return false
   }
 
   render() {
