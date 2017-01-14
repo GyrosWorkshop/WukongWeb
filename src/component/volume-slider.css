@@ -30,21 +30,20 @@
 
     :root {
       --thumb: {
-        height: 1em;
-        width: 1em;
+        height: 0.8em;
+        width: 0.8em;
         background: #f09442;
         border: solid 1px #5f5f5f;
         border-radius: 50%;
         transition: transform 200ms ease;
-        transform: scale(0.75, 0.75);
       };
       --thumb-highlight: {
-        transform: none;
+        transform: scale(1.2, 1.2);
       };
       --track: {
-        height: 2px;
+        height: 0.1em;
         background: #5f5f5f;
-        border-radius: 1px;
+        border-radius: 0.05em;
       };
     }
 
@@ -52,7 +51,7 @@
       @apply --thumb;
 
       appearance: none;
-      margin-top: -9px;
+      margin-top: -0.35em;
     }
 
     &::-moz-range-thumb {
