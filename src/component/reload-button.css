@@ -1,0 +1,12 @@
+.button {
+  background: transparent;
+  outline: none;
+  border: none;
+  font-size: 20px;
+  padding: 0.25em;
+
+  & > i {
+    width: 1em;
+    height: 1em;
+  }
+}
