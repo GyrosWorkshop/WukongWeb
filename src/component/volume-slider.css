@@ -1,7 +1,7 @@
 .container {
   display: flex;
   color: #000;
-  font-size: 16px;
+  font-size: 20px;
 
   & > * {
     background: transparent;
@@ -51,7 +51,7 @@
       @apply --thumb;
 
       appearance: none;
-      margin-top: -7px;
+      margin-top: -9px;
     }
 
     &::-moz-range-thumb {
@@ -64,8 +64,6 @@
 
     &::-webkit-slider-runnable-track {
       @apply --track;
-
-      margin-bottom: 1px;
     }
 
     &::-moz-range-track {
