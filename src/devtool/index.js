@@ -26,7 +26,8 @@ export default createDevTools(
     <FilteredMonitor
       blacklist={[
         Action.Player.elapsed.type,
-        Action.Player.duration.type
+        Action.Player.duration.type,
+        Action.Player.volume.type
       ]}
       actionsFilter={action => {
         switch (action.type) {
