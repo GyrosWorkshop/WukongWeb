@@ -19,4 +19,8 @@
   &:active {
     color: #d8853b;
   }
+
+  &:disabled {
+    color: #969696;
+  }
 }

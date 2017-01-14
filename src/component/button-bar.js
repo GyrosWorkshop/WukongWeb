@@ -8,7 +8,8 @@ import style from './button-bar.css'
 
 function mapStateToProps(state) {
   return {
-    running: state.player.running
+    running: state.player.running,
+    downvote: state.player.downvote
   }
 }
 
@@ -16,6 +17,9 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatchReload() {
       dispatch(Action.Player.reload.create(true))
+    },
+    dispatchDownvote() {
+      dispatch(Action.Player.downvote.create())
     }
   }
 }
@@ -25,19 +29,27 @@ function mapDispatchToProps(dispatch) {
 export default class ReloadButton extends PureComponent {
   static propTypes = {
     running: PropTypes.bool,
-    dispatchReload: PropTypes.func
+    downvote: PropTypes.bool,
+    dispatchReload: PropTypes.func,
+    dispatchDownvote: PropTypes.func
   }
 
   onReloadAction = (event) => {
     this.props.dispatchReload()
   }
 
+  onDownvoteAction = (event) => {
+    this.props.dispatchDownvote()
+  }
+
   render() {
+    const {running, downvote} = this.props
     return (
       <div styleName='container'>
-        <ButtonItem icon='refresh'/>
-        <ButtonItem icon='refresh'/>
-        <ButtonItem icon='refresh'/>
+        <ButtonItem icon='refresh' hidden={running}
+          action={this.onReloadAction}/>
+        <ButtonItem icon='thumbs-o-down' disabled={downvote}
+          action={this.onDownvoteAction}/>
       </div>
     )
   }
