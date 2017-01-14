@@ -27,6 +27,14 @@ export default class VolumeSlider extends PureComponent {
     dispatchVolume: PropTypes.func
   }
 
+  state = {
+    canSetVolume: (() => {
+      const audio = document.createElement('audio')
+      audio.volume = 0
+      return audio.volume == 0
+    })()
+  }
+
   onInputChange = (event) => {
     const input = parseFloat(event.target.value)
     this.props.dispatchVolume(input)
@@ -42,7 +50,8 @@ export default class VolumeSlider extends PureComponent {
 
   render() {
     const {volume} = this.props
-    return (
+    const {canSetVolume} = this.state
+    return canSetVolume && (
       <div styleName='container'>
         <button onTouchTap={this.onMinAction}>
           <i className='fa fa-volume-down'/>
