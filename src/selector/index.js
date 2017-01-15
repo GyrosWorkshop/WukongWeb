@@ -66,5 +66,11 @@ export default {
     selectState('user.id'),
     selectState('song.playing.player'),
     (user, player) => user && player && (user == player)
+  ),
+  currentSongs: createSelector(
+    selectState('song.playlist'),
+    selectState('search.results'),
+    selectState('search.keyword'),
+    (playlist, results, keyword) => keyword ? results : playlist
   )
 }
