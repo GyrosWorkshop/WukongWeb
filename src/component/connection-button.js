@@ -29,13 +29,13 @@ export default class ConnectionButton extends PureComponent {
   }
 
   onButtonAction = (event) => {
-    this.setState({open: true})
+    this.props.dispatchConnection((this.props.connection + 1) % 2)
   }
 
   render() {
     const {connection} = this.props
     return (
-      <ButtonItem icon='plug'
+      <ButtonItem icon={connection ? 'chain' : 'chain-broken'}
         action={this.onButtonAction}/>
     )
   }
