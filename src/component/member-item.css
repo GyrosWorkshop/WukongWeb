@@ -26,12 +26,12 @@
     transform: translate(48px, -12px) translateX(-50%);
   }
 
-  & .tooltip {
+  & > .tooltip {
     transition: opacity 200ms ease;
     opacity: 0;
   }
 
-  &:hover .tooltip {
+  &:hover > .tooltip {
     opacity: 1;
   }
 }
