@@ -31,20 +31,14 @@ export default class MemberList extends PureComponent {
       <div styleName='container' style={{
         transition: 'transform 800ms ease',
         transform: 'translateX(50%)' + `translateX(-${
-          members[index]
-            ? index * 120 + 60
-            : members.length * 60
+          members[index] ? index * 120 + 60 : members.length * 60
         }px)`
       }}>
-        {members.map((member, i) => (
-          <MemberItem key={member.id}
-            nickname={member.nickname} avatar={member.avatar}
-            style={{
-              transition: 'transform 800ms ease',
-              transform: index == i
-                ? 'scale(1,1)'
-                : 'scale(0.8,0.8)'
-            }}/>
+        {members.map(({id, nickname, avatar}, i) => (
+          <MemberItem key={id} nickname={nickname} avatar={avatar} style={{
+            transition: 'transform 800ms ease',
+            transform: index == i ? 'scale(1,1)' : 'scale(0.8,0.8)'
+          }}/>
         ))}
       </div>
     )
