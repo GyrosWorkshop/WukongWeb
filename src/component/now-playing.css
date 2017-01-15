@@ -30,8 +30,7 @@
       text-decoration: none;
       transition: color 200ms ease;
 
-      &:hover,
-      &:focus {
+      &:hover {
         color: #f09442;
       }
 
