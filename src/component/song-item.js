@@ -9,13 +9,15 @@ export default class SongItem extends PureComponent {
     title: PropTypes.string,
     album: PropTypes.string,
     artist: PropTypes.string,
-    link: PropTypes.string
+    link: PropTypes.string,
+    icon: PropTypes.string
   }
 
   render() {
-    const {title, album, artist, link} = this.props
+    const {title, album, artist, link, icon} = this.props
     return (
       <div styleName='container'>
+        <img src={icon}/>
         <a href={link} target='_blank'>{title}</a>
         <span>{artist}{artist && album && ' — '}{album}</span>
       </div>

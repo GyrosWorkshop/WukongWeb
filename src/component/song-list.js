@@ -27,9 +27,13 @@ export default class SongList extends PureComponent {
     const {songs} = this.props
     return (
       <div styleName='container'>
-        {songs.map(({id, title, album, artist, link}) => (
+        {songs.map(({id, siteId, title, album, artist, link}) => (
           <SongItem key={id} title={title} album={album} artist={artist}
-            link={link}/>
+            link={link} icon={{
+              'netease-cloud-music': 'https://music.163.com/favicon.ico',
+              'QQMusic': 'https://y.qq.com/favicon.ico',
+              'Xiami': 'https://www.xiami.com/favicon.ico'
+            }[siteId]}/>
         ))}
       </div>
     )
