@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 
 import Selector from '../selector'
+import SongItem from './song-item'
 import style from './song-list.css'
 
 function mapStateToProps(state) {
@@ -23,8 +24,13 @@ export default class SongList extends PureComponent {
   }
 
   render() {
+    const {songs} = this.props
     return (
       <div styleName='container'>
+        {songs.map(({id, title, album, artist, link}) => (
+          <SongItem key={id} title={title} album={album} artist={artist}
+            link={link}/>
+        ))}
       </div>
     )
   }
