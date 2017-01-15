@@ -10,7 +10,7 @@ function mapStateToProps(state) {
   return {
     format: state.song.playing.format,
     quality: state.song.playing.quality,
-    preferredQuality: state.user.preferences.audioQuality
+    preferred: state.user.preferences.audioQuality
   }
 }
 
@@ -28,24 +28,32 @@ export default class QualityButton extends PureComponent {
   static propTypes = {
     format: PropTypes.string,
     quality: PropTypes.object,
-    preferredQuality: PropTypes.number,
+    preferred: PropTypes.number,
     dispatchQuality: PropTypes.func
   }
 
   onButtonAction = (event) => {
-    this.setState({open: true})
+    this.props.dispatchQuality((this.props.preferred + 1) % 4)
   }
 
   render() {
-    const {/*format, quality, */preferredQuality} = this.props
-    const format = 'mp3'
-    const quality = {
-      level: 2,
-      description: 'high (320kbps)'
-    }
+    const {format, quality, preferred} = this.props
     return (
       <ButtonItem icon='headphones'
-        action={this.onButtonAction}/>
+        action={this.onButtonAction}>
+        {(format || quality) && (<p>
+          Playing: {
+            format || 'unknown'
+          } {
+            quality && quality.description
+          }
+        </p>)}
+        <p>
+          Preferred Quality: {
+            ['low', 'medium', 'high', 'lossless'][preferred]
+          }
+        </p>
+      </ButtonItem>
     )
   }
 }

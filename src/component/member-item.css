@@ -27,11 +27,14 @@
   }
 
   & > .tooltip {
+    visibility: hidden;
     transition: opacity 200ms ease;
     opacity: 0;
   }
 
-  &:hover > .tooltip {
+  &:hover > .tooltip,
+  &:focus > .tooltip {
+    visibility: visible;
     opacity: 1;
   }
 }

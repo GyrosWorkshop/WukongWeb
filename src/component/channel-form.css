@@ -19,7 +19,8 @@
     border: 2px solid #f09442;
     transition: border-color 200ms ease;
 
-    &:hover {
+    &:hover,
+    &:focus {
       border-color: #f19e54;
     }
 
@@ -33,7 +34,8 @@
     background: #f09442;
     transition: background 200ms ease;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: #f19e54;
     }
 

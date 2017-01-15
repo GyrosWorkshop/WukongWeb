@@ -36,7 +36,9 @@ export default class ReloadButton extends PureComponent {
     const {running} = this.props
     return (
       <ButtonItem icon='refresh' hidden={running}
-        action={this.onButtonAction}/>
+        action={this.onButtonAction}>
+        <p>Reload Song</p>
+      </ButtonItem>
     )
   }
 }

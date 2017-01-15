@@ -36,7 +36,9 @@ export default class ConnectionButton extends PureComponent {
     const {connection} = this.props
     return (
       <ButtonItem icon={connection ? 'chain' : 'chain-broken'}
-        action={this.onButtonAction}/>
+        action={this.onButtonAction}>
+        <p>Use CDN: {connection ? 'On' : 'Off'}</p>
+      </ButtonItem>
     )
   }
 }

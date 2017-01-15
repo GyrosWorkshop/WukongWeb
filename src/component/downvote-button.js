@@ -36,7 +36,9 @@ export default class DownvoteButton extends PureComponent {
     const {downvote} = this.props
     return (
       <ButtonItem icon='thumbs-o-down' disabled={downvote}
-        action={this.onButtonAction}/>
+        action={this.onButtonAction}>
+        <p>Downvote Song</p>
+      </ButtonItem>
     )
   }
 }

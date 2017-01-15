@@ -36,7 +36,9 @@ export default class SilenceButton extends PureComponent {
     const {listenOnly} = this.props
     return (
       <ButtonItem icon={listenOnly ? 'user-secret' : 'user'}
-        action={this.onButtonAction}/>
+        action={this.onButtonAction}>
+        <p>Listen Only: {listenOnly ? 'On' : 'Off'}</p>
+      </ButtonItem>
     )
   }
 }

@@ -10,9 +10,10 @@ export default class ButtonBar extends PureComponent {
   }
 
   render() {
+    const {children} = this.props
     return (
       <div styleName='container'>
-        {this.props.children}
+        {children}
       </div>
     )
   }
