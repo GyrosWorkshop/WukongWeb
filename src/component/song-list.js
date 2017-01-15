@@ -8,7 +8,8 @@ import style from './song-list.css'
 
 function mapStateToProps(state) {
   return {
-    songs: Selector.currentSongs(state)
+    songs: Selector.currentSongs(state),
+    search: Selector.currentSearch(state)
   }
 }
 
@@ -20,11 +21,12 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class SongList extends PureComponent {
   static propTypes = {
-    songs: PropTypes.array
+    songs: PropTypes.array,
+    search: PropTypes.bool
   }
 
   render() {
-    const {songs} = this.props
+    const {songs, search} = this.props
     return (
       <div styleName='container'>
         {songs.map(({id, siteId, title, album, artist, link}) => (
@@ -33,7 +35,8 @@ export default class SongList extends PureComponent {
               'netease-cloud-music': 'https://music.163.com/favicon.ico',
               'QQMusic': 'https://y.qq.com/favicon.ico',
               'Xiami': 'https://www.xiami.com/favicon.ico'
-            }[siteId]}/>
+            }[siteId]}>
+          </SongItem>
         ))}
       </div>
     )

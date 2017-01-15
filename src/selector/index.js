@@ -72,5 +72,9 @@ export default {
     selectState('search.results'),
     selectState('search.keyword'),
     (playlist, results, keyword) => keyword ? results : playlist
+  ),
+  currentSearch: createSelector(
+    selectState('search.keyword'),
+    (keyword) => !!keyword
   )
 }
