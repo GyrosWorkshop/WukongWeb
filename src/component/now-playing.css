@@ -1,22 +1,23 @@
 .container {
   width: 100%;
-  margin: 12px 0;
+  margin: 24px 0;
   font-size: 18px;
   color: #000;
 
   & > * {
     display: block;
+    width: 100%;
     margin: auto;
   }
 
   & > img {
-    width: 100%;
     max-width: 500px;
   }
 
   & > p {
     margin-top: 0.6em;
     text-align: center;
+    overflow-wrap: break-word;
 
     &:first-of-type {
       font-size: 1.2em;
