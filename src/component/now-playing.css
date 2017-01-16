@@ -10,11 +10,8 @@
   }
 
   & > img {
-    width: 500px;
-
-    @media (max-width: 500px) {
-      width: 100%;
-    }
+    width: 100%;
+    max-width: 500px;
   }
 
   & > p {

@@ -1,3 +1,46 @@
 .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin: 8px 0;
 
+  & > * {
+    display: block;
+    margin: 0;
+  }
+
+  & > img {
+    width: 32px;
+    height: 32px;
+  }
+
+  & > p {
+    flex: 1;
+    margin: 0 0.3em;
+    color: #8a8a8a;
+    overflow: hidden;
+
+    & > * {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    & > :first-child {
+      font-size: 1.2em;
+      color: #000;
+    }
+
+    & > a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 200ms ease;
+
+      &:hover {
+        color: #f09442;
+      }
+    }
+  }
 }
