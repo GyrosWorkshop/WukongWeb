@@ -7,13 +7,14 @@ import style from './song-button.css'
 export default class SongButton extends PureComponent {
   static propTypes = {
     icon: PropTypes.string,
-    action: PropTypes.func
+    action: PropTypes.func,
+    context: PropTypes.any
   }
 
   onButtonAction = (event) => {
-    const {action} = this.props
+    const {action, context} = this.props
     if (action) {
-      action()
+      action(context)
     }
   }
 
