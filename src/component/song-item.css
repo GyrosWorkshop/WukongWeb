@@ -24,6 +24,7 @@
 
     & > * {
       display: block;
+      max-width: max-content;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
