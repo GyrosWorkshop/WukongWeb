@@ -1,10 +1,10 @@
 import React, {PureComponent, PropTypes} from 'react'
 import CSSModules from 'react-css-modules'
 
-import style from './button-item.css'
+import style from './flat-button.css'
 
 @CSSModules(style)
-export default class ButtonItem extends PureComponent {
+export default class FlatButton extends PureComponent {
   static propTypes = {
     icon: PropTypes.string,
     hidden: PropTypes.bool,

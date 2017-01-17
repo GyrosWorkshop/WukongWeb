@@ -2,7 +2,7 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import Action from '../action'
-import ButtonItem from './button-item'
+import FlatButton from './flat-button'
 
 function mapStateToProps(state) {
   return {
@@ -32,10 +32,10 @@ export default class SilenceButton extends PureComponent {
   render() {
     const {listenOnly} = this.props
     return (
-      <ButtonItem icon={listenOnly ? 'user-secret' : 'user'}
+      <FlatButton icon={listenOnly ? 'user-secret' : 'user'}
         action={this.onButtonAction}>
         <p>Listen Only: {listenOnly ? 'On' : 'Off'}</p>
-      </ButtonItem>
+      </FlatButton>
     )
   }
 }

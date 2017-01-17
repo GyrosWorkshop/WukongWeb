@@ -2,7 +2,7 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import Action from '../action'
-import ButtonItem from './button-item'
+import FlatButton from './flat-button'
 
 function mapStateToProps(state) {
   return {
@@ -36,7 +36,7 @@ export default class QualityButton extends PureComponent {
   render() {
     const {format, quality, preferred} = this.props
     return (
-      <ButtonItem icon='headphones'
+      <FlatButton icon='headphones'
         action={this.onButtonAction}>
         {(format || quality) && <p>
           Playing: {
@@ -50,7 +50,7 @@ export default class QualityButton extends PureComponent {
             ['low', 'medium', 'high', 'lossless'][preferred]
           }
         </p>
-      </ButtonItem>
+      </FlatButton>
     )
   }
 }
