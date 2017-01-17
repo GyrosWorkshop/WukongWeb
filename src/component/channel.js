@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import MemberList from './member-list'
 import NowPlaying from './now-playing'
 import ActionPanel from './action-panel'
+import SearchForm from './search-form'
 import SongList from './song-list'
 import PlayerAudio from './player-audio'
 import style from './channel.css'
@@ -16,6 +17,7 @@ export default class Channel extends PureComponent {
         <MemberList/>
         <NowPlaying/>
         <ActionPanel/>
+        <SearchForm/>
         <SongList/>
         <PlayerAudio/>
       </div>

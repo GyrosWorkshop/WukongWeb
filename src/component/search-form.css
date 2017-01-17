@@ -1,0 +1,46 @@
+.container {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+
+  & > * {
+    display: block;
+    padding: 8px;
+    margin: 0px;
+    background: transparent;
+    outline: none;
+    border: 2px solid #f09442;
+  }
+
+  & > input {
+    flex: 1;
+    color: #f09442;
+    border-right-width: 0;
+    border-radius: 4px 0 0 4px;
+  }
+
+  & > button {
+    color: #fff;
+    background: #f09442;
+    border-radius: 0 4px 4px 0;
+    transition: background 200ms ease, border-color 200ms ease;
+
+    & > i {
+      width: 1em;
+      height: 1em;
+    }
+
+    &:hover {
+      background: #f19e54;
+      border-color: #f19e54;
+    }
+
+    &:active {
+      background: #d8853b;
+      border-color: #d8853b;
+    }
+  }
+}
