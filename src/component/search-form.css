@@ -9,7 +9,7 @@
   & > * {
     display: block;
     padding: 8px;
-    margin: 0px;
+    margin: 0;
     background: transparent;
     outline: none;
     border: 2px solid #f09442;
