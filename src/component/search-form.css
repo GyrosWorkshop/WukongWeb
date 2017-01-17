@@ -8,8 +8,7 @@
 
   & > * {
     display: block;
-    padding: 8px;
-    margin: 0;
+    padding: 0.5em;
     background: transparent;
     outline: none;
     border: 2px solid #f09442;
