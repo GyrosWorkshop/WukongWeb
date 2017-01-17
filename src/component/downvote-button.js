@@ -2,7 +2,7 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import Action from '../action'
-import FlatButton from './flat-button'
+import ButtonItem from './button-item'
 
 function mapStateToProps(state) {
   return {
@@ -32,10 +32,10 @@ export default class DownvoteButton extends PureComponent {
   render() {
     const {downvote} = this.props
     return (
-      <FlatButton icon='thumbs-o-down' disabled={downvote}
+      <ButtonItem icon='thumbs-o-down' disabled={downvote}
         action={this.onButtonAction}>
         <p>Downvote Song</p>
-      </FlatButton>
+      </ButtonItem>
     )
   }
 }

@@ -2,7 +2,7 @@ import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 import Action from '../action'
-import FlatButton from './flat-button'
+import ButtonItem from './button-item'
 
 function mapStateToProps(state) {
   return {
@@ -32,10 +32,10 @@ export default class ConnectionButton extends PureComponent {
   render() {
     const {connection} = this.props
     return (
-      <FlatButton icon={connection ? 'chain' : 'chain-broken'}
+      <ButtonItem icon={connection ? 'chain' : 'chain-broken'}
         action={this.onButtonAction}>
         <p>Use CDN: {connection ? 'On' : 'Off'}</p>
-      </FlatButton>
+      </ButtonItem>
     )
   }
 }
