@@ -13,7 +13,7 @@ export default class ButtonItem extends PureComponent {
     children: PropTypes.node
   }
 
-  onButtonAction = (event) => {
+  onButtonClick = (event) => {
     const {hidden, disabled, action} = this.props
     if (!hidden && !disabled && action) {
       action()
@@ -24,7 +24,7 @@ export default class ButtonItem extends PureComponent {
     const {icon, hidden, disabled, children} = this.props
     return !hidden && (
       <div styleName='container'>
-        <button disabled={disabled} onClick={this.onButtonAction}>
+        <button disabled={disabled} onClick={this.onButtonClick}>
           <i className={`fa fa-${icon}`}/>
         </button>
         {children && <div styleName='tooltip'>{children}</div>}

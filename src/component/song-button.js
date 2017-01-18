@@ -11,7 +11,7 @@ export default class SongButton extends PureComponent {
     context: PropTypes.any
   }
 
-  onButtonAction = (event) => {
+  onButtonClick = (event) => {
     const {action, context} = this.props
     if (action) {
       action(context)
@@ -22,7 +22,7 @@ export default class SongButton extends PureComponent {
     const {icon} = this.props
     return (
       <div styleName='container'>
-        <button onClick={this.onButtonAction}>
+        <button onClick={this.onButtonClick}>
           <i className={`fa fa-${icon}`}/>
         </button>
       </div>

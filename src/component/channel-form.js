@@ -29,28 +29,28 @@ export default class ChannelForm extends PureComponent {
   }
 
   state = {
-    input: ''
+    value: ''
   }
 
   onInputChange = (event) => {
-    const input = event.target.value
-    this.setState({input})
+    const value = event.target.value
+    this.setState({value})
   }
 
-  onInputCommit = (event) => {
-    const {input} = this.state
-    if (input) {
-      this.props.dispatchChannel(input)
+  onButtonClick = (event) => {
+    const {value} = this.state
+    if (value) {
+      this.props.dispatchChannel(value)
     }
   }
 
   render() {
     const {channel} = this.props
-    const {input} = this.state
+    const {value} = this.state
     return (
       <div styleName='container'>
-        <input value={input} onChange={this.onInputChange}/>
-        <button onClick={this.onInputCommit}>
+        <input value={value} onChange={this.onInputChange}/>
+        <button onClick={this.onButtonClick}>
           <i className='fa fa-play'/>
           <span>Wukong</span>
         </button>
