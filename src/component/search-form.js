@@ -25,38 +25,38 @@ export default class SearchForm extends PureComponent {
   }
 
   state = {
-    input: ''
+    value: ''
   }
 
-  updateInput(input, emitChange) {
-    this.setState({input})
-    if (emitChange) this.props.dispatchKeyword(input)
+  updateValue(value, emitChange) {
+    this.setState({value})
+    if (emitChange) this.props.dispatchKeyword(value)
   }
 
   onInputChange = (event) => {
-    const input = event.target.value
-    this.updateInput(input, !input)
+    const value = event.target.value
+    this.updateValue(value, !value)
   }
 
   onKeyDown = (event) => {
     if (event.key == 'Enter') {
-      this.updateInput(this.state.input, true)
+      this.updateValue(this.state.value, true)
     }
   }
 
-  onButtonAction = (event) => {
-    this.updateInput(this.state.input, true)
+  onButtonClick = (event) => {
+    this.refs.input.focus()
   }
 
   render() {
-    const {input} = this.state
+    const {value} = this.state
     return (
       <div styleName='container'>
-        <input value={input} onChange={this.onInputChange}
-          onKeyDown={this.onKeyDown}/>
-        <button onClick={this.onButtonAction}>
+        <button onClick={this.onButtonClick}>
           <i className='fa fa-search'/>
         </button>
+        <input ref='input' value={value} onChange={this.onInputChange}
+          onKeyDown={this.onKeyDown}/>
       </div>
     )
   }

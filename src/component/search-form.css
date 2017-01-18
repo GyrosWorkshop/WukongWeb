@@ -4,42 +4,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #000;
   font-size: 16px;
 
   & > * {
     display: block;
-    padding: 0.5em;
     background: transparent;
     outline: none;
-    border: 2px solid #f09442;
-  }
-
-  & > input {
-    flex: 1;
-    color: #f09442;
-    border-right-width: 0;
-    border-radius: 4px 0 0 4px;
+    border: none;
   }
 
   & > button {
-    color: #fff;
-    background: #f09442;
-    border-radius: 0 4px 4px 0;
-    transition: background 200ms ease, border-color 200ms ease;
+    font-size: 1.25em;
+    padding: 0.25em;
 
     & > i {
       width: 1em;
       height: 1em;
     }
+  }
+
+  & > input {
+    flex: 1;
+    padding: 0.25em 0;
+    margin: 0 0.5em;
+    transition: box-shadow 200ms ease;
 
     &:hover {
-      background: #f19e54;
-      border-color: #f19e54;
+      box-shadow: 0 1px 0 0 #ccc;
     }
 
-    &:active {
-      background: #d8853b;
-      border-color: #d8853b;
+    &:focus {
+      box-shadow: 0 1px 0 0 #333;
     }
   }
 }
