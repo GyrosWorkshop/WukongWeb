@@ -7,6 +7,7 @@ import SyncButton from './sync-button'
 import ShuffleButton from './shuffle-button'
 import ButtonItem from './button-item'
 import CollapsedPane from './collapsed-pane'
+import ConfigForm from './config-form'
 import style from './omni-panel.css'
 
 @CSSModules(style)
@@ -32,7 +33,7 @@ export default class OmniPanel extends PureComponent {
           </ButtonBar>
         </div>
         <CollapsedPane open={expanded}>
-          <div style={{background: '#ccc', height: 100}}/>
+          <ConfigForm/>
         </CollapsedPane>
       </div>
     )

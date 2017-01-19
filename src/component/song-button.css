@@ -1,11 +1,10 @@
 .container {
-  font-size: 12px;
+  font-size: 16px;
 
   & > button {
     background: transparent;
     outline: none;
     border: none;
-    font-size: 1.25em;
     padding: 0.25em;
     color: #000;
     transition: color 200ms ease;
