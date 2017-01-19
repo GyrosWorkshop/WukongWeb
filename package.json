@@ -28,7 +28,7 @@
     "css-loader": "0.26.1",
     "eslint": "3.13.1",
     "eslint-plugin-react": "6.9.0",
-    "extract-text-webpack-plugin": "2.0.0-beta.4",
+    "extract-text-webpack-plugin": "2.0.0-beta.5",
     "favicons-webpack-plugin": "0.0.7",
     "file-loader": "0.9.0",
     "html-webpack-plugin": "2.26.0",
@@ -44,8 +44,8 @@
     "stylelint": "7.7.1",
     "stylelint-config-standard": "15.0.1",
     "url-loader": "0.5.7",
-    "webpack": "2.2.0-rc.4",
-    "webpack-dev-server": "2.2.0-rc.0",
+    "webpack": "2.2.0",
+    "webpack-dev-server": "2.2.0",
     "webpack-md5-hash": "0.0.5"
   },
   "scripts": {
