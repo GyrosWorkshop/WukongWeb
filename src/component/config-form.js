@@ -50,9 +50,9 @@ export default class ConfigForm extends PureComponent {
     return (
       <div styleName='container'>
         {kOptions.map(option => (
-          <label>
+          <label key={option}>
             <span>{option}</span>
-            <textarea key={option} name={option} rows={4}
+            <textarea name={option} rows={4}
               value={this.state[option]} onChange={this.onInputChange}/>
           </label>
         ))}

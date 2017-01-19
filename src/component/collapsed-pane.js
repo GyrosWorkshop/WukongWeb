@@ -14,9 +14,17 @@ export default class CollapsedPane extends PureComponent {
     height: 'auto'
   }
 
+  updateHeight() {
+    this.setState({height: `${this.refs.pane.scrollHeight}px`})
+  }
+
+  componentDidMount() {
+    this.updateHeight()
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.props.children != prevProps.children) {
-      this.setState({height: `${this.refs.pane.scrollHeight}px`})
+      this.updateHeight()
     }
   }
 
