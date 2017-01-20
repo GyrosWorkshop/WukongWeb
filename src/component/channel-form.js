@@ -17,7 +17,9 @@ export default class ChannelForm extends PureComponent {
   }
 
   onButtonClick = (event) => {
-    this.setState({submit: true})
+    if (this.state.value) {
+      this.setState({submit: true})
+    }
   }
 
   render() {
@@ -29,7 +31,7 @@ export default class ChannelForm extends PureComponent {
           <i className='fa fa-play'/>
           <span>Wukong</span>
         </button>
-        {value && submit && <Redirect to={{pathname: `/${value}`}}/>}
+        {submit && <Redirect to={{pathname: `/${value}`}}/>}
       </div>
     )
   }
