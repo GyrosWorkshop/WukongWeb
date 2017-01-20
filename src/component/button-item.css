@@ -1,0 +1,70 @@
+.container {
+  position: relative;
+  font-size: 16px;
+
+  & > button {
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: 1.25em;
+    padding: 0.25em;
+    color: #000;
+    transition: color 200ms ease;
+
+    & > i {
+      width: 1em;
+      height: 1em;
+    }
+
+    &:hover {
+      color: #f09442;
+    }
+
+    &:active {
+      color: #d8853b;
+    }
+
+    &:disabled {
+      color: #969696;
+    }
+
+    & ~ .tooltip {
+      visibility: hidden;
+      transition: opacity 200ms ease;
+      opacity: 0;
+    }
+
+    &:hover ~ .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  & > .tooltip {
+    width: max-content;
+    color: #fff;
+    background: #f09442;
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%) translateY(-4px);
+
+    &::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border: 4px solid transparent;
+      border-top-color: #f09442;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 100%);
+    }
+
+    & > p {
+      margin: 0;
+    }
+  }
+}

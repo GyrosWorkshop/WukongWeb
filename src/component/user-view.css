@@ -1,0 +1,27 @@
+.container {
+  font-size: 18px;
+
+  & > * {
+    display: block;
+    width: max-content;
+    padding: 0;
+    margin: auto;
+  }
+
+  & > img {
+    width: 96px;
+    height: 96px;
+    border: 2px solid #f09442;
+    border-radius: 50%;
+    position: relative;
+    top: 12px;
+    z-index: -1;
+  }
+
+  & > p {
+    color: #fff;
+    background: #f09442;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+}

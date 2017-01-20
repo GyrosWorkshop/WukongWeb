@@ -1,12 +1,3 @@
 language: node_js
 node_js:
-- 6
-deploy:
-  provider: releases
-  api_key:
-    secure: eFhiR0aXWHdLC899/j390j02dH0kmMYIVlxSI38/CO3MoMGpGoZZ3FMt+9QIIX7ZvrOaGmnuKcqtqirTUouFKWzNAhBgkZac+vjDCNTSRJzZY0ZoQUe990tLf+vIa11Q6+ZV+9YfFGOA36pWKnr9Km7DynqqK1D0fSz0YI5n7FyLLSxc0qRksJ0H5TPxMiZVKFZpnBoDLyhlaOTI+4PEsaVScwMPrcv7nZD7AG3BOMCQWRNrUsvUPGsiLBpRVNI+ocjyoH0zbxe0yxrCHaaAqKICzxpkeXMsBdHmuWJ54WTbWiphq/Vty4uPaOydV7Z1MCHXoZLMWaVi6qUDwJ6tMdiyQagdUWHs/jW/JnYgJIV2o426C8L+vJCzX9n1xZ4ecrgEEFQg/khO6RKYLwoiEH63uFDPHry3B0gKLLBI3xmjjElyG8TBWHcmjfi1BDYiQAcpbuK3KoXlT0AXxpcNG6Osgpk0UJSABEkdu0ri7/VzlcQslg41i53caGpArM9xEf1KloF53kCpSvvRcqvEYUUy+tz4VFYy/vkQ5chtGkds3yovMaDuSOVzsdX4IUPaRixu5AcxBE3XQkz8iysPLiGP2VIXMd8k8m4VrPulNBL1zadTo7+nAmtkmx1kGBY7f0Pq2OfavHeZF5//ZgMMvRo4FU5GwrvQ9iLQgSv6aIw=
-  file: release/wukong-web.tar.gz
-  on:
-    repo: GyrosWorkshop/WukongWeb
-    tags: true
-    branch: master
+  - 6

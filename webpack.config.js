@@ -1,31 +1,84 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const FaviconsPlugin = require('favicons-webpack-plugin')
 const Md5HashPlugin = require('webpack-md5-hash')
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
 const production = process.env.NODE_ENV == 'production'
 const devHost = process.env.DEV_HOST || 'localhost'
 const devPort = parseInt(process.env.DEV_PORT) || 8080
+const devServer = `http://${devHost}:${devPort}`
+const apiServer = process.env.WUKONG_SERVER || 'http://localhost:5000'
 
 const config = {
   context: sourcePath,
   output: {
     path: buildPath,
+    publicPath: production ? '/' : `${devServer}/`,
     filename: production ? '[chunkhash].js' : 'bundle.js'
-  },
-  resolve: {
-    extensions: ['.js', '.jsx']
   },
   module: {
     rules: [{
-      test: /\.(js|jsx)$/, include: sourcePath,
-      loader: 'babel-loader'
+      resource: {
+        include: sourcePath,
+        test: /\.js$/
+      },
+      use: [{
+        loader: 'babel-loader'
+      }]
     }, {
-      test: /\.(png)$/, include: sourcePath,
-      loader: 'url-loader?limit=1000'
+      resource: {
+        include: sourcePath,
+        test: /\.global\.css$/
+      },
+      use: ExtractTextPlugin.extract({
+        loader: [{
+          loader: 'css-loader',
+          query: {
+            sourceMap: true
+          }
+        }, {
+          loader: 'postcss-loader'
+        }],
+        fallbackLoader: [{
+          loader: 'style-loader'
+        }]
+      }).split('!')
+    }, {
+      resource: {
+        include: sourcePath,
+        test: /\.css$/,
+        not: [/\.global\.css$/]
+      },
+      use: ExtractTextPlugin.extract({
+        loader: [{
+          loader: 'css-loader',
+          query: {
+            sourceMap: true,
+            modules: true,
+            localIdentName: production ? '[hash:base64]' : '[name]-[local]',
+            importLoaders: 1
+          }
+        }, {
+          loader: 'postcss-loader'
+        }],
+        fallbackLoader: [{
+          loader: 'style-loader'
+        }]
+      }).split('!')
+    }, {
+      resource: {
+        test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
+      },
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
+      }]
     }]
   },
   entry: [],
@@ -34,8 +87,12 @@ const config = {
   devServer: {
     host: devHost,
     port: devPort,
-    contentBase: false,
+    contentBase: buildPath,
+    historyApiFallback: true,
     hot: true
+  },
+  performance: {
+    hints: production && 'warning'
   }
 }
 
@@ -48,29 +105,36 @@ config.plugins.push(
   ]),
   new webpack.DefinePlugin({__env: {
     production: JSON.stringify(production),
-    server: JSON.stringify(process.env.WUKONG_SERVER)
+    server: JSON.stringify(apiServer)
   }}),
   new webpack.LoaderOptionsPlugin({
     debug: !production,
     minimize: production,
     options: {
-      context: __dirname
+      context: sourcePath,
+      postcss: () => [
+        require('postcss-cssnext')()
+      ]
     }
-  }),
-  new FaviconsWebpackPlugin({
-    logo: './resource/icon-merge.png',
-    title: 'Wukong'
   }),
   new HtmlPlugin({
     template: './index.html',
     minify: !production ? undefined : {
       collapseWhitespace: true,
-      preserveLineBreaks: true,
       collapseBooleanAttributes: true,
       removeEmptyAttributes: true,
       removeRedundantAttributes: true,
       removeComments: true
     }
+  }),
+  new ExtractTextPlugin({
+    filename: '[contenthash].css',
+    allChunks: true,
+    disable: !production
+  }),
+  new FaviconsPlugin({
+    logo: './resource/icon.png',
+    title: 'Wukong'
   })
 )
 
@@ -85,7 +149,7 @@ if (production) {
   config.entry.unshift(
     'react-hot-loader/patch',
     'webpack/hot/only-dev-server',
-    `webpack-dev-server/client?http://${devHost}:${devPort}`
+    `webpack-dev-server/client?${devServer}`
   )
   config.plugins.push(
     new webpack.HotModuleReplacementPlugin(),

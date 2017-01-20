@@ -28,6 +28,11 @@ export const shuffle = {
   create() { return {type: this.type} }
 }
 
+export const sync = {
+  type: 'SongSync',
+  create() { return {type: this.type} }
+}
+
 export const play = {
   type: 'SongPlay',
   create(song) { return {type: this.type, song} }
@@ -36,19 +41,4 @@ export const play = {
 export const preload = {
   type: 'SongPreload',
   create(song) { return {type: this.type, song} }
-}
-
-export const elapsed = {
-  type: 'SongElapsed',
-  create(elapsed) { return {type: this.type, elapsed} }
-}
-
-export const ended = {
-  type: 'SongEnded',
-  create() { return {type: this.type} }
-}
-
-export const downvote = {
-  type: 'SongDownvote',
-  create() { return {type: this.type} }
 }
