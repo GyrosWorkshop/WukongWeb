@@ -31,7 +31,8 @@ const selectAudioQuality = filesSelector => createSelector(
   setDefaultValue([])(filesSelector),
   selectState('user.preferences.audioQuality'),
   (files, level) => {
-    const results = files.filter(file => file.quality.level <= level)
+    const results = files
+      .filter(file => file.quality.level <= level)
       .sort((file1, file2) => file2.quality.level - file1.quality.level)
     return results[0]
   }
@@ -81,7 +82,12 @@ export default {
     selectState('song.playing.lyrics'),
     selectState('player.elapsed'),
     (lyrics, elapsed) => lyrics
-      ? lyrics.map(lines => lines.find(line => elapsed >= line.time).text)
+      ? lyrics.map(lines => lines.find((line, index) => {
+          const nextLine = lines[index + 1]
+          if (!nextLine) return true
+          if (elapsed < nextLine.time) return true
+          return false
+        })).map(line => line.text)
       : ['没有歌词 o(*≧▽≦)ツ']
   )
 }
