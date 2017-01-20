@@ -76,5 +76,12 @@ export default {
   currentSearch: createSelector(
     selectState('search.keyword'),
     (keyword) => !!keyword
+  ),
+  currentLyrics: createSelector(
+    selectState('song.playing.lyrics'),
+    selectState('player.elapsed'),
+    (lyrics, elapsed) => lyrics
+      ? lyrics.map(lines => lines.find(line => elapsed >= line.time).text)
+      : ['没有歌词 o(*≧▽≦)ツ']
   )
 }

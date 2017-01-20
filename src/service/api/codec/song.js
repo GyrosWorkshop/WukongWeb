@@ -43,34 +43,34 @@ function parseFile(file, multiple) {
 
 function parseLyrics(lyrics) {
   if (!lyrics) return
-  const lrcItems = lyrics
-    .filter(item => item.withTimeline)
+  const items = lyrics
+    .filter(item => item.lyric && item.withTimeline)
     .sort((item1, item2) => item1.translate - item2.translate)
-  if (!lrcItems.length) return
-  const lrcText = (lrcItems[0].lyric || '').split(/[\n\r]/).join(' ')
-  if (!lrcText.length) return
-  const metadata = {}
-  const lines = []
-  for (let string = lrcText; string;) {
-    const times = []
-    for (let match; (match = string.match(/^\s*\[(.*?):(.*?)]/));) {
-      const data = match.slice(1, 3)
-      if (isNaN(parseInt(data[0])) || isNaN(parseFloat(data[1]))) {
-        metadata[data[0]] = data[1]
-      } else {
-        times.push(parseInt(data[0]) * 60 + parseFloat(data[1]))
+  if (!items.length) return
+  return items.map(item => {
+    const metadata = {}
+    const lines = []
+    for (let string = item.lyric.split(/[\n\r]/).join(' '); string;) {
+      const times = []
+      for (let match; (match = string.match(/^\s*\[(.*?):(.*?)]/));) {
+        const data = match.slice(1, 3)
+        if (isNaN(parseInt(data[0])) || isNaN(parseFloat(data[1]))) {
+          metadata[data[0]] = data[1]
+        } else {
+          times.push(parseInt(data[0]) * 60 + parseFloat(data[1]))
+        }
+        string = string.substr(match[0].length)
       }
-      string = string.substr(match[0].length)
+      const match = string.match(/^(\s*(.*?)\s*)(\[.*?:.*?]|$)/)
+      const text = match[2]
+      times.forEach(time => lines.push({time, text}))
+      string = string.substr(match[1].length)
     }
-    const match = string.match(/^(\s*(.*?)\s*)(\[.*?:.*?]|$)/)
-    const text = match[2]
-    times.forEach(time => lines.push({time, text}))
-    string = string.substr(match[1].length)
-  }
-  if (metadata.offset) {
-    const offset = parseFloat(metadata.offset) / 1000
-    lines.forEach(line => line.time += offset)
-  }
-  lines.sort((line1, line2) => line1.time - line2.time)
-  return lines
+    if (metadata.offset) {
+      const offset = parseFloat(metadata.offset) / 1000
+      lines.forEach(line => line.time += offset)
+    }
+    lines.sort((line1, line2) => line1.time - line2.time)
+    return lines
+  })
 }
