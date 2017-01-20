@@ -33,7 +33,7 @@ export default class ChannelForm extends PureComponent {
   }
 
   onInputChange = (event) => {
-    const value = event.target.value
+    const {value} = event.target
     this.setState({value})
   }
 

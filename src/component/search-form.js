@@ -34,7 +34,7 @@ export default class SearchForm extends PureComponent {
   }
 
   onInputChange = (event) => {
-    const value = event.target.value
+    const {value} = event.target
     this.updateValue(value, !value)
   }
 
