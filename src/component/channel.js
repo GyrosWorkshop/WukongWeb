@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules'
 
 import MemberList from './member-list'
 import NowPlaying from './now-playing'
+import LyricsMarquee from './lyrics-marquee'
 import ActionPanel from './action-panel'
 import OmniPanel from './omni-panel'
 import SongList from './song-list'
@@ -16,6 +17,7 @@ export default class Channel extends PureComponent {
       <div styleName='container'>
         <MemberList/>
         <NowPlaying/>
+        <LyricsMarquee/>
         <ActionPanel/>
         <OmniPanel/>
         <SongList/>
