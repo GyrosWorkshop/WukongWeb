@@ -40,8 +40,10 @@ export default function Service() {
       try {
         switch (action.type) {
           case Action.User.preferences.type:
-            await api.sendChannel(prevState)
             await api.sendUpnext()
+            break
+          case Action.Channel.name.type:
+            await api.sendChannel(prevState)
             break
           case Action.Song.prepend.type:
           case Action.Song.append.type:
