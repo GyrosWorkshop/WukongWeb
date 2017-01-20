@@ -52,7 +52,8 @@
     "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
     "build": "env NODE_ENV=production webpack --colors --progress",
     "lint": "eslint '*.js' src && stylelint 'src/**/*.css'",
-    "test": "npm run lint && npm run build"
+    "test": "npm run lint && npm run build",
+    "release": "./script/release.sh"
   },
   "repository": {
     "type": "git",

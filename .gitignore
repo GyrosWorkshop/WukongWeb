@@ -1,7 +1,10 @@
 #node
 node_modules
-build
 *.log
+
+#data
+/build
+/release
 
 #vim
 *.swp
