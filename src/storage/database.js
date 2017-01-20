@@ -23,7 +23,6 @@ export function save(state = {}) {
   try {
     localStorage.setItem(kStorageKey, JSON.stringify(pick(state, [
       'user.preferences',
-      'channel.name',
       'song.playlist',
       'player.volume'
     ])))
