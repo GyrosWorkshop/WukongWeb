@@ -81,13 +81,17 @@ export default {
   currentLyrics: createSelector(
     selectState('song.playing.lyrics'),
     selectState('player.elapsed'),
-    (lyrics, elapsed) => lyrics
-      ? lyrics.map(lines => lines.find((line, index) => {
+    (lyrics, elapsed) => {
+      if (!lyrics) return ['没有歌词 o(*≧▽≦)ツ']
+      return lyrics.map(lines => {
+        const line = lines.find((line, index) => {
           const nextLine = lines[index + 1]
           if (!nextLine) return true
           if (elapsed < nextLine.time) return true
           return false
-        })).map(line => line.text)
-      : ['没有歌词 o(*≧▽≦)ツ']
+        })
+        return line.text
+      })
+    }
   )
 }
