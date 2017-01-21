@@ -122,12 +122,12 @@ export default class PlayerAudio extends PureComponent {
     } else if (this.props.song != nextProps.song
       || Math.abs(this.props.time - nextProps.time) > 10) {
       this.setAudioState(playing, nextProps.playing, nextProps.time)
+      if (nextProps.isSelf) {
+        nextProps.dispatchSelfPlaying()
+      }
     }
     if (this.props.preload != nextProps.preload) {
       this.setAudioState(preload, nextProps.preload)
-    }
-    if (!this.props.isSelf && nextProps.isSelf) {
-      nextProps.dispatchSelfPlaying()
     }
     return false
   }
