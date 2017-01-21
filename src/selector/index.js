@@ -31,9 +31,10 @@ const selectAudioQuality = filesSelector => createSelector(
   setDefaultValue([])(filesSelector),
   selectState('user.preferences.audioQuality'),
   (files, level) => {
+    const fileLevel = file => get(file, 'quality.level', 0)
     const results = files
-      .filter(file => file.quality.level <= level)
-      .sort((file1, file2) => file2.quality.level - file1.quality.level)
+      .filter(file => fileLevel(file) <= level)
+      .sort((file1, file2) => fileLevel(file2) - fileLevel(file1))
     return results[0]
   }
 )
@@ -64,7 +65,7 @@ export default {
     (members, player) => members.map(member => member.id).indexOf(player)
   ),
   selfPlaying: createSelector(
-    selectState('user.id'),
+    selectState('user.profile.id'),
     selectState('song.playing.player'),
     (user, player) => user && player && (user == player)
   ),

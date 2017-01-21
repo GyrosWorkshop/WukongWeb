@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(Action.Player.reload.create(false))
     },
     dispatchSelfPlaying() {
-      dispatch(Action.Song.move(0, Number.MAX_SAFE_INTEGER))
+      dispatch(Action.Song.move.create(0, Number.MAX_SAFE_INTEGER))
     },
   }
 }
