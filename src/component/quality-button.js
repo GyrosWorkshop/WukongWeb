@@ -1,13 +1,14 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 
+import Selector from '../selector'
 import Action from '../action'
 import ButtonItem from './button-item'
 
 function mapStateToProps(state) {
   return {
-    format: state.song.playing.format,
-    quality: state.song.playing.quality,
+    format: Selector.playingFile(state).format,
+    quality: Selector.playingFile(state).quality,
     preferred: state.user.preferences.audioQuality
   }
 }
