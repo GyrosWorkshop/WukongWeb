@@ -1,5 +1,9 @@
 .container {
   width: 100%;
   margin: 24px 0;
-  display: flex;
+  overflow-x: hidden;
+
+  & > .list {
+    display: flex;
+  }
 }
