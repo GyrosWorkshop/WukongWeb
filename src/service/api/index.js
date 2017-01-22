@@ -42,8 +42,7 @@ export default function API(getState, dispatch, next) {
 
     async sendUpnext(prevState) {
       const state = getState()
-      const channel = state.channel.name
-      if (!channel) return
+      if (!state.channel.name) return
       const song = Codec.Song.encode(
         state.user.preferences.listenOnly
           ? undefined
@@ -55,7 +54,7 @@ export default function API(getState, dispatch, next) {
             : prevState.song.playlist[0]
         ))
       if (prevState && isEqual(song, prevSong)) return
-      await http('POST', `/api/channel/updateNextSong/${channel}`, {
+      await http('POST', `/api/channel/updateNextSong`, {
         ...song,
         withCookie: state.user.preferences.cookie
       })
@@ -63,20 +62,18 @@ export default function API(getState, dispatch, next) {
 
     async sendSync() {
       const state = getState()
-      const channel = state.channel.name
-      if (!channel) return
+      if (!state.channel.name) return
       const song = Codec.Song.encode(state.song.playing)
-      await http('POST', `/api/channel/finished/${channel}`,
+      await http('POST', `/api/channel/finished`,
         song.songId ? song : null
       )
     },
 
     async sendDownvote() {
       const state = getState()
-      const channel = state.channel.name
-      if (!channel) return
+      if (!state.channel.name) return
       const song = Codec.Song.encode(state.song.playing)
-      await http('POST', `/api/channel/downVote/${channel}`,
+      await http('POST', `/api/channel/downVote`,
         song.songId ? song : null
       )
     },
