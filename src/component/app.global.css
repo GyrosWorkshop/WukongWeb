@@ -18,3 +18,28 @@ body,
 *::after {
   box-sizing: border-box;
 }
+
+body {
+  font-family:
+    'Helvetica Neue',
+    'Helvetica',
+    'Nimbus Sans L',
+    'Arial',
+    'Liberation Sans',
+    'PingFang SC',
+    'Hiragino Sans GB',
+    'Source Han Sans CN',
+    'Source Han Sans SC',
+    'Microsoft YaHei',
+    'ST Heiti',
+    'SimHei',
+    sans-serif;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+}
