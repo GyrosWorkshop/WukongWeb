@@ -7,6 +7,9 @@ import Action from '../action'
 import SongItem from './song-item'
 import SongButton from './song-button'
 import style from './song-list.css'
+import neteaseIcon from '../resource/netease.png'
+import qqIcon from '../resource/qq.png'
+import xiamiIcon from '../resource/xiami.png'
 
 function mapStateToProps(state) {
   return {
@@ -51,9 +54,9 @@ export default class SongList extends PureComponent {
         {songs.map(({id, siteId, title, album, artist, link}, i) => (
           <SongItem key={id} title={title} album={album} artist={artist}
             link={link} icon={{
-              'netease-cloud-music': 'https://music.163.com/favicon.ico',
-              'QQMusic': 'https://y.qq.com/favicon.ico',
-              'Xiami': 'https://www.xiami.com/favicon.ico'
+              'netease-cloud-music': neteaseIcon,
+              'QQMusic': qqIcon,
+              'Xiami': xiamiIcon
             }[siteId]}>
             {search ? [
               <SongButton key='upnext' icon='plus'
