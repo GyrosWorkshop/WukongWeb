@@ -1,4 +1,4 @@
 .container {
-  overflow-y: hidden;
+  overflow: visible;
   transition: height 200ms ease;
 }
