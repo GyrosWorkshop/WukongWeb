@@ -1,16 +1,11 @@
-export const prepend = {
-  type: 'SongPrepend',
-  create(song) { return {type: this.type, song} }
-}
-
-export const append = {
-  type: 'SongAppend',
+export const add = {
+  type: 'SongAdd',
   create(song) { return {type: this.type, song} }
 }
 
 export const remove = {
   type: 'SongRemove',
-  create(song) { return {type: this.type, song} }
+  create(id) { return {type: this.type, id} }
 }
 
 export const move = {

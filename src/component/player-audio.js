@@ -36,8 +36,8 @@ function mapDispatchToProps(dispatch) {
     dispatchReloaded() {
       dispatch(Action.Player.reload.create(false))
     },
-    dispatchSelfPlaying() {
-      dispatch(Action.Song.move.create(0, Number.MAX_SAFE_INTEGER))
+    dispatchSelfPlaying(id) {
+      dispatch(Action.Song.move.create(id, Number.MAX_SAFE_INTEGER))
     },
   }
 }
@@ -123,7 +123,7 @@ export default class PlayerAudio extends PureComponent {
       || Math.abs(this.props.time - nextProps.time) > 10) {
       this.setAudioState(playing, nextProps.playing, nextProps.time)
       if (nextProps.isSelf) {
-        nextProps.dispatchSelfPlaying()
+        nextProps.dispatchSelfPlaying(nextProps.song)
       }
     }
     if (this.props.preload != nextProps.preload) {

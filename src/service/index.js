@@ -45,8 +45,7 @@ export default function Service() {
           case Action.Channel.name.type:
             await api.sendChannel(prevState)
             break
-          case Action.Song.prepend.type:
-          case Action.Song.append.type:
+          case Action.Song.add.type:
           case Action.Song.remove.type:
           case Action.Song.move.type:
           case Action.Song.assign.type:

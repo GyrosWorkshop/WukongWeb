@@ -17,11 +17,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchPrepend(song) {
-      dispatch(Action.Song.prepend.create(song))
+    dispatchAdd(song) {
+      dispatch(Action.Song.add.create(song))
     },
     dispatchRemove(song) {
-      dispatch(Action.Song.remove.create(song))
+      dispatch(Action.Song.remove.create(song.id))
     }
   }
 }
@@ -32,12 +32,12 @@ export default class SongList extends PureComponent {
   static propTypes = {
     songs: PropTypes.array,
     search: PropTypes.bool,
-    dispatchPrepend: PropTypes.func,
+    dispatchAdd: PropTypes.func,
     dispatchRemove: PropTypes.func
   }
 
   onUpnextAction = (context) => {
-    this.props.dispatchPrepend(this.props.songs[context])
+    this.props.dispatchAdd(this.props.songs[context])
   }
 
   onDeleteAction = (context) => {
