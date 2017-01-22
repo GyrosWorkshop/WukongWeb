@@ -44,7 +44,7 @@ export default class NowPlaying extends PureComponent {
           </a>}
         </p>
         <p>
-          <span>{artist}{artist && album && ' — '}{album}</span>
+          <span>{artist}{artist && album && ' − '}{album}</span>
         </p>
       </div>
     )
