@@ -28,7 +28,9 @@ export default class SyncButton extends PureComponent {
 
   render() {
     return (
-      <ButtonItem icon='cloud-download' action={this.onButtonAction}/>
+      <ButtonItem icon='cloud-download' action={this.onButtonAction}>
+        <p>Sync</p>
+      </ButtonItem>
     )
   }
 }

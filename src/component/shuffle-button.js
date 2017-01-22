@@ -28,7 +28,9 @@ export default class ShuffleButton extends PureComponent {
 
   render() {
     return (
-      <ButtonItem icon='random' action={this.onButtonAction}/>
+      <ButtonItem icon='random' action={this.onButtonAction}>
+        <p>Shuffle</p>
+      </ButtonItem>
     )
   }
 }

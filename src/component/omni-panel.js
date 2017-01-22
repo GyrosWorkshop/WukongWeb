@@ -29,7 +29,9 @@ export default class OmniPanel extends PureComponent {
           <ButtonBar>
             <SyncButton/>
             <ShuffleButton/>
-            <ButtonItem icon='cog' action={this.onButtonAction}/>
+            <ButtonItem icon='cog' action={this.onButtonAction}>
+              <p>Config</p>
+            </ButtonItem>
           </ButtonBar>
         </div>
         <CollapsedPane open={expanded}>
