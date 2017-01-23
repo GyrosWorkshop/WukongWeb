@@ -21,11 +21,13 @@
     & > textarea {
       font-size: 12px;
       resize: none;
-      border: 1px solid #ccc;
+      color: #444;
+      border: 1px solid #999;
       border-radius: 2px;
-      transition: border-color 200ms ease;
+      transition: color 200ms ease, border-color 200ms ease;
 
       &:focus {
+        color: #000;
         border-color: #333;
       }
     }
