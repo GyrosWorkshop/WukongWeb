@@ -52,13 +52,19 @@ export default class Channel extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        <ChannelTitle/>
-        <MemberList/>
-        <NowPlaying/>
-        <LyricsMarquee/>
-        <ActionPanel/>
-        <OmniPanel/>
-        <SongList/>
+        <div>
+          <ChannelTitle/>
+          <MemberList/>
+        </div>
+        <div styleName='sidebar'>
+          <NowPlaying/>
+          <LyricsMarquee/>
+          <ActionPanel/>
+        </div>
+        <div styleName='content'>
+          <OmniPanel/>
+          <SongList/>
+        </div>
         <PlayerAudio/>
       </div>
     )

@@ -3,4 +3,25 @@
   max-width: 700px;
   margin: auto;
   padding: 1px;
+
+  & > div {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 1200px;
+
+    & > .sidebar {
+      position: fixed;
+      width: 300px;
+      padding: 1px;
+    }
+
+    & > .content {
+      padding: 1px;
+      padding-left: 360px;
+    }
+  }
 }
