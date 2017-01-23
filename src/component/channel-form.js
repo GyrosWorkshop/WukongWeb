@@ -26,7 +26,8 @@ export default class ChannelForm extends PureComponent {
     const {value, submit} = this.state
     return (
       <div styleName='container'>
-        <input value={value} onChange={this.onInputChange}/>
+        <input value={value} placeholder='Channel'
+          onChange={this.onInputChange}/>
         <button onClick={this.onButtonClick}>
           <i className='fa fa-play'/>
           <span>Wukong</span>
