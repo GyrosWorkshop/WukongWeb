@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import CSSModules from 'react-css-modules'
 
+import ProgressIndicator from './progress-indicator'
 import ButtonBar from './button-bar'
 import ReloadButton from './reload-button'
 import DownvoteButton from './downvote-button'
@@ -15,6 +16,7 @@ export default class ActionPanel extends PureComponent {
   render() {
     return (
       <div styleName='container'>
+        <ProgressIndicator/>
         <ButtonBar>
           <ReloadButton/>
           <DownvoteButton/>
