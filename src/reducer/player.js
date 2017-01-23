@@ -6,8 +6,6 @@ function running(state = false, action) {
   switch (action.type) {
     case Action.Player.running.type:
       return action.running
-    case Action.Player.reset.type:
-      return false
     default:
       return state
   }
@@ -17,8 +15,6 @@ function elapsed(state = 0, action) {
   switch (action.type) {
     case Action.Player.elapsed.type:
       return action.elapsed
-    case Action.Player.reset.type:
-      return 0
     default:
       return state
   }
@@ -28,8 +24,6 @@ function duration(state = 0, action) {
   switch (action.type) {
     case Action.Player.duration.type:
       return action.duration
-    case Action.Player.reset.type:
-      return 0
     default:
       return state
   }
