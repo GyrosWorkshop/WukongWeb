@@ -9,10 +9,6 @@
   background: transparent;
   transition: background 200ms ease;
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.07);
-  }
-
   & > * {
     display: block;
     margin: 0;
@@ -52,5 +48,9 @@
         color: #f09442;
       }
     }
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.07);
   }
 }
