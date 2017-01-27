@@ -60,7 +60,7 @@ export default function API(getState, dispatch, next) {
       })
     },
 
-    async sendSync() {
+    async sendEnded() {
       const state = getState()
       if (!state.channel.name) return
       const song = Codec.Song.encode(state.song.playing)

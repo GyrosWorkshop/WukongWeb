@@ -10,7 +10,6 @@ export default function Service() {
     async function onLoad() {
       try {
         await api.fetchUser()
-        await api.sendChannel()
       } catch (error) {
         utility.notifyError(error, 'Reload', utility.reloadApp)
         return
@@ -40,10 +39,11 @@ export default function Service() {
       try {
         switch (action.type) {
           case Action.User.preferences.type:
-            await api.sendUpnext()
+            await api.sendUpnext(prevState)
             break
           case Action.Channel.name.type:
             await api.sendChannel(prevState)
+            await api.sendUpnext()
             break
           case Action.Song.add.type:
           case Action.Song.remove.type:
@@ -54,10 +54,10 @@ export default function Service() {
             break
           case Action.Song.sync.type:
             await api.fetchPlaylist()
-            await api.sendUpnext()
+            await api.sendUpnext(prevState)
             break
           case Action.Player.ended.type:
-            await api.sendSync()
+            await api.sendEnded()
             break
           case Action.Player.downvote.type:
             await api.sendDownvote()
