@@ -58,7 +58,7 @@ export default class Channel extends PureComponent {
         <div styleName='right'>
           <MemberList/>
         </div>
-        <div styleName='left' style={{top: 48}}>
+        <div styleName='left' style={{top: 52}}>
           <NowPlaying/>
           <LyricsMarquee/>
           <ActionPanel/>
