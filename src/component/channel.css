@@ -13,15 +13,13 @@
   @media (min-width: 1200px) {
     max-width: 1200px;
 
-    & > .sidebar {
+    & > .left {
       position: fixed;
-      width: 300px;
-      padding: 1px;
+      width: 264px;
     }
 
-    & > .content {
-      padding: 1px;
-      padding-left: 360px;
+    & > .right {
+      padding-left: 324px;
     }
   }
 }
