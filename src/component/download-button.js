@@ -1,12 +1,13 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
+import {parse} from 'url'
 
-import Selector from '../selector'
-import Action from '../action'
 import ButtonItem from './button-item'
 
 function mapStateToProps(state) {
   return {
+    title: state.song.playing.title,
+    artist: state.song.playing.artist,
     files: state.song.playing.files
   }
 }
@@ -18,18 +19,38 @@ function mapDispatchToProps(dispatch) {
 @connect(mapStateToProps, mapDispatchToProps)
 export default class DownloadButton extends PureComponent {
   static propTypes = {
+    title: PropTypes.string,
+    artist: PropTypes.string,
     files: PropTypes.array
   }
 
   render() {
-    const {files} = this.props
-    //format || 'unknown'
-    //quality && quality.description
+    const {title, artist, files} = this.props
     return (
       <ButtonItem icon='download' hidden={!files}>
         <p>Download Song</p>
-        {files && files.map(({format, quality}) => (
-          <p>{JSON.stringify(file)}</p>
+        {files && files.map(({urls, format, quality}) => (
+          <p>
+            <span>
+              {format || 'unknown'}&nbsp;
+              {quality && quality.description}:
+            </span>
+            {urls.map((url, index) => (
+              <span>
+                <br/>&nbsp;·&nbsp;
+                <a href={url} target='_blank'
+                  type={`audio/${format}`}
+                  download={`${artist} - ${title}`}
+                  style={{
+                    color: 'inherit',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}>
+                  {parse(url).host}
+                </a>
+              </span>
+            ))}
+          </p>
         ))}
       </ButtonItem>
     )

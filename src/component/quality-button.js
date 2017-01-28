@@ -40,16 +40,13 @@ export default class QualityButton extends PureComponent {
       <ButtonItem icon='headphones'
         action={this.onButtonAction}>
         {(format || quality) && <p>
-          Playing: {
-            format || 'unknown'
-          } {
-            quality && quality.description
-          }
+          Playing:&nbsp;
+          {format || 'unknown'}&nbsp;
+          {quality && quality.description}
         </p>}
         <p>
-          Preferred Quality: {
-            ['low', 'medium', 'high', 'lossless'][preferred]
-          }
+          Preferred Quality:&nbsp;
+          {['low', 'medium', 'high', 'lossless'][preferred]}
         </p>
       </ButtonItem>
     )

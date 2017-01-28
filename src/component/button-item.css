@@ -32,6 +32,11 @@
       visibility: hidden;
       transition: opacity 200ms ease;
       opacity: 0;
+
+      &:hover {
+        visibility: visible;
+        opacity: 1;
+      }
     }
 
     &:hover ~ .tooltip {
@@ -49,7 +54,7 @@
     position: absolute;
     top: 0;
     left: 50%;
-    transform: translate(-50%, -100%) translateY(-4px);
+    transform: translate(-50%, -100%);
 
     &::after {
       content: '';
