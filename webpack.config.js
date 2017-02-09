@@ -35,7 +35,7 @@ const config = {
         test: /\.global\.css$/
       },
       use: ExtractTextPlugin.extract({
-        loader: [{
+        use: [{
           loader: 'css-loader',
           query: {
             sourceMap: true
@@ -43,10 +43,10 @@ const config = {
         }, {
           loader: 'postcss-loader'
         }],
-        fallbackLoader: [{
+        fallback: [{
           loader: 'style-loader'
         }]
-      }).split('!')
+      })
     }, {
       resource: {
         include: sourcePath,
@@ -54,7 +54,7 @@ const config = {
         not: [/\.global\.css$/]
       },
       use: ExtractTextPlugin.extract({
-        loader: [{
+        use: [{
           loader: 'css-loader',
           query: {
             sourceMap: true,
@@ -65,10 +65,10 @@ const config = {
         }, {
           loader: 'postcss-loader'
         }],
-        fallbackLoader: [{
+        fallback: [{
           loader: 'style-loader'
         }]
-      }).split('!')
+      })
     }, {
       resource: {
         test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
