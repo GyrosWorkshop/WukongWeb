@@ -46,7 +46,7 @@ export default class Channel extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.params.channel != prevProps.params.channel) {
+    if (this.props.match.params.channel != prevProps.match.params.channel) {
       this.updateChannel()
     }
   }
