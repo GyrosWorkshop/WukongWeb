@@ -1,5 +1,5 @@
 import React, {PureComponent, PropTypes} from 'react'
-import {BrowserRouter, Match} from 'react-router'
+import {BrowserRouter, Route} from 'react-router-dom'
 
 import Background from './background'
 import Notification from './notification'
@@ -16,8 +16,8 @@ export default class App extends PureComponent {
     return (
       <BrowserRouter>
         <div className='app'>
-          <Match pattern='/' exactly component={Welcome}/>
-          <Match pattern='/:channel' component={Channel}/>
+          <Route path='/' exact component={Welcome}/>
+          <Route path='/:channel' component={Channel}/>
           <Background/>
           <Notification/>
           {this.props.children}
