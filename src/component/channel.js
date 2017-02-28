@@ -29,14 +29,16 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class Channel extends PureComponent {
   static propTypes = {
-    params: PropTypes.shape({
-      channel: PropTypes.string
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        channel: PropTypes.string
+      })
     }),
     dispatchChannel: PropTypes.func
   }
 
   updateChannel() {
-    this.props.dispatchChannel(this.props.params.channel)
+    this.props.dispatchChannel(this.props.match.params.channel)
   }
 
   componentDidMount() {
