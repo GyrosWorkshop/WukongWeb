@@ -9,7 +9,7 @@ export function open(state = {}) {
         preferences: {
           listenOnly: false,
           connection: 0,
-          audioQuality: 2,
+          audioQuality: 0,
           theme: 0
         }
       }
