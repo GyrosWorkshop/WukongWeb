@@ -13,8 +13,10 @@ import SongList from './song-list'
 import PlayerAudio from './player-audio'
 import style from './channel.css'
 
-function mapStateToProps(state) {
-  return {}
+function mapStateToProps(state, props) {
+  return {
+    channel: props.match.params.channel
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -29,16 +31,12 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class Channel extends PureComponent {
   static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        channel: PropTypes.string
-      })
-    }),
+    channel: PropTypes.string,
     dispatchChannel: PropTypes.func
   }
 
   updateChannel() {
-    this.props.dispatchChannel(this.props.match.params.channel)
+    this.props.dispatchChannel(this.props.channel)
   }
 
   componentDidMount() {
@@ -46,7 +44,7 @@ export default class Channel extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.match.params.channel != prevProps.match.params.channel) {
+    if (this.props.channel != prevProps.channel) {
       this.updateChannel()
     }
   }

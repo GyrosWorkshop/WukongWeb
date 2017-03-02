@@ -1,7 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import {parse} from 'url'
-import {uniq} from 'lodash'
 
 import ButtonItem from './button-item'
 
@@ -30,14 +29,14 @@ export default class DownloadButton extends PureComponent {
     return (
       <ButtonItem icon='download' hidden={!files}>
         <p>Download Song</p>
-        {files && files.map(({urls, format, quality}) => (
-          <p key={urls.join('.')}>
+        {files && files.map(({urls, format, quality}, index) => (
+          <p key={index}>
             <span>
               {format || 'unknown'}&nbsp;
               {quality && quality.description}:
             </span>
-            {uniq(urls).map((url, index) => (
-              <span key={url}>
+            {urls.map((url, index) => (
+              <span key={index}>
                 <br/>&nbsp;·&nbsp;
                 <a href={url} target='_blank'
                   type={`audio/${format}`}
