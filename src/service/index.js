@@ -14,7 +14,7 @@ export default function Service() {
         utility.notifyError(error, 'Reload', utility.reloadApp)
         return
       }
-      api.receiveMessage(async (event, data) => {
+      api.receiveMessage(async event => {
         try {
           switch (event) {
             case 'open':
