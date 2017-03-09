@@ -52,4 +52,14 @@ export function websocket(endpoint, handler) {
       emit(eventName, eventData)
     }
   }
+  const ping = setInterval(() => {
+    switch (socket.readyState) {
+      case socket.OPEN:
+        socket.send('ping ' + new Date())
+        break
+      case socket.CLOSED:
+        clearInterval(ping)
+        break
+    }
+  })
 }
