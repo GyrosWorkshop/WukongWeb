@@ -95,15 +95,10 @@ export default function API(getState, dispatch, next) {
     },
 
     receiveMessage(callback) {
-      websocket('/api/ws', ({connect, send}) => async (event, data) => {
+      websocket('/api/ws', send => async (event, data) => {
         switch (event) {
           case 'open':
-            callback(event)
-            break
           case 'close':
-            setTimeout(connect, 5000)
-            callback(event)
-            break
           case 'error':
             callback(event)
             break

@@ -35,31 +35,27 @@ export async function http(method, endpoint, data) {
 
 export function websocket(endpoint, handler) {
   const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
-  const emit = handler({
-    connect() {
-      websocket(endpoint, handler)
-    },
-    send(data) {
-      socket.send(JSON.stringify(data))
-    }
-  })
-  socket.onopen = event => emit('open', event)
-  socket.onclose = event => emit('close', event)
-  socket.onerror = event => emit('error', event)
+  const connect = () => websocket(endpoint, handler)
+  const ping = () => socket.send(`ping-${Date.now()}`)
+  const send = data => socket.send(JSON.stringify(data))
+  const emit = handler(send)
+  let interval = null
+  socket.onopen = event => {
+    emit('open', event)
+    interval = setInterval(ping, 30 * 1000)
+  }
+  socket.onclose = event => {
+    emit('close', event)
+    clearInterval(interval)
+    setTimeout(connect, 5 * 1000)
+  }
+  socket.onerror = event => {
+    emit('error', event)
+  }
   socket.onmessage = event => {
     if (event.data) {
       const {eventName, ...eventData} = JSON.parse(event.data)
       emit(eventName, eventData)
     }
   }
-  const ping = setInterval(() => {
-    switch (socket.readyState) {
-      case socket.OPEN:
-        socket.send('ping ' + new Date())
-        break
-      case socket.CLOSED:
-        clearInterval(ping)
-        break
-    }
-  }, 1000 * 30)
 }

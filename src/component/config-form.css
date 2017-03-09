@@ -9,7 +9,7 @@
     & > * {
       display: block;
       padding: 4px;
-      width: stretch;
+      width: fill;
       background: transparent;
       outline: none;
     }
