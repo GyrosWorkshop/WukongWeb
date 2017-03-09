@@ -61,5 +61,5 @@ export function websocket(endpoint, handler) {
         clearInterval(ping)
         break
     }
-  })
+  }, 1000 * 30)
 }
