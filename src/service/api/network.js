@@ -26,7 +26,7 @@ export async function http(method, endpoint, data) {
     }
   } else if (response.status == 401) {
     location.href = `${server}/oauth/google?redirectUri=${
-      encodeURIComponent(origin)
+      encodeURIComponent(location)
     }`
   } else {
     throw new Error(`${response.statusText}: ${method} ${endpoint}`)
