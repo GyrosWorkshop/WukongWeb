@@ -90,6 +90,10 @@ export default class PlayerAudio extends PureComponent {
         break
       case 'error':
         this.setAudioState(playing, null)
+        // trigger a reload
+        setTimeout(() => {
+          this.setAudioState(playing, this.props.playing, this.props.time)
+        }, 1000)
         break
     }
   }
