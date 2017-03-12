@@ -1,6 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
+import DocumentTitle from 'react-document-title'
 
 import Action from '../action'
 import ChannelTitle from './channel-title'
@@ -50,25 +51,28 @@ export default class Channel extends PureComponent {
   }
 
   render() {
+    const {channel} = this.props
     return (
-      <div styleName='container'>
-        <div styleName='left' style={{top: 0}}>
-          <ChannelTitle/>
+      <DocumentTitle title={`Wukong#${channel}`}>
+        <div styleName='container'>
+          <div styleName='left' style={{top: 0}}>
+            <ChannelTitle/>
+          </div>
+          <div styleName='right'>
+            <MemberList/>
+          </div>
+          <div styleName='left' style={{top: 52}}>
+            <NowPlaying/>
+            <LyricsMarquee/>
+            <ActionPanel/>
+          </div>
+          <div styleName='right'>
+            <OmniPanel/>
+            <SongList/>
+          </div>
+          <PlayerAudio/>
         </div>
-        <div styleName='right'>
-          <MemberList/>
-        </div>
-        <div styleName='left' style={{top: 52}}>
-          <NowPlaying/>
-          <LyricsMarquee/>
-          <ActionPanel/>
-        </div>
-        <div styleName='right'>
-          <OmniPanel/>
-          <SongList/>
-        </div>
-        <PlayerAudio/>
-      </div>
+      </DocumentTitle>
     )
   }
 }
