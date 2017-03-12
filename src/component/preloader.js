@@ -1,7 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
-import {ImageCache} from 'react-preload'
 
 import Selector from '../selector'
 import style from './preloader.css'
@@ -34,12 +33,19 @@ export default class Preloader extends PureComponent {
     }
   }
 
+  setImageState(url) {
+    const {artwork} = this.refs
+    if (url) {
+      artwork.src = url
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.audio != nextProps.audio) {
       this.setAudioState(nextProps.audio)
     }
     if (this.props.artwork != nextProps.artwork) {
-      ImageCache.get(nextProps.artwork)
+      this.setImageState(nextProps.artwork)
     }
     return false
   }
@@ -48,6 +54,7 @@ export default class Preloader extends PureComponent {
     return (
       <div styleName='container'>
         <audio ref='audio' preload='auto'/>
+        <img ref='artwork'/>
       </div>
     )
   }
