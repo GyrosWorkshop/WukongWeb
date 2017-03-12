@@ -73,7 +73,7 @@ export function websocket(endpoint, handler) {
   }
   socket.onmessage = event => {
     if (event.data) {
-      if (event.data.startsWith("pong ")) return
+      if (event.data.startsWith('pong ')) return
       const {eventName, ...eventData} = JSON.parse(event.data)
       emit(eventName, eventData)
     }
