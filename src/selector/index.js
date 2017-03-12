@@ -47,13 +47,19 @@ export default {
     getValue('url'),
     setDefaultValue(artworkImage)
   ),
-  playingFile: composeSelector(
+  playingAudioFile: composeSelector(
     takeState,
     getValue('song.playing.files'),
     selectAudioQuality,
     selectConnection
   ),
-  preloadFile: composeSelector(
+  preloadArtwork: composeSelector(
+    takeState,
+    getValue('song.preload.artwork'),
+    selectConnection,
+    getValue('url')
+  ),
+  preloadAudioFile: composeSelector(
     takeState,
     getValue('song.preload.files'),
     selectAudioQuality,

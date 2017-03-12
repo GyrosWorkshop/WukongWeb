@@ -8,8 +8,7 @@ import style from './player-audio.css'
 
 function mapStateToProps(state) {
   return {
-    playing: Selector.playingFile(state).url,
-    preload: Selector.preloadFile(state).url,
+    playing: Selector.playingAudioFile(state).url,
     song: state.song.playing.id,
     time: state.song.playing.time,
     running: state.player.running,
@@ -47,7 +46,6 @@ function mapDispatchToProps(dispatch) {
 export default class PlayerAudio extends PureComponent {
   static propTypes = {
     playing: PropTypes.string,
-    preload: PropTypes.string,
     song: PropTypes.string,
     time: PropTypes.number,
     running: PropTypes.bool,
@@ -115,7 +113,7 @@ export default class PlayerAudio extends PureComponent {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const {playing, preload} = this.refs
+    const {playing} = this.refs
     if (this.props.volume != nextProps.volume) {
       playing.volume = nextProps.volume
     }
@@ -130,9 +128,6 @@ export default class PlayerAudio extends PureComponent {
         nextProps.dispatchSelfPlaying(nextProps.song)
       }
     }
-    if (this.props.preload != nextProps.preload) {
-      this.setAudioState(preload, nextProps.preload)
-    }
     return false
   }
 
@@ -140,7 +135,6 @@ export default class PlayerAudio extends PureComponent {
     return (
       <div styleName='container'>
         <audio ref='playing' autoPlay={true}/>
-        <audio ref='preload' preload='auto'/>
       </div>
     )
   }
