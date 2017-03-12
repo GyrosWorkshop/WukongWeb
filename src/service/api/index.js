@@ -123,6 +123,9 @@ export default function API(getState, dispatch, next) {
               ...Codec.Song.decode(data.song)
             }))
             break
+          case 'Notification':
+            next(Action.Misc.notification.create(data.notification))
+            break
         }
       })
     }

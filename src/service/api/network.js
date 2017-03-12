@@ -5,6 +5,27 @@ const server = __env.production ? origin : (
   __env.server || 'http://localhost:5000'
 )
 
+async function handleLogin() {
+  const schemes = await http('GET', '/oauth/all')
+  if (!schemes || schemes.length == 0) {
+    throw new Error('Login error: no available login schemes.')
+  }
+  let schemeUrl = ''
+  if (schemes.length == 1) {
+    schemeUrl = schemes[0].url
+  } else {
+    const scheme = prompt('Login - Please choose an OAuth2 scheme: \n\n' +
+      schemes.map(it => ` - ${it.scheme}: ${it.displayName}\n`).join(''),
+      schemes[0].scheme)
+    schemeUrl = schemes.filter(it =>
+      it.scheme == scheme
+    )[0].url
+  }
+  location.href = `${server}${schemeUrl}?redirectUri=${
+    encodeURIComponent(location)
+  }`
+}
+
 export async function http(method, endpoint, data) {
   const response = await fetch(server + endpoint, {
     method,
@@ -25,9 +46,7 @@ export async function http(method, endpoint, data) {
       return JSON.parse(data)
     }
   } else if (response.status == 401) {
-    location.href = `${server}/oauth/google?redirectUri=${
-      encodeURIComponent(location)
-    }`
+    handleLogin()
   } else {
     throw new Error(`${response.statusText}: ${method} ${endpoint}`)
   }
