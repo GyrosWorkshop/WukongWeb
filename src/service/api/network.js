@@ -18,7 +18,7 @@ async function handleLogin() {
       schemes.map(it => ` - ${it.scheme}: ${it.displayName}\n`).join(''),
       schemes[0].scheme)
     schemeUrl = schemes.filter(it =>
-      it.scheme == scheme
+      it.scheme.toLowerCase() == scheme.toLowerCase()
     )[0].url
   }
   location.href = `${server}${schemeUrl}?redirectUri=${
