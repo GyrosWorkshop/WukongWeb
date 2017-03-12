@@ -36,7 +36,7 @@ export async function http(method, endpoint, data) {
 export function websocket(endpoint, handler) {
   const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
   const connect = () => websocket(endpoint, handler)
-  const ping = () => socket.send(`ping-${Date.now()}`)
+  const ping = () => socket.send(`ping ${Date.now()}`)
   const send = data => socket.send(JSON.stringify(data))
   const emit = handler(send)
   let interval = null
