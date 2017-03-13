@@ -37,7 +37,6 @@ export function websocket(endpoint, handler) {
   const socket = new WebSocket(server.replace(/^http/i, 'ws') + endpoint)
   const connect = () => websocket(endpoint, handler)
   const ping = () => socket.send(`ping ${Date.now()}`)
-  const send = data => socket.send(JSON.stringify(data))
   let interval = null
   socket.onopen = event => {
     handler('open', event)
