@@ -9,6 +9,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
+    "comma-dangle": ["error", "never"],
     "no-unused-vars": ["error", {"args": "none", "caughtErrors": "none"}],
     "max-len": ["error", 80],
     "no-console": ["error"]

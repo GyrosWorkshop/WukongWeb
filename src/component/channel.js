@@ -12,6 +12,7 @@ import ActionPanel from './action-panel'
 import OmniPanel from './omni-panel'
 import SongList from './song-list'
 import PlayerAudio from './player-audio'
+import PreloadControl from './preload-control'
 import style from './channel.css'
 
 function mapStateToProps(state, props) {
@@ -71,6 +72,7 @@ export default class Channel extends PureComponent {
             <SongList/>
           </div>
           <PlayerAudio/>
+          <PreloadControl/>
         </div>
       </DocumentTitle>
     )

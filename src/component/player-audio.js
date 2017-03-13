@@ -8,9 +8,8 @@ import style from './player-audio.css'
 
 function mapStateToProps(state) {
   return {
-    playing: Selector.playingFile(state).url,
-    preload: Selector.preloadFile(state).url,
-    song: state.song.playing.id,
+    id: state.song.playing.id,
+    file: Selector.playingFile(state).url,
     time: state.song.playing.time,
     running: state.player.running,
     volume: state.player.volume,
@@ -38,7 +37,7 @@ function mapDispatchToProps(dispatch) {
     },
     dispatchSelfPlaying(id) {
       dispatch(Action.Song.move.create(id, Number.MAX_SAFE_INTEGER))
-    },
+    }
   }
 }
 
@@ -46,9 +45,8 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class PlayerAudio extends PureComponent {
   static propTypes = {
-    playing: PropTypes.string,
-    preload: PropTypes.string,
-    song: PropTypes.string,
+    id: PropTypes.string,
+    file: PropTypes.string,
     time: PropTypes.number,
     running: PropTypes.bool,
     volume: PropTypes.number,
@@ -62,7 +60,8 @@ export default class PlayerAudio extends PureComponent {
     dispatchSelfPlaying: PropTypes.func
   }
 
-  setAudioState(audio, url, time) {
+  setAudioState(url, time) {
+    const {audio} = this.refs
     if (url) {
       audio.src = url
       if (time) audio.currentTime = (Date.now() / 1000) - time
@@ -72,7 +71,7 @@ export default class PlayerAudio extends PureComponent {
   }
 
   onAudioEvent = (event) => {
-    const {playing} = this.refs
+    const {audio} = this.refs
     switch (event.type) {
       case 'playing':
         this.props.dispatchRunning(true)
@@ -81,54 +80,51 @@ export default class PlayerAudio extends PureComponent {
         this.props.dispatchRunning(false)
         break
       case 'timeupdate':
-        this.props.dispatchElapsed(playing.currentTime)
-        this.props.dispatchDuration(playing.duration)
+        this.props.dispatchElapsed(audio.currentTime)
+        this.props.dispatchDuration(audio.duration)
         break
       case 'ended':
-        this.setAudioState(playing, null)
+        this.setAudioState(null)
         this.props.dispatchEnded()
         break
       case 'error':
-        this.setAudioState(playing, null)
-        this.setAudioState(playing, this.props.playing, this.props.time)
+        this.setAudioState(null)
+        this.setAudioState(this.props.file, this.props.time)
         break
     }
   }
 
   componentDidMount() {
-    const {playing} = this.refs
+    const {audio} = this.refs
     for (const type of [
       'playing', 'pause', 'timeupdate', 'ended', 'error'
-    ]) playing.addEventListener(type, this.onAudioEvent)
-    playing.volume = this.props.volume
-    this.setAudioState(playing, this.props.playing, this.props.time)
+    ]) audio.addEventListener(type, this.onAudioEvent)
+    audio.volume = this.props.volume
+    this.setAudioState(this.props.file, this.props.time)
   }
 
   componentWillUnmount() {
-    const {playing} = this.refs
+    const {audio} = this.refs
     for (const type of [
       'playing', 'pause', 'timeupdate', 'ended', 'error'
-    ]) playing.removeEventListener(type, this.onAudioEvent)
+    ]) audio.removeEventListener(type, this.onAudioEvent)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const {playing, preload} = this.refs
+    const {audio} = this.refs
     if (this.props.volume != nextProps.volume) {
-      playing.volume = nextProps.volume
+      audio.volume = nextProps.volume
     }
     if (nextProps.reload) {
-      this.setAudioState(playing, null)
-      this.setAudioState(playing, nextProps.playing, nextProps.time)
+      this.setAudioState(null)
+      this.setAudioState(nextProps.file, nextProps.time)
       nextProps.dispatchReloaded()
-    } else if (this.props.song != nextProps.song
+    } else if (this.props.id != nextProps.id
       || Math.abs(this.props.time - nextProps.time) > 10) {
-      this.setAudioState(playing, nextProps.playing, nextProps.time)
+      this.setAudioState(nextProps.file, nextProps.time)
       if (nextProps.isSelf) {
-        nextProps.dispatchSelfPlaying(nextProps.song)
+        nextProps.dispatchSelfPlaying(nextProps.id)
       }
-    }
-    if (this.props.preload != nextProps.preload) {
-      this.setAudioState(preload, nextProps.preload)
     }
     return false
   }
@@ -136,8 +132,7 @@ export default class PlayerAudio extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        <audio ref='playing' autoPlay={true}/>
-        <audio ref='preload' preload='auto'/>
+        <audio ref='audio' autoPlay={true}/>
       </div>
     )
   }
