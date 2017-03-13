@@ -95,7 +95,7 @@ export default function API(getState, dispatch, next) {
     },
 
     receiveMessage(callback) {
-      websocket('/api/ws', send => async (event, data) => {
+      websocket('/api/ws', async (event, data) => {
         switch (event) {
           case 'open':
           case 'close':
