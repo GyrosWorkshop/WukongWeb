@@ -3,6 +3,11 @@ export const profile = {
   create(profile) { return {type: this.type, profile} }
 }
 
+export const auth = {
+  type: 'UserAuth',
+  create(auth) { return {type: this.type, auth} }
+}
+
 export const preferences = {
   type: 'UserPreferences',
   create(preferences) { return {type: this.type, preferences} }
