@@ -14,7 +14,10 @@ function profile(state = {}, action) {
 function auth(state = {}, action) {
   switch (action.type) {
     case Action.User.auth.type:
-      return action.auth
+      return {
+        ...state,
+        ...action.auth
+      }
     default:
       return state
   }
