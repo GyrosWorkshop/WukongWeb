@@ -6,6 +6,9 @@ export function open(state = {}) {
   try {
     return merge({
       user: {
+        auth: {
+          state: true
+        },
         preferences: {
           listenOnly: false,
           connection: 0,
