@@ -1,9 +1,9 @@
 import Action from '../../action'
 
-export default function Utility(getState, dispatch, next) {
+export default function Utility(getState, dispatch) {
   return {
     notifyError(error, action, callback) {
-      next(Action.Misc.notification.create({
+      dispatch(Action.Misc.notification.create({
         message: error.toString(),
         action,
         callback

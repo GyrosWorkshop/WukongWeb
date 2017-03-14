@@ -4,8 +4,8 @@ import Utility from './utility'
 
 export default function Service() {
   return ({getState, dispatch}) => (next) => {
-    const api = API(getState, dispatch, next)
-    const utility = Utility(getState, dispatch, next)
+    const api = API(getState, dispatch)
+    const utility = Utility(getState, dispatch)
 
     async function onLoad() {
       try {
@@ -54,7 +54,6 @@ export default function Service() {
             break
           case Action.Song.sync.type:
             await api.fetchPlaylist()
-            await api.sendUpnext(prevState)
             break
           case Action.Player.ended.type:
             await api.sendEnded()

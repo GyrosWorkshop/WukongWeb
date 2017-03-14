@@ -4,12 +4,13 @@ import Action from '../../action'
 import Network from './network'
 import Codec from './codec'
 
-export default function API(getState, dispatch, next) {
+export default function API(getState, dispatch) {
   const {http, websocket} = Network(
     response => {
       if (response.status == 401) {
-        //TODO
-        next()
+        dispatch(Action.User.auth.create({
+          invalid: true
+        }))
         throw new Error('You have to sign in to continue.')
       }
       if (!response.ok) {
@@ -21,7 +22,7 @@ export default function API(getState, dispatch, next) {
   return {
     async fetchUser() {
       const user = await http('GET', '/api/user/userinfo')
-      next(Action.User.profile.create(
+      dispatch(Action.User.profile.create(
         Codec.User.decode(user)
       ))
     },
@@ -39,7 +40,7 @@ export default function API(getState, dispatch, next) {
         })
       ))
       const songs = [].concat(...lists.map(list => list.songs || []))
-      next(Action.Song.assign.create(
+      dispatch(Action.Song.assign.create(
         songs.map(Codec.Song.decode)
       ))
     },
@@ -99,11 +100,11 @@ export default function API(getState, dispatch, next) {
           key: keyword,
           withCookie: state.user.preferences.cookie
         })
-        next(Action.Search.results.create(
+        dispatch(Action.Search.results.create(
           results.map(Codec.Song.decode)
         ))
       } else {
-        next(Action.Search.results.create([]))
+        dispatch(Action.Search.results.create([]))
       }
     },
 
@@ -116,28 +117,27 @@ export default function API(getState, dispatch, next) {
             callback(event)
             break
           case 'UserListUpdated':
-            next(Action.Channel.members.create(
+            dispatch(Action.Channel.members.create(
               data.users.map(Codec.User.decode)
             ))
             break
           case 'Play':
-            next(Action.Player.reset.create())
-            if (data.downvote) {
-              next(Action.Player.downvote.create())
-            }
-            next(Action.Song.play.create(data.song && {
+            dispatch(Action.Player.reset.create({
+              downvote: !!data.downvote
+            }))
+            dispatch(Action.Song.play.create(data.song && {
               ...Codec.Song.decode(data.song),
               player: data.user || '',
               time: (Date.now() / 1000) - (data.elapsed || 0)
             }))
             break
           case 'NextSongUpdate':
-            next(Action.Song.preload.create(data.song && {
+            dispatch(Action.Song.preload.create(data.song && {
               ...Codec.Song.decode(data.song)
             }))
             break
           case 'Notification':
-            next(Action.Misc.notification.create(
+            dispatch(Action.Misc.notification.create(
               data.notification
             ))
             break
