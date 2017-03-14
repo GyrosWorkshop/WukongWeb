@@ -6,10 +6,10 @@ import {get, fromPairs, debounce} from 'lodash'
 import Action from '../action'
 import style from './config-form.css'
 
-const kOptions = ['sync', 'cookie']
+const options = ['sync', 'cookie']
 
 function mapStateToProps(state) {
-  return fromPairs(kOptions.map(option => [
+  return fromPairs(options.map(option => [
     option, get(state, `user.preferences.${option}`)
   ]))
 }
@@ -26,13 +26,13 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class ConfigForm extends PureComponent {
   static propTypes = {
-    ...fromPairs(kOptions.map(option => [
+    ...fromPairs(options.map(option => [
       option, PropTypes.string
     ])),
     dispatchPreferences: PropTypes.func
   }
 
-  state = fromPairs(kOptions.map(option => [
+  state = fromPairs(options.map(option => [
     option, this.props[option] || ''
   ]))
 
@@ -49,7 +49,7 @@ export default class ConfigForm extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        {kOptions.map(option => (
+        {options.map(option => (
           <label key={option}>
             <span>{option}</span>
             <textarea name={option} rows={4}

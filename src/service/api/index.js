@@ -9,7 +9,7 @@ export default function API(getState, dispatch) {
     response => {
       if (response.status == 401) {
         dispatch(Action.User.auth.create({
-          state: false
+          status: false
         }))
         throw new Error('You have to sign in to continue.')
       }

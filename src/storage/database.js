@@ -1,13 +1,13 @@
 import {merge, pick} from 'lodash'
 
-const kStorageKey = 'wukong'
+const key = 'wukong'
 
 export function open(state = {}) {
   try {
     return merge({
       user: {
         auth: {
-          state: true
+          status: true
         },
         preferences: {
           listenOnly: false,
@@ -15,7 +15,7 @@ export function open(state = {}) {
           audioQuality: 2
         }
       }
-    }, JSON.parse(localStorage.getItem(kStorageKey)), state)
+    }, JSON.parse(localStorage.getItem(key)), state)
   } catch (error) {
     return state
   }
@@ -23,12 +23,12 @@ export function open(state = {}) {
 
 export function save(state = {}) {
   try {
-    localStorage.setItem(kStorageKey, JSON.stringify(pick(state, [
+    localStorage.setItem(key, JSON.stringify(pick(state, [
       'user.preferences',
       'song.playlist',
       'player.volume'
     ])))
   } catch (error) {
-    localStorage.removeItem(kStorageKey)
+    localStorage.removeItem(key)
   }
 }
