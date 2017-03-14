@@ -71,11 +71,6 @@ export default {
     selectState('song.playing.player'),
     (members, player) => members.map(member => member.id).indexOf(player)
   ),
-  selfPlaying: createSelector(
-    selectState('user.profile.id'),
-    selectState('song.playing.player'),
-    (user, player) => user && player && (user == player)
-  ),
   currentSongs: createSelector(
     selectState('song.playlist'),
     selectState('search.results'),

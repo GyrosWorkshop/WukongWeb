@@ -13,8 +13,7 @@ function mapStateToProps(state) {
     time: state.song.playing.time,
     running: state.player.running,
     volume: state.player.volume,
-    reload: state.player.reload,
-    isSelf: Selector.selfPlaying(state)
+    reload: state.player.reload
   }
 }
 
@@ -34,9 +33,6 @@ function mapDispatchToProps(dispatch) {
     },
     dispatchReloaded() {
       dispatch(Action.Player.reload.create(false))
-    },
-    dispatchSelfPlaying(id) {
-      dispatch(Action.Song.move.create(id, Number.MAX_SAFE_INTEGER))
     }
   }
 }
@@ -51,13 +47,11 @@ export default class PlayerAudio extends PureComponent {
     running: PropTypes.bool,
     volume: PropTypes.number,
     reload: PropTypes.bool,
-    isSelf: PropTypes.bool,
     dispatchRunning: PropTypes.func,
     dispatchElapsed: PropTypes.func,
     dispatchDuration: PropTypes.func,
     dispatchEnded: PropTypes.func,
     dispatchReloaded: PropTypes.func,
-    dispatchSelfPlaying: PropTypes.func
   }
 
   setAudioState(url, time) {
@@ -122,9 +116,6 @@ export default class PlayerAudio extends PureComponent {
     } else if (this.props.id != nextProps.id
       || Math.abs(this.props.time - nextProps.time) > 10) {
       this.setAudioState(nextProps.file, nextProps.time)
-      if (nextProps.isSelf) {
-        nextProps.dispatchSelfPlaying(nextProps.id)
-      }
     }
     return false
   }

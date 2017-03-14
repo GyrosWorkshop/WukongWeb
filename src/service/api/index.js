@@ -136,6 +136,7 @@ export default function API(getState, dispatch) {
 
   api.receiveMessage = callback => {
     network.websocket('/api/ws', send => async (event, data) => {
+      const state = getState()
       switch (event) {
         case 'open':
         case 'close':
@@ -159,6 +160,12 @@ export default function API(getState, dispatch) {
             player: data.user || '',
             time: (Date.now() / 1000) - (data.elapsed || 0)
           }))
+          if (state.user.profile.id == data.user) {
+            dispatch(Action.Song.move.create(
+              Codec.Song.decode(data.song).id,
+              Number.MAX_SAFE_INTEGER
+            ))
+          }
           break
         case 'NextSongUpdate':
           dispatch(Action.Song.preload.create(data.song && {
