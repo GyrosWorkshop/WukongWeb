@@ -51,7 +51,7 @@ export default class PlayerAudio extends PureComponent {
     dispatchElapsed: PropTypes.func,
     dispatchDuration: PropTypes.func,
     dispatchEnded: PropTypes.func,
-    dispatchReloaded: PropTypes.func,
+    dispatchReloaded: PropTypes.func
   }
 
   setAudioState(url, time) {

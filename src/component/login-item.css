@@ -1,2 +1,29 @@
 .container {
+  padding: 8px;
+  margin: 4px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+  transition: background 200ms ease;
+
+  & > * {
+    display: block;
+    width: max-content;
+    padding: 0;
+    margin: auto;
+  }
+
+  & > img {
+    width: 64px;
+    height: 64px;
+  }
+
+  & > p {
+    margin-top: 12px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.07);
+  }
 }

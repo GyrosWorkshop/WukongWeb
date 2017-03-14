@@ -10,6 +10,7 @@ export default class Login extends PureComponent {
     return (
       <div styleName='container'>
         <div styleName='content'>
+          <p>Sign in with</p>
           <LoginList/>
         </div>
       </div>
