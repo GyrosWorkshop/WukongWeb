@@ -11,7 +11,7 @@ export default function Service() {
       try {
         await api.fetchUser()
       } catch (error) {
-        utility.notifyError(error, 'Reload', utility.reloadApp)
+        utility.notifyError(error.message)
         return
       }
       api.receiveMessage(async event => {
@@ -28,7 +28,7 @@ export default function Service() {
               break
           }
         } catch (error) {
-          utility.notifyError(error)
+          utility.notifyError(error.message)
         }
       })
     }
@@ -69,7 +69,7 @@ export default function Service() {
             break
         }
       } catch (error) {
-        utility.notifyError(error)
+        utility.notifyError(error.message)
       }
     }
 
