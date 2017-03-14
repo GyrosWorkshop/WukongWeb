@@ -1,10 +1,23 @@
 import {isEqual} from 'lodash'
 
 import Action from '../../action'
-import {http, websocket} from './network'
+import Network from './network'
 import Codec from './codec'
 
 export default function API(getState, dispatch, next) {
+  const {http, websocket} = Network(
+    response => {
+      if (response.status == 401) {
+        //TODO
+        next()
+        throw new Error('You have to sign in to continue.')
+      }
+      if (!response.ok) {
+        throw new Error(`${response.statusText}: ${method} ${endpoint}`)
+      }
+    }
+  )
+
   return {
     async fetchUser() {
       const user = await http('GET', '/api/user/userinfo')
