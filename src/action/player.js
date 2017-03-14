@@ -35,5 +35,5 @@ export const reload = {
 
 export const reset = {
   type: 'PlayerReset',
-  create() { return {type: this.type} }
+  create(state) { return {type: this.type, state} }
 }
