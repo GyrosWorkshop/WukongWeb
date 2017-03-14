@@ -21,22 +21,36 @@ export default function API(getState, dispatch) {
 
   const api = {}
 
+  api.processAuth = async () => {
+    const state = getState()
+    const auth = state.user.auth
+    if (auth.status) return
+    if (auth.providers) {
+      const provider = auth.providers.find(
+        provider => provider.id == auth.selected
+      )
+      if (provider) {
+        location.href = network.url('http', `${provider.url}?redirectUri=${
+          encodeURIComponent(location.href)
+        }`)
+      }
+    } else {
+      const providers = await network.http('GET', '/oauth/all')
+      dispatch(Action.User.auth.create({
+        providers: providers.map(provider => ({
+          id: provider.scheme,
+          name: provider.displayName,
+          url: provider.url
+        }))
+      }))
+    }
+  }
+
   api.fetchUser = async () => {
     const user = await network.http('GET', '/api/user/userinfo')
     dispatch(Action.User.profile.create(
       Codec.User.decode(user)
     ))
-  }
-
-  api.fetchAuth = async () => {
-    const auth = await network.http('GET', '/oauth/all')
-    dispatch(Action.User.auth.create({
-      providers: auth.map(provider => ({
-        id: provider.scheme,
-        name: provider.displayName,
-        url: network.url('http', provider.url)
-      }))
-    }))
   }
 
   api.fetchPlaylist = async () => {

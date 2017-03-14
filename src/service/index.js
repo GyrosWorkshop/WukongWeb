@@ -38,6 +38,9 @@ export default function Service() {
       next(action)
       try {
         switch (action.type) {
+          case Action.User.auth.type:
+            await api.processAuth()
+            break
           case Action.User.preferences.type:
             await api.sendUpnext(prevState)
             break
