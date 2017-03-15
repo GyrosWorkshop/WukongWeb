@@ -5,9 +5,6 @@ import {BrowserRouter, Route} from 'react-router-dom'
 
 import Background from './background'
 import Notification from './notification'
-import Welcome from './welcome'
-import Channel from './channel'
-import Login from './login'
 import './app.global.css'
 
 function mapStateToProps(state) {
@@ -33,9 +30,15 @@ export default class App extends PureComponent {
       <DocumentTitle title='Wukong'>
         <BrowserRouter>
           <div className='app'>
-            <Route path='/' exact component={Welcome}/>
-            <Route path='/:channel' component={Channel}/>
-            {!auth && <Login/>}
+            <Route path='/' exact component={
+              <LazyComponent component={() => import('./welcome')}/>
+            }/>
+            <Route path='/:channel' component={
+              <LazyComponent component={() => import('./channel')}/>
+            }/>
+            {!auth && (
+              <LazyComponent component={() => import('./login')}/>
+            )}
             <Notification/>
             <Background/>
             {children}
@@ -43,5 +46,26 @@ export default class App extends PureComponent {
         </BrowserRouter>
       </DocumentTitle>
     )
+  }
+}
+
+class LazyComponent extends PureComponent {
+  static propTypes = {
+    component: PropTypes.func
+  }
+
+  state = {
+    component: null
+  }
+
+  render() {
+    const {component, ...props} = this.props
+    const {component: Component} = this.state
+    if (Component) {
+      return <Component {...props}/>
+    } else {
+      component().then(component => this.setState({component}))
+      return null
+    }
   }
 }
