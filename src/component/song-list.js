@@ -13,8 +13,7 @@ import xiamiIcon from '../resource/xiami.png'
 
 function mapStateToProps(state) {
   return {
-    songs: Selector.currentSongs(state),
-    search: Selector.currentSearch(state)
+    songs: Selector.currentSongs(state)
   }
 }
 
@@ -34,24 +33,26 @@ function mapDispatchToProps(dispatch) {
 export default class SongList extends PureComponent {
   static propTypes = {
     songs: PropTypes.array,
-    search: PropTypes.bool,
     dispatchAdd: PropTypes.func,
     dispatchRemove: PropTypes.func
   }
 
   onUpnextAction = (context) => {
-    this.props.dispatchAdd(this.props.songs[context])
+    this.props.dispatchAdd(this.props.songs[context].song)
   }
 
   onDeleteAction = (context) => {
-    this.props.dispatchRemove(this.props.songs[context])
+    this.props.dispatchRemove(this.props.songs[context].song)
   }
 
   render() {
-    const {songs, search} = this.props
+    const {songs} = this.props
     return (
       <div styleName='container'>
-        {songs.map(({id, siteId, title, album, artist, link}, i) => (
+        {songs.map(({
+          song: {id, siteId, title, album, artist, link},
+          search, added
+        }, i) => (
           <SongItem key={id} title={title} album={album} artist={artist}
             link={link} icon={{
               'netease-cloud-music': neteaseIcon,
@@ -59,8 +60,11 @@ export default class SongList extends PureComponent {
               'Xiami': xiamiIcon
             }[siteId]}>
             {search ? [
-              <SongButton key='upnext' icon='plus'
-                action={this.onUpnextAction} context={i}/>
+              added
+                ? <SongButton key='delete' icon='trash'
+                    action={this.onDeleteAction} context={i}/>
+                : <SongButton key='upnext' icon='plus'
+                    action={this.onUpnextAction} context={i}/>
             ] : [
               <SongButton key='upnext' icon='arrow-up'
                 action={this.onUpnextAction} context={i}/>,

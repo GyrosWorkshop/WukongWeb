@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect'
-import {get, flow} from 'lodash'
+import {get, flow, fromPairs} from 'lodash'
 
 import artworkImage from '../resource/artwork.png'
 
@@ -72,14 +72,32 @@ export default {
     (members, player) => members.map(member => member.id).indexOf(player)
   ),
   currentSongs: createSelector(
-    selectState('song.playlist'),
-    selectState('search.results'),
+    createSelector(
+      selectState('song.playlist'),
+      (playlist) => {
+        return playlist.map(song => ({
+          song,
+          search: false,
+          added: true
+        }))
+      }
+    ),
+    createSelector(
+      selectState('song.playlist'),
+      selectState('search.results'),
+      (playlist, results) => {
+        const table = fromPairs(playlist.map(song => [
+          song.id, true
+        ]))
+        return results.map(song => ({
+          song,
+          search: true,
+          added: !!table[song.id]
+        }))
+      }
+    ),
     selectState('search.keyword'),
     (playlist, results, keyword) => keyword ? results : playlist
-  ),
-  currentSearch: createSelector(
-    selectState('search.keyword'),
-    (keyword) => !!keyword
   ),
   currentLyrics: createSelector(
     selectState('song.playing.lyrics'),
