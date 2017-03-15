@@ -6,6 +6,7 @@ const FaviconsPlugin = require('favicons-webpack-plugin')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
+const vendorPath = path.join(__dirname, 'node_modules')
 const production = process.env.NODE_ENV == 'production'
 const devHost = process.env.DEV_HOST || 'localhost'
 const devPort = parseInt(process.env.DEV_PORT) || 8080
@@ -116,6 +117,14 @@ config.plugins.push(
         require('postcss-cssnext')()
       ]
     }
+  }),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'vendor',
+    minChunks: (module, count) => module.context.startsWith(vendorPath)
+  }),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: 'manifest',
+    minChunks: Infinity
   }),
   new HtmlPlugin({
     template: './index.html',
