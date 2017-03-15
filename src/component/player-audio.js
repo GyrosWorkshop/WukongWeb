@@ -8,13 +8,17 @@ import style from './player-audio.css'
 
 function mapStateToProps(state) {
   return {
+<<<<<<< HEAD
     playing: Selector.playingAudioFile(state).url,
     song: state.song.playing.id,
+=======
+    id: state.song.playing.id,
+    file: Selector.playingFile(state).url,
+>>>>>>> qusic
     time: state.song.playing.time,
     running: state.player.running,
     volume: state.player.volume,
-    reload: state.player.reload,
-    isSelf: Selector.selfPlaying(state)
+    reload: state.player.reload
   }
 }
 
@@ -34,10 +38,7 @@ function mapDispatchToProps(dispatch) {
     },
     dispatchReloaded() {
       dispatch(Action.Player.reload.create(false))
-    },
-    dispatchSelfPlaying(id) {
-      dispatch(Action.Song.move.create(id, Number.MAX_SAFE_INTEGER))
-    },
+    }
   }
 }
 
@@ -45,22 +46,26 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class PlayerAudio extends PureComponent {
   static propTypes = {
+<<<<<<< HEAD
     playing: PropTypes.string,
     song: PropTypes.string,
+=======
+    id: PropTypes.string,
+    file: PropTypes.string,
+>>>>>>> qusic
     time: PropTypes.number,
     running: PropTypes.bool,
     volume: PropTypes.number,
     reload: PropTypes.bool,
-    isSelf: PropTypes.bool,
     dispatchRunning: PropTypes.func,
     dispatchElapsed: PropTypes.func,
     dispatchDuration: PropTypes.func,
     dispatchEnded: PropTypes.func,
-    dispatchReloaded: PropTypes.func,
-    dispatchSelfPlaying: PropTypes.func
+    dispatchReloaded: PropTypes.func
   }
 
-  setAudioState(audio, url, time) {
+  setAudioState(url, time) {
+    const {audio} = this.refs
     if (url) {
       audio.src = url
       if (time) audio.currentTime = (Date.now() / 1000) - time
@@ -70,7 +75,7 @@ export default class PlayerAudio extends PureComponent {
   }
 
   onAudioEvent = (event) => {
-    const {playing} = this.refs
+    const {audio} = this.refs
     switch (event.type) {
       case 'playing':
         this.props.dispatchRunning(true)
@@ -79,54 +84,59 @@ export default class PlayerAudio extends PureComponent {
         this.props.dispatchRunning(false)
         break
       case 'timeupdate':
-        this.props.dispatchElapsed(playing.currentTime)
-        this.props.dispatchDuration(playing.duration)
+        this.props.dispatchElapsed(audio.currentTime)
+        this.props.dispatchDuration(audio.duration)
         break
       case 'ended':
-        this.setAudioState(playing, null)
+        this.setAudioState(null)
         this.props.dispatchEnded()
         break
       case 'error':
-        this.setAudioState(playing, null)
-        // trigger a reload
-        setTimeout(() => {
-          this.setAudioState(playing, this.props.playing, this.props.time)
-        }, 1000)
+        this.setAudioState(null)
+        this.setAudioState(this.props.file, this.props.time)
         break
     }
   }
 
   componentDidMount() {
-    const {playing} = this.refs
+    const {audio} = this.refs
     for (const type of [
       'playing', 'pause', 'timeupdate', 'ended', 'error'
-    ]) playing.addEventListener(type, this.onAudioEvent)
-    playing.volume = this.props.volume
-    this.setAudioState(playing, this.props.playing, this.props.time)
+    ]) audio.addEventListener(type, this.onAudioEvent)
+    audio.volume = this.props.volume
+    this.setAudioState(this.props.file, this.props.time)
   }
 
   componentWillUnmount() {
-    const {playing} = this.refs
+    const {audio} = this.refs
     for (const type of [
       'playing', 'pause', 'timeupdate', 'ended', 'error'
-    ]) playing.removeEventListener(type, this.onAudioEvent)
+    ]) audio.removeEventListener(type, this.onAudioEvent)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+<<<<<<< HEAD
     const {playing} = this.refs
+=======
+    const {audio} = this.refs
+>>>>>>> qusic
     if (this.props.volume != nextProps.volume) {
-      playing.volume = nextProps.volume
+      audio.volume = nextProps.volume
     }
     if (nextProps.reload) {
-      this.setAudioState(playing, null)
-      this.setAudioState(playing, nextProps.playing, nextProps.time)
+      this.setAudioState(null)
+      this.setAudioState(nextProps.file, nextProps.time)
       nextProps.dispatchReloaded()
-    } else if (this.props.song != nextProps.song
+    } else if (this.props.id != nextProps.id
       || Math.abs(this.props.time - nextProps.time) > 10) {
+<<<<<<< HEAD
       this.setAudioState(playing, nextProps.playing, nextProps.time)
       if (nextProps.isSelf) {
         nextProps.dispatchSelfPlaying(nextProps.song)
       }
+=======
+      this.setAudioState(nextProps.file, nextProps.time)
+>>>>>>> qusic
     }
     return false
   }
@@ -134,7 +144,11 @@ export default class PlayerAudio extends PureComponent {
   render() {
     return (
       <div styleName='container'>
+<<<<<<< HEAD
         <audio ref='playing' autoPlay={true}/>
+=======
+        <audio ref='audio' autoPlay={true}/>
+>>>>>>> qusic
       </div>
     )
   }

@@ -5,6 +5,7 @@ const server = __env.production ? origin : (
   __env.server || 'http://localhost:5000'
 )
 
+<<<<<<< HEAD
 async function handleLogin() {
   const schemes = await http('GET', '/oauth/all')
   if (!schemes || schemes.length == 0) {
@@ -62,20 +63,65 @@ export function websocket(endpoint, handler) {
   socket.onopen = event => {
     emit('open', event)
     interval = setInterval(ping, 30 * 1000)
+=======
+export default function Network(hook) {
+  const network = {}
+
+  network.url = (protocol, endpoint) => {
+    return server.replace(/^http/i, protocol) + endpoint
+>>>>>>> qusic
   }
-  socket.onclose = event => {
-    emit('close', event)
-    clearInterval(interval)
-    setTimeout(connect, 5 * 1000)
+
+  network.http = async (method, endpoint, data) => {
+    const response = await fetch(network.url('http', endpoint), {
+      method,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+      mode: __env.production ? 'same-origin' : 'cors',
+      credentials: __env.production ? 'same-origin' : 'include',
+      cache: 'default',
+      redirect: 'manual',
+      referrer: 'no-referrer'
+    })
+    hook(method, endpoint, response)
+    const string = await response.text()
+    return JSON.parse(string)
   }
-  socket.onerror = event => {
-    emit('error', event)
-  }
+<<<<<<< HEAD
   socket.onmessage = event => {
     if (event.data) {
       if (event.data.startsWith('pong ')) return
       const {eventName, ...eventData} = JSON.parse(event.data)
+=======
+
+  network.websocket = (endpoint, handler) => {
+    const socket = new WebSocket(network.url('ws', endpoint))
+    const connect = () => network.websocket(endpoint, handler)
+    const send = (eventName, eventData) => socket.send(JSON.stringify({
+      eventName,
+      ...eventData
+    }))
+    const emit = handler(send)
+    socket.onopen = event => {
+      emit('open', event)
+    }
+    socket.onclose = event => {
+      emit('close', event)
+      setTimeout(connect, 5 * 1000)
+    }
+    socket.onerror = event => {
+      emit('error', event)
+    }
+    socket.onmessage = event => {
+      const string = event.data
+      const {eventName, ...eventData} = JSON.parse(string)
+>>>>>>> qusic
       emit(eventName, eventData)
     }
   }
+
+  return network
 }

@@ -4,14 +4,14 @@ import Utility from './utility'
 
 export default function Service() {
   return ({getState, dispatch}) => (next) => {
-    const api = API(getState, dispatch, next)
-    const utility = Utility(getState, dispatch, next)
+    const api = API(getState, dispatch)
+    const utility = Utility(getState, dispatch)
 
     async function onLoad() {
       try {
         await api.fetchUser()
       } catch (error) {
-        utility.notifyError(error, 'Reload', utility.reloadApp)
+        utility.notifyError(error.message)
         return
       }
       api.receiveMessage(async event => {
@@ -28,7 +28,7 @@ export default function Service() {
               break
           }
         } catch (error) {
-          utility.notifyError(error)
+          utility.notifyError(error.message)
         }
       })
     }
@@ -38,6 +38,9 @@ export default function Service() {
       next(action)
       try {
         switch (action.type) {
+          case Action.User.auth.type:
+            await api.processAuth()
+            break
           case Action.User.preferences.type:
             await api.sendUpnext(prevState)
             break
@@ -54,7 +57,6 @@ export default function Service() {
             break
           case Action.Song.sync.type:
             await api.fetchPlaylist()
-            await api.sendUpnext(prevState)
             break
           case Action.Player.ended.type:
             await api.sendEnded()
@@ -67,7 +69,7 @@ export default function Service() {
             break
         }
       } catch (error) {
-        utility.notifyError(error)
+        utility.notifyError(error.message)
       }
     }
 

@@ -47,7 +47,18 @@ export default {
     getValue('url'),
     setDefaultValue(artworkImage)
   ),
+<<<<<<< HEAD
   playingAudioFile: composeSelector(
+=======
+  preloadArtwork: composeSelector(
+    takeState,
+    getValue('song.preload.artwork'),
+    selectConnection,
+    getValue('url'),
+    setDefaultValue(artworkImage)
+  ),
+  playingFile: composeSelector(
+>>>>>>> qusic
     takeState,
     getValue('song.playing.files'),
     selectAudioQuality,
@@ -69,11 +80,6 @@ export default {
     selectState('channel.members'),
     selectState('song.playing.player'),
     (members, player) => members.map(member => member.id).indexOf(player)
-  ),
-  selfPlaying: createSelector(
-    selectState('user.profile.id'),
-    selectState('song.playing.player'),
-    (user, player) => user && player && (user == player)
   ),
   currentSongs: createSelector(
     selectState('song.playlist'),

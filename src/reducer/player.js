@@ -45,7 +45,7 @@ function downvote(state = false, action) {
     case Action.Player.downvote.type:
       return true
     case Action.Player.reset.type:
-      return false
+      return action.state.downvote
     default:
       return state
   }

@@ -1,6 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
+import DocumentTitle from 'react-document-title'
 
 import Action from '../action'
 import ChannelTitle from './channel-title'
@@ -11,7 +12,11 @@ import ActionPanel from './action-panel'
 import OmniPanel from './omni-panel'
 import SongList from './song-list'
 import PlayerAudio from './player-audio'
+<<<<<<< HEAD
 import Preloader from './preloader'
+=======
+import PreloadControl from './preload-control'
+>>>>>>> qusic
 import style from './channel.css'
 
 function mapStateToProps(state, props) {
@@ -51,11 +56,29 @@ export default class Channel extends PureComponent {
   }
 
   render() {
+    const {channel} = this.props
     return (
-      <div styleName='container'>
-        <div styleName='left' style={{top: 0}}>
-          <ChannelTitle/>
+      <DocumentTitle title={`Wukong#${channel}`}>
+        <div styleName='container'>
+          <div styleName='left' style={{top: 0}}>
+            <ChannelTitle/>
+          </div>
+          <div styleName='right'>
+            <MemberList/>
+          </div>
+          <div styleName='left' style={{top: 52}}>
+            <NowPlaying/>
+            <LyricsMarquee/>
+            <ActionPanel/>
+          </div>
+          <div styleName='right'>
+            <OmniPanel/>
+            <SongList/>
+          </div>
+          <PlayerAudio/>
+          <PreloadControl/>
         </div>
+<<<<<<< HEAD
         <div styleName='right'>
           <MemberList/>
         </div>
@@ -71,6 +94,9 @@ export default class Channel extends PureComponent {
         <PlayerAudio/>
         <Preloader/>
       </div>
+=======
+      </DocumentTitle>
+>>>>>>> qusic
     )
   }
 }

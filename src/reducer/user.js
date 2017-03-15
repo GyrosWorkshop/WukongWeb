@@ -11,6 +11,18 @@ function profile(state = {}, action) {
   }
 }
 
+function auth(state = {}, action) {
+  switch (action.type) {
+    case Action.User.auth.type:
+      return {
+        ...state,
+        ...action.auth
+      }
+    default:
+      return state
+  }
+}
+
 function preferences(state = {}, action) {
   switch (action.type) {
     case Action.User.preferences.type:
@@ -25,5 +37,6 @@ function preferences(state = {}, action) {
 
 export default combineReducers({
   profile,
+  auth,
   preferences
 })
