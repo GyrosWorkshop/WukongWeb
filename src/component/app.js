@@ -1,7 +1,7 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {BrowserRouter, Route} from 'react-router-dom'
 import DocumentTitle from 'react-document-title'
+import {BrowserRouter, Route} from 'react-router-dom'
 
 import Background from './background'
 import Notification from './notification'
@@ -30,8 +30,8 @@ export default class App extends PureComponent {
   render() {
     const {auth, children} = this.props
     return (
-      <BrowserRouter>
-        <DocumentTitle title='Wukong'>
+      <DocumentTitle title='Wukong'>
+        <BrowserRouter>
           <div className='app'>
             <Route path='/' exact component={Welcome}/>
             <Route path='/:channel' component={Channel}/>
@@ -40,8 +40,8 @@ export default class App extends PureComponent {
             <Background/>
             {children}
           </div>
-        </DocumentTitle>
-      </BrowserRouter>
+        </BrowserRouter>
+      </DocumentTitle>
     )
   }
 }
