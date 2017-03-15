@@ -17,7 +17,8 @@ const config = {
   output: {
     path: buildPath,
     publicPath: production ? '/' : `${devServer}/`,
-    filename: production ? '[chunkhash].js' : 'bundle.js'
+    filename: production ? '[chunkhash].js' : '[name].[hash].js',
+    chunkFilename: production ? '[chunkhash].js' : '[name].[hash].js'
   },
   module: {
     rules: [{
