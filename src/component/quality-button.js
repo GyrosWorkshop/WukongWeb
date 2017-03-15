@@ -7,8 +7,8 @@ import ButtonItem from './button-item'
 
 function mapStateToProps(state) {
   return {
-    format: Selector.playingAudioFile(state).format,
-    quality: Selector.playingAudioFile(state).quality,
+    format: Selector.playingFile(state).format,
+    quality: Selector.playingFile(state).quality,
     preferred: state.user.preferences.audioQuality
   }
 }

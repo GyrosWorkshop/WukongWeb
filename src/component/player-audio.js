@@ -8,13 +8,8 @@ import style from './player-audio.css'
 
 function mapStateToProps(state) {
   return {
-<<<<<<< HEAD
-    playing: Selector.playingAudioFile(state).url,
-    song: state.song.playing.id,
-=======
     id: state.song.playing.id,
     file: Selector.playingFile(state).url,
->>>>>>> qusic
     time: state.song.playing.time,
     running: state.player.running,
     volume: state.player.volume,
@@ -46,13 +41,8 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class PlayerAudio extends PureComponent {
   static propTypes = {
-<<<<<<< HEAD
-    playing: PropTypes.string,
-    song: PropTypes.string,
-=======
     id: PropTypes.string,
     file: PropTypes.string,
->>>>>>> qusic
     time: PropTypes.number,
     running: PropTypes.bool,
     volume: PropTypes.number,
@@ -115,11 +105,7 @@ export default class PlayerAudio extends PureComponent {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-<<<<<<< HEAD
-    const {playing} = this.refs
-=======
     const {audio} = this.refs
->>>>>>> qusic
     if (this.props.volume != nextProps.volume) {
       audio.volume = nextProps.volume
     }
@@ -129,14 +115,7 @@ export default class PlayerAudio extends PureComponent {
       nextProps.dispatchReloaded()
     } else if (this.props.id != nextProps.id
       || Math.abs(this.props.time - nextProps.time) > 10) {
-<<<<<<< HEAD
-      this.setAudioState(playing, nextProps.playing, nextProps.time)
-      if (nextProps.isSelf) {
-        nextProps.dispatchSelfPlaying(nextProps.song)
-      }
-=======
       this.setAudioState(nextProps.file, nextProps.time)
->>>>>>> qusic
     }
     return false
   }
@@ -144,11 +123,7 @@ export default class PlayerAudio extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-<<<<<<< HEAD
-        <audio ref='playing' autoPlay={true}/>
-=======
         <audio ref='audio' autoPlay={true}/>
->>>>>>> qusic
       </div>
     )
   }

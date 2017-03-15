@@ -109,41 +109,6 @@ export default function API(getState, dispatch) {
     )
   }
 
-<<<<<<< HEAD
-    receiveMessage(callback) {
-      websocket('/api/ws', send => async (event, data) => {
-        switch (event) {
-          case 'open':
-          case 'close':
-          case 'error':
-            callback(event)
-            break
-          case 'UserListUpdated':
-            next(Action.Channel.members.create(
-              data.users.map(Codec.User.decode)
-            ))
-            break
-          case 'Play':
-            next(Action.Player.reset.create())
-            if (data.downvote) {
-              next(Action.Player.downvote.create())
-            }
-            next(Action.Song.play.create(data.song && {
-              ...Codec.Song.decode(data.song),
-              player: data.user || '',
-              time: (Date.now() / 1000) - (data.elapsed || 0)
-            }))
-            break
-          case 'NextSongUpdate':
-            next(Action.Song.preload.create(data.song && {
-              ...Codec.Song.decode(data.song)
-            }))
-            break
-          case 'Notification':
-            next(Action.Misc.notification.create(data.notification))
-            break
-        }
-=======
   api.sendDownvote = async () => {
     const state = getState()
     if (!state.channel.name) return
@@ -160,7 +125,6 @@ export default function API(getState, dispatch) {
       const results = await network.http('POST', '/provider/searchSongs', {
         key: keyword,
         withCookie: state.user.preferences.cookie
->>>>>>> qusic
       })
       dispatch(Action.Search.results.create(
         results.map(Codec.Song.decode)

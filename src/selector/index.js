@@ -47,9 +47,6 @@ export default {
     getValue('url'),
     setDefaultValue(artworkImage)
   ),
-<<<<<<< HEAD
-  playingAudioFile: composeSelector(
-=======
   preloadArtwork: composeSelector(
     takeState,
     getValue('song.preload.artwork'),
@@ -58,19 +55,12 @@ export default {
     setDefaultValue(artworkImage)
   ),
   playingFile: composeSelector(
->>>>>>> qusic
     takeState,
     getValue('song.playing.files'),
     selectAudioQuality,
     selectConnection
   ),
-  preloadArtwork: composeSelector(
-    takeState,
-    getValue('song.preload.artwork'),
-    selectConnection,
-    getValue('url')
-  ),
-  preloadAudioFile: composeSelector(
+  preloadFile: composeSelector(
     takeState,
     getValue('song.preload.files'),
     selectAudioQuality,

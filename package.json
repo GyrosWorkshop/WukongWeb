@@ -27,11 +27,7 @@
     "react": "15.4.2",
     "react-addons-perf": "15.4.2",
     "react-css-modules": "4.1.0",
-<<<<<<< HEAD
-    "react-document-title": "^2.0.2",
-=======
     "react-document-title": "2.0.2",
->>>>>>> qusic
     "react-dom": "15.4.2",
     "react-event-listener": "0.4.2",
     "react-hot-loader": "3.0.0-beta.6",
@@ -56,7 +52,7 @@
     "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
     "build": "env NODE_ENV=production webpack --colors --progress",
     "lint": "eslint '*.js' src && stylelint 'src/**/*.css'",
-    "test": "npm run lint",
+    "test": "npm run lint && npm run build",
     "package": "tar -czvf wukong-web.tgz -C build .",
     "clean": "rm -rf build *.tgz"
   },

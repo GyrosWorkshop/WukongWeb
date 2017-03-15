@@ -1,7 +1,6 @@
 import React, {PureComponent, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
-import DocumentTitle from 'react-document-title'
 
 import style from './channel-title.css'
 
@@ -25,11 +24,9 @@ export default class ChannelTitle extends PureComponent {
   render() {
     const {channel} = this.props
     return (
-      <DocumentTitle title={channel ? `Wukong / ${channel}` : 'Wukong'}>
-        <div styleName='container'>
-          <p>Wukong / {channel}</p>
-        </div>
-      </DocumentTitle>
+      <div styleName='container'>
+        <p>Wukong#{channel}</p>
+      </div>
     )
   }
 }

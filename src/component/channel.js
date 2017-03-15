@@ -12,11 +12,7 @@ import ActionPanel from './action-panel'
 import OmniPanel from './omni-panel'
 import SongList from './song-list'
 import PlayerAudio from './player-audio'
-<<<<<<< HEAD
-import Preloader from './preloader'
-=======
 import PreloadControl from './preload-control'
->>>>>>> qusic
 import style from './channel.css'
 
 function mapStateToProps(state, props) {
@@ -78,25 +74,7 @@ export default class Channel extends PureComponent {
           <PlayerAudio/>
           <PreloadControl/>
         </div>
-<<<<<<< HEAD
-        <div styleName='right'>
-          <MemberList/>
-        </div>
-        <div styleName='left' style={{top: 52}}>
-          <NowPlaying/>
-          <LyricsMarquee/>
-          <ActionPanel/>
-        </div>
-        <div styleName='right'>
-          <OmniPanel/>
-          <SongList/>
-        </div>
-        <PlayerAudio/>
-        <Preloader/>
-      </div>
-=======
       </DocumentTitle>
->>>>>>> qusic
     )
   }
 }
