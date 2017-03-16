@@ -6,6 +6,7 @@
   left: 0;
   z-index: 1;
   background: rgba(0, 0, 0, 0.25);
+  animation: fade 800ms ease;
 
   & > .content {
     position: absolute;
@@ -14,14 +15,25 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
-    border-radius: 2px;
+    border-radius: 4px;
     box-shadow: 0 1px 2px 1px #666;
     font-size: 18px;
     text-align: center;
+    animation: slide 800ms ease;
 
     & > p {
       padding: 0;
       margin: 16px 16px 4px;
     }
   }
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slide {
+  0% { transform: translate(-50%, 0%); }
+  100% { transform: translate(-50%, -50%); }
 }
