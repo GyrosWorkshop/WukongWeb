@@ -28,7 +28,7 @@ export default function Network(hook) {
     })
     hook(method, endpoint, response)
     const string = await response.text()
-    return JSON.parse(string)
+    return string && JSON.parse(string)
   }
 
   network.websocket = (endpoint, handler) => {
