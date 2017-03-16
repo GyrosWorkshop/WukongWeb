@@ -75,10 +75,7 @@ const config = {
         test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
       },
       use: [{
-        loader: 'url-loader',
-        options: {
-          limit: 10000
-        }
+        loader: 'file-loader'
       }]
     }]
   },
