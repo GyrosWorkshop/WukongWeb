@@ -1,4 +1,4 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {PureComponent, PropTypes, createElement} from 'react'
 import {connect} from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import {BrowserRouter, Route} from 'react-router-dom'
@@ -36,7 +36,7 @@ export default class App extends PureComponent {
             <Route path='/:channel' component={
               lazy(() => import('./channel'))
             }/>
-            {!auth && (
+            {!auth && createElement(
               lazy(() => import('./login'))
             )}
             <Notification/>
