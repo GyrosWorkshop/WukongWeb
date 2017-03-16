@@ -31,13 +31,13 @@ export default class App extends PureComponent {
         <BrowserRouter>
           <div className='app'>
             <Route path='/' exact component={
-              <LazyComponent component={() => import('./welcome')}/>
+              lazy(() => import('./welcome'))
             }/>
             <Route path='/:channel' component={
-              <LazyComponent component={() => import('./channel')}/>
+              lazy(() => import('./channel'))
             }/>
             {!auth && (
-              <LazyComponent component={() => import('./login')}/>
+              lazy(() => import('./login'))
             )}
             <Notification/>
             <Background/>
@@ -49,23 +49,27 @@ export default class App extends PureComponent {
   }
 }
 
-class LazyComponent extends PureComponent {
-  static propTypes = {
-    component: PropTypes.func
-  }
+function lazy(loader) {
+  return class LazyComponent extends PureComponent {
+    state = {
+      component: null
+    }
 
-  state = {
-    component: null
-  }
+    load() {
+      loader().then(module => {
+        const component = module.default
+        this.setState({component})
+      })
+    }
 
-  render() {
-    const {component, ...props} = this.props
-    const {component: Component} = this.state
-    if (Component) {
-      return <Component {...props}/>
-    } else {
-      component().then(component => this.setState({component}))
-      return null
+    render() {
+      const {component: Component} = this.state
+      if (Component) {
+        return <Component {...this.props}/>
+      } else {
+        this.load()
+        return null
+      }
     }
   }
 }
