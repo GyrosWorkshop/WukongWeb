@@ -10,6 +10,3 @@ deploy:
   on:
     repo: GyrosWorkshop/WukongWeb
     tags: true
-env:
-  global:
-    secure: YVNWwBAx8icPTt+ZZKgmkdhN7gbP0W19XIUwImne0ab7M/Pkx2NOiDW4wO6efynVtHf64R/ue55Bsry3JRQpvp0f0y5dY3XBUNoyNWZ/WRbRkOmZr5l/uEYYsGX7ry3Ww2EYawVbh9QPDp/ufzZgff7Hm8f/qBfH02lRPpzS8WTIFDG0DNNrYVEJXoAPPEeD9/JBwqWopCBw4gAcOSfA14YwfSORY0VDD5jKN9XqHbekfZkfoQJcp/+K5kj2PWlrOWZfBy4EodjW+X7CfIX62xaMemMuRkduqqr6yBbnVw2kRWmnBao4vC//rLG4/kXOnZATFbfs3SWo/94NT5rC0Hn4XolUhI3mYdFs3uNy+0BRH+DLennIo0o+R9P0UWKpwaQAvyNaqyinH6IDV8NfE+SGUM00nMNtLdjqSYHDzFuYfMEzY4p5LL1Zc3ONKx5OXfXnljr6142FVT7D/1RBbbj0YtznRpBij+ky2GY+DyVByQ78deCyTAcNw8uMUUO7PxN01DleU2K/SeqX2FReDdjStmXb6FN4nlHtKa50jw0ad0cdZtrLKUo9qwVHRKPvVRZIgYW+PTFyNHQ10hu8gjNnww10Q2vdbpkq+UIKb41ujYz/L+t2PlQT3nDpi2Nr4v8JWcBo8gpOnlKKAv0xREkPOOfrp3/jyUojy+sk5ig=
