@@ -9,7 +9,7 @@ export default class AppFooter extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        Wukong frontend v{version}
+        Wukong frontend v{version} { /* TODO: any better text here? */ }
       </div>
     )
   }
