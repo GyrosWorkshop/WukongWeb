@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-@CSSModules(style)
+@CSSModules(style, {allowMultiple: true})
 export default class Channel extends PureComponent {
   static propTypes = {
     channel: PropTypes.string,
@@ -63,7 +63,7 @@ export default class Channel extends PureComponent {
           <div styleName='right'>
             <MemberList/>
           </div>
-          <div styleName='left' style={{top: 0, paddingTop: 52}}>
+          <div styleName='left left-wrapper' style={{top: 0, paddingTop: 52}}>
             <div styleName='left-content'>
               <NowPlaying/>
               <LyricsMarquee/>

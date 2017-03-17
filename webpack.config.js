@@ -13,6 +13,7 @@ const devHost = process.env.DEV_HOST || 'localhost'
 const devPort = parseInt(process.env.DEV_PORT) || 8080
 const devServer = `http://${devHost}:${devPort}`
 const apiServer = process.env.WUKONG_SERVER || 'http://localhost:5000'
+const {version} = require('./package.json')
 
 const config = {
   context: sourcePath,
@@ -104,7 +105,10 @@ config.plugins.push(
   ]),
   new webpack.DefinePlugin({__env: {
     production: JSON.stringify(production),
-    server: JSON.stringify(apiServer)
+    server: JSON.stringify(apiServer),
+    version: JSON.stringify(version),
+    homepage: JSON.stringify('https://github.com/GyrosWorkshop/WukongWeb'),
+    buildDate: JSON.stringify(new Date().toString())
   }}),
   new webpack.LoaderOptionsPlugin({
     debug: !production,
