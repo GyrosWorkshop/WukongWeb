@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FaviconsPlugin = require('favicons-webpack-plugin')
+const VersionFile = require('webpack-version-file')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
@@ -148,6 +149,9 @@ if (production) {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true
+    }),
+    new VersionFile({
+      output: path.join(buildPath, 'version.txt')
     })
   )
 } else {
