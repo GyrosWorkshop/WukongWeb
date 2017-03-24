@@ -13,7 +13,6 @@ import OmniPanel from './omni-panel'
 import SongList from './song-list'
 import PlayerAudio from './player-audio'
 import PreloadControl from './preload-control'
-import AppFooter from './footer'
 import style from './channel.css'
 
 function mapStateToProps(state, props) {
@@ -31,7 +30,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-@CSSModules(style, {allowMultiple: true})
+@CSSModules(style)
 export default class Channel extends PureComponent {
   static propTypes = {
     channel: PropTypes.string,
@@ -57,19 +56,16 @@ export default class Channel extends PureComponent {
     return (
       <DocumentTitle title={`Wukong#${channel}`}>
         <div styleName='container'>
-          <div styleName='left' style={{top: 0, zIndex: 10}}> {/* FIXME */}
+          <div styleName='left' style={{top: 0}}>
             <ChannelTitle/>
           </div>
           <div styleName='right'>
             <MemberList/>
           </div>
-          <div styleName='left left-wrapper' style={{top: 0, paddingTop: 52}}>
-            <div styleName='left-content'>
-              <NowPlaying/>
-              <LyricsMarquee/>
-              <ActionPanel/>
-            </div>
-            <AppFooter/>
+          <div styleName='left' style={{top: 52}}>
+            <NowPlaying/>
+            <LyricsMarquee/>
+            <ActionPanel/>
           </div>
           <div styleName='right'>
             <OmniPanel/>

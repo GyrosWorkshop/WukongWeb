@@ -35,8 +35,9 @@ export default class MemberList extends PureComponent {
             members[index] ? index * 120 + 60 : members.length * 60
             }px)`
         }}>
-          {members.map(({id, nickname, avatar, url}, i) => (
-            <MemberItem key={id} nickname={nickname} avatar={avatar} url={url}
+          {members.map(({id, nickname, avatar, link}, i) => (
+            <MemberItem key={id}
+              nickname={nickname} avatar={avatar} link={link}
               style={{
                 transition: 'transform 800ms ease',
                 transform: index == i ? 'scale(1,1)' : 'scale(0.8,0.8)'

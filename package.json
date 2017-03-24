@@ -44,13 +44,12 @@
     "stylelint-config-standard": "16.0.0",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.2",
-    "webpack-version-file": "0.1.3",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
     "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
     "build": "env NODE_ENV=production webpack --colors --progress",
-    "lint": "eslint '*.js' src && stylelint \"src/**/*.css\"",
+    "lint": "eslint \"*.js\" src && stylelint \"src/**/*.css\"",
     "test": "npm run lint && npm run build",
     "package": "tar -czvf wukong-web.tgz -C build .",
     "clean": "rm -rf build *.tgz"

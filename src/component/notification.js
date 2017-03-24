@@ -37,7 +37,8 @@ export default class Notification extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.notification != prevProps.notification) {
+    if (this.props.notification.message != prevProps.notification.message
+      && this.props.notification.action != prevProps.notification.action) {
       this.updateTimeout()
     }
   }

@@ -53,8 +53,9 @@ export default class SongList extends PureComponent {
           song: {id, siteId, title, album, artist, link},
           search, added
         }, i) => (
-          <SongItem key={id} title={title} album={album} artist={artist}
-            link={link} icon={{
+          <SongItem key={id}
+            title={title} album={album} artist={artist} link={link}
+            icon={{
               'netease-cloud-music': neteaseIcon,
               'QQMusic': qqIcon,
               'Xiami': xiamiIcon

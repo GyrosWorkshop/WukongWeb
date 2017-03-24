@@ -160,7 +160,7 @@ export default function API(getState, dispatch) {
             player: data.user || '',
             time: (Date.now() / 1000) - (data.elapsed || 0)
           }))
-          if (state.user.profile.id === data.user) {
+          if (state.user.profile.id == data.user) {
             dispatch(Action.Song.move.create(
               Codec.Song.decode(data.song).id,
               Number.MAX_SAFE_INTEGER

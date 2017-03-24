@@ -3,17 +3,16 @@ const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FaviconsPlugin = require('favicons-webpack-plugin')
-const VersionFile = require('webpack-version-file')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
 const vendorPath = path.join(__dirname, 'node_modules')
+const version = process.env.npm_package_version
 const production = process.env.NODE_ENV == 'production'
 const devHost = process.env.DEV_HOST || 'localhost'
 const devPort = parseInt(process.env.DEV_PORT) || 8080
 const devServer = `http://${devHost}:${devPort}`
 const apiServer = process.env.WUKONG_SERVER || 'http://localhost:5000'
-const {version} = require('./package.json')
 
 const config = {
   context: sourcePath,
@@ -105,10 +104,7 @@ config.plugins.push(
   ]),
   new webpack.DefinePlugin({__env: {
     production: JSON.stringify(production),
-    server: JSON.stringify(apiServer),
-    version: JSON.stringify(version),
-    homepage: JSON.stringify('https://github.com/GyrosWorkshop/WukongWeb'),
-    buildDate: JSON.stringify(new Date().toString())
+    server: JSON.stringify(apiServer)
   }}),
   new webpack.LoaderOptionsPlugin({
     debug: !production,
@@ -129,13 +125,10 @@ config.plugins.push(
     minChunks: Infinity
   }),
   new HtmlPlugin({
-    template: './index.html',
+    template: './index.ejs',
+    comment: `Wukong v${version}`,
     minify: !production ? undefined : {
-      collapseWhitespace: true,
-      collapseBooleanAttributes: true,
-      removeEmptyAttributes: true,
-      removeRedundantAttributes: true,
-      removeComments: true
+      collapseWhitespace: true
     }
   }),
   new ExtractTextPlugin({
@@ -153,9 +146,6 @@ if (production) {
   config.plugins.push(
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true
-    }),
-    new VersionFile({
-      output: path.join(buildPath, 'version.txt')
     })
   )
 } else {

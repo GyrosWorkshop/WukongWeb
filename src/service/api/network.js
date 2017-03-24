@@ -27,10 +27,14 @@ export default function Network(hook) {
       referrer: 'no-referrer'
     })
     hook(method, endpoint, response)
-    const contentType = response.headers.get('content-type')
-    if (contentType && contentType.indexOf('application/json') !== -1) {
-      return await response.json()
+    const string = await response.text()
+    const type = response.headers.get('content-type')
+    if (type) {
+      if (type.startsWith('application/json')) {
+        return JSON.parse(string)
+      }
     }
+    return string
   }
 
   network.websocket = (endpoint, handler) => {

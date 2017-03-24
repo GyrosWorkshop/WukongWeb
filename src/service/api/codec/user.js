@@ -3,7 +3,7 @@ export function encode(object = {}) {
     id: object.id,
     userName: object.nickname,
     avatar: object.avatar,
-    url: object.url
+    url: object.link
   }
 }
 
@@ -12,6 +12,6 @@ export function decode(object = {}) {
     id: object.id,
     nickname: object.userName,
     avatar: object.avatar,
-    url: object.url
+    link: object.url
   }
 }

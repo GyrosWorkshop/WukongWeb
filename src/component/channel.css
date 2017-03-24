@@ -14,19 +14,9 @@
   @media (min-width: 1200px) {
     max-width: 1200px;
 
-    & > .left-wrapper {
-      min-height: 100vh;
-    }
-
     & > .left {
       position: fixed;
       width: 264px;
-      display: flex;
-      flex-direction: column;
-
-      & > .left-content {
-        flex: 1 0 auto;
-      }
     }
 
     & > .right {
