@@ -3,41 +3,37 @@
   margin: 0 12px 16px;
   font-size: 18px;
 
-  & > a {
+  & > * {
     display: block;
+    width: max-content;
+    padding: 0;
+    margin: auto;
+  }
 
-    & > * {
-      display: block;
-      width: max-content;
-      padding: 0;
-      margin: auto;
-    }
+  & > img {
+    width: 96px;
+    height: 96px;
+    border: 2px solid #f09442;
+    border-radius: 50%;
+  }
 
-    & > img {
-      width: 96px;
-      height: 96px;
-      border: 2px solid #f09442;
-      border-radius: 50%;
-    }
+  & > p {
+    color: #fff;
+    background: #f09442;
+    padding: 4px 8px;
+    border-radius: 4px;
+    position: absolute;
+    transform: translate(48px, -12px) translateX(-50%);
+  }
 
-    & > p {
-      color: #fff;
-      background: #f09442;
-      padding: 4px 8px;
-      border-radius: 4px;
-      position: absolute;
-      transform: translate(48px, -12px) translateX(-50%);
-    }
+  & > .tooltip {
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    opacity: 0;
+  }
 
-    & > .tooltip {
-      visibility: hidden;
-      transition: opacity 200ms ease;
-      opacity: 0;
-    }
-
-    &:hover > .tooltip {
-      visibility: visible;
-      opacity: 1;
-    }
+  &:hover > .tooltip {
+    visibility: visible;
+    opacity: 1;
   }
 }

@@ -8,18 +8,15 @@ export default class MemberItem extends PureComponent {
   static propTypes = {
     nickname: PropTypes.string,
     avatar: PropTypes.string,
-    link: PropTypes.string,
     style: PropTypes.object
   }
 
   render() {
-    const {nickname, avatar, link, style} = this.props
+    const {nickname, avatar, style} = this.props
     return (
       <div styleName='container' style={style}>
-        <a href={link} target='_blank'>
-          <img src={avatar}/>
-          <p styleName='tooltip'>{nickname}</p>
-        </a>
+        <img src={avatar}/>
+        <p styleName='tooltip'>{nickname}</p>
       </div>
     )
   }
