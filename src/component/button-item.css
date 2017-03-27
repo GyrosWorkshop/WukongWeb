@@ -46,7 +46,6 @@
   }
 
   & > .tooltip {
-    width: max-content;
     color: #fff;
     background: #f09442;
     padding: 8px;
@@ -70,6 +69,7 @@
 
     & > p {
       margin: 0;
+      white-space: pre;
     }
   }
 }

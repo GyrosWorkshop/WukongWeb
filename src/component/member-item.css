@@ -5,7 +5,6 @@
 
   & > * {
     display: block;
-    width: max-content;
     padding: 0;
     margin: auto;
   }
@@ -22,6 +21,7 @@
     background: #f09442;
     padding: 4px 8px;
     border-radius: 4px;
+    white-space: nowrap;
     position: absolute;
     transform: translate(48px, -12px) translateX(-50%);
   }

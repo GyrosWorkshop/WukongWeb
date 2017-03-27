@@ -9,7 +9,6 @@
 
   & > * {
     display: block;
-    width: max-content;
     padding: 0;
     margin: auto;
   }
