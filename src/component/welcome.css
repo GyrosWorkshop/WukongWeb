@@ -1,5 +1,5 @@
 .container {
-  position: absolute;
+  position: fixed;
   width: 90%;
   max-width: 300px;
   top: 40%;

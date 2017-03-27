@@ -29,7 +29,7 @@ export default class App extends PureComponent {
     return (
       <DocumentTitle title='Wukong'>
         <BrowserRouter>
-          <div className='app'>
+          <div>
             <Route path='/' exact component={
               lazy(() => import('./welcome'))
             }/>
