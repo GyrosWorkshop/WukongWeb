@@ -59,6 +59,7 @@ export default class PlayerAudio extends PureComponent {
     if (url) {
       audio.src = url
       if (time) audio.currentTime = (Date.now() / 1000) - time
+      audio.play()
     } else {
       audio.removeAttribute('src')
     }
