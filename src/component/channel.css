@@ -11,8 +11,8 @@
     padding: 0;
   }
 
-  @media (min-width: 1200px) {
-    max-width: 1200px;
+  @media (min-width: 960px) {
+    max-width: 960px;
 
     & > .left {
       position: fixed;
