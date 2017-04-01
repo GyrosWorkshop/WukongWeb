@@ -35,4 +35,8 @@ textarea {
 #app {
   overflow-x: hidden;
   overflow-y: visible;
+
+  /* April Fool's Day */
+  min-height: 100vh;
+  transform: scale(-1, 1);
 }
