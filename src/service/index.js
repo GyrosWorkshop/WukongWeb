@@ -48,13 +48,6 @@ export default function Service() {
             break
           case Action.User.preferences.type:
             await api.sendUpnext(prevState)
-
-            // Automatically fetch playlists if necessary.
-            if (!prevState.song.playlists
-              || prevState.song.playlists.length == 0) {
-              await api.fetchPlaylist()
-            }
-
             break
           case Action.Channel.name.type:
             await api.sendChannel(prevState)
