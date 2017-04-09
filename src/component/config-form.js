@@ -39,6 +39,7 @@ export default class ConfigForm extends PureComponent {
   onInputChange = (() => {
     const debouncedDispatch = debounce(
       this.props.dispatchSaveConfiguration, 500)
+
     return event => {
       const {name, value} = event.target
       const preference = {[name]: value}
@@ -54,7 +55,9 @@ export default class ConfigForm extends PureComponent {
           <label key={option}>
             <span>{option}</span>
             <textarea name={option} rows={4}
-              value={this.state[option]} onChange={this.onInputChange}/>
+              value={this.state[option]}
+              onChange={this.onInputChange}
+              onBlur={this.onInputChange}/>
           </label>
         ))}
       </div>
