@@ -10,6 +10,7 @@ export default function Service() {
     async function onLoad() {
       try {
         await api.fetchUser()
+        await api.fetchUserConfiguration()
       } catch (error) {
         utility.notifyError(error.message)
         return
@@ -41,8 +42,19 @@ export default function Service() {
           case Action.User.auth.type:
             await api.processAuth()
             break
+          case Action.User.saveConfiguration.type:
+            await api.saveUserConfiguration()
+            await api.sendUpnext()
+            break
           case Action.User.preferences.type:
             await api.sendUpnext(prevState)
+
+            // Automatically fetch playlists if necessary.
+            if (!prevState.song.playlists
+              || prevState.song.playlists.length == 0) {
+              await api.fetchPlaylist()
+            }
+
             break
           case Action.Channel.name.type:
             await api.sendChannel(prevState)

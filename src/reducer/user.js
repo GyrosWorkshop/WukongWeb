@@ -26,6 +26,7 @@ function auth(state = {}, action) {
 function preferences(state = {}, action) {
   switch (action.type) {
     case Action.User.preferences.type:
+    case Action.User.saveConfiguration.type:
       return {
         ...state,
         ...action.preferences

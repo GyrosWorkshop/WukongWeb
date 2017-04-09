@@ -53,6 +53,21 @@ export default function API(getState, dispatch) {
     ))
   }
 
+  api.fetchUserConfiguration = async () => {
+    const configuration = await network.http('GET', '/api/user/configuration')
+    if (configuration.syncPlaylists && configuration.cookies) {
+      dispatch(Action.User.preferences.create(
+        Codec.UserConfiguration.decode(configuration)
+      ))
+    }
+  }
+
+  api.saveUserConfiguration = async() => {
+    const state = getState()
+    const configuration = Codec.UserConfiguration.encode(state.user.preferences)
+    await network.http('POST', '/api/user/configuration', configuration)
+  }
+
   api.fetchPlaylist = async () => {
     const state = getState()
     const sync = state.user.preferences.sync

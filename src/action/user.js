@@ -12,3 +12,8 @@ export const preferences = {
   type: 'UserPreferences',
   create(preferences) { return {type: this.type, preferences} }
 }
+
+export const saveConfiguration = {
+  type: 'UserSaveConfiguration',
+  create(preferences) { return {type: this.type, preferences}}
+}
