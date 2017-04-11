@@ -49,6 +49,12 @@ export default function API(getState, dispatch) {
     dispatch(Action.User.profile.create(profile))
   }
 
+  api.fetchPreferences = async () => {
+    const data = await network.http('GET', '/api/user/configuration')
+    const preferences = Codec.Preferences.decode(data)
+    dispatch(Action.User.preferences.create(preferences))
+  }
+
   api.fetchPlaylist = async () => {
     const state = getState()
     const sync = state.user.preferences.sync
@@ -65,6 +71,17 @@ export default function API(getState, dispatch) {
       .concat(...data.map(item => item.songs || []))
       .map(Codec.Song.decode)
     dispatch(Action.Song.assign.create(songs))
+  }
+
+  api.sendPreferences = async prevState => {
+    const state = getState()
+    const preferences = Codec.Preferences.encode(state.user.preferences)
+    const prevPreferences = prevState &&
+      Codec.Preferences.encode(prevState.user.preferences)
+    if (prevState && isEqual(preferences, prevPreferences)) return
+    await network.http('POST', '/api/user/configuration',
+      preferences
+    )
   }
 
   api.sendChannel = async prevState => {
