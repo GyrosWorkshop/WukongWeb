@@ -84,11 +84,11 @@ export default function API(getState, dispatch) {
         ? undefined
         : state.song.playlist[0]
     )
-    const prevSong = Codec.Song.encode(prevState && (
-        prevState.user.preferences.listenOnly
-          ? undefined
-          : prevState.song.playlist[0]
-      ))
+    const prevSong = prevState && Codec.Song.encode(
+      prevState.user.preferences.listenOnly
+        ? undefined
+        : prevState.song.playlist[0]
+    )
     if (prevState && isEqual(song, prevSong)) return
     await network.http('POST', '/api/channel/updateNextSong', {
       ...song,
