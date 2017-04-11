@@ -1,9 +1,7 @@
-import * as Song from './song'
 import * as User from './user'
-import * as UserConfiguration from './user-configuration'
+import * as Song from './song'
 
 export default {
-  Song,
   User,
-  UserConfiguration
+  Song
 }

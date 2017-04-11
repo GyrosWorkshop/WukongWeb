@@ -10,7 +10,6 @@ export default function Service() {
     async function onLoad() {
       try {
         await api.fetchUser()
-        await api.fetchUserConfiguration()
       } catch (error) {
         utility.notifyError(error.message)
         return
@@ -41,10 +40,6 @@ export default function Service() {
         switch (action.type) {
           case Action.User.auth.type:
             await api.processAuth()
-            break
-          case Action.User.saveConfiguration.type:
-            await api.saveUserConfiguration()
-            await api.sendUpnext()
             break
           case Action.User.preferences.type:
             await api.sendUpnext(prevState)

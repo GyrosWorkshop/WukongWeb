@@ -16,8 +16,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchSaveConfiguration(preferences) {
-      dispatch(Action.User.saveConfiguration.create(preferences))
+    dispatchPreferences(preferences) {
+      dispatch(Action.User.preferences.create(preferences))
     }
   }
 }
@@ -29,7 +29,7 @@ export default class ConfigForm extends PureComponent {
     ...fromPairs(options.map(option => [
       option, PropTypes.string
     ])),
-    dispatchSaveConfiguration: PropTypes.func
+    dispatchPreferences: PropTypes.func
   }
 
   state = fromPairs(options.map(option => [
@@ -37,9 +37,7 @@ export default class ConfigForm extends PureComponent {
   ]))
 
   onInputChange = (() => {
-    const debouncedDispatch = debounce(
-      this.props.dispatchSaveConfiguration, 500)
-
+    const debouncedDispatch = debounce(this.props.dispatchPreferences, 500)
     return event => {
       const {name, value} = event.target
       const preference = {[name]: value}
@@ -55,9 +53,7 @@ export default class ConfigForm extends PureComponent {
           <label key={option}>
             <span>{option}</span>
             <textarea name={option} rows={4}
-              value={this.state[option]}
-              onChange={this.onInputChange}
-              onBlur={this.onInputChange}/>
+              value={this.state[option]} onChange={this.onInputChange}/>
           </label>
         ))}
       </div>
