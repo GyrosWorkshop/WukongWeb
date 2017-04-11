@@ -10,6 +10,7 @@ export default function Service() {
     async function onLoad() {
       try {
         await api.fetchUser()
+        await api.fetchPreferences()
       } catch (error) {
         utility.notifyError(error.message)
         return
@@ -43,6 +44,7 @@ export default function Service() {
             break
           case Action.User.preferences.type:
             await api.sendUpnext(prevState)
+            await api.sendPreferences(prevState)
             break
           case Action.Channel.name.type:
             await api.sendChannel(prevState)
