@@ -8,9 +8,7 @@ export default function API(getState, dispatch) {
   const network = Network(
     (method, endpoint, response) => {
       if (response.status == 401) {
-        dispatch(Action.User.auth.create({
-          status: false
-        }))
+        dispatch(Action.User.auth.create({status: false}))
         throw new Error('You have to sign in to continue.')
       }
       if (!response.ok) {
@@ -35,22 +33,20 @@ export default function API(getState, dispatch) {
         }`)
       }
     } else {
-      const providers = await network.http('GET', '/oauth/all')
-      dispatch(Action.User.auth.create({
-        providers: providers.map(provider => ({
-          id: provider.scheme,
-          name: provider.displayName,
-          url: provider.url
-        }))
+      const data = await network.http('GET', '/oauth/all')
+      const providers = data.map(item => ({
+        id: item.scheme,
+        name: item.displayName,
+        url: item.url
       }))
+      dispatch(Action.User.auth.create({providers}))
     }
   }
 
   api.fetchUser = async () => {
-    const user = await network.http('GET', '/api/user/userinfo')
-    dispatch(Action.User.profile.create(
-      Codec.User.decode(user)
-    ))
+    const data = await network.http('GET', '/api/user/userinfo')
+    const profile = Codec.User.decode(data)
+    dispatch(Action.User.profile.create(profile))
   }
 
   api.fetchPlaylist = async () => {
@@ -59,16 +55,16 @@ export default function API(getState, dispatch) {
     if (!sync) return
     const urls = sync.split('\n').filter(line => line)
     if (!urls.length) return
-    const lists = await Promise.all(urls.map(url =>
+    const data = await Promise.all(urls.map(url =>
       network.http('POST', '/provider/songListWithUrl', {
         url,
         withCookie: state.user.preferences.cookie
       })
     ))
-    const songs = [].concat(...lists.map(list => list.songs || []))
-    dispatch(Action.Song.assign.create(
-      songs.map(Codec.Song.decode)
-    ))
+    const songs = []
+      .concat(...data.map(item => item.songs || []))
+      .map(Codec.Song.decode)
+    dispatch(Action.Song.assign.create(songs))
   }
 
   api.sendChannel = async prevState => {
@@ -122,13 +118,12 @@ export default function API(getState, dispatch) {
     const state = getState()
     const keyword = state.search.keyword
     if (keyword) {
-      const results = await network.http('POST', '/provider/searchSongs', {
+      const data = await network.http('POST', '/provider/searchSongs', {
         key: keyword,
         withCookie: state.user.preferences.cookie
       })
-      dispatch(Action.Search.results.create(
-        results.map(Codec.Song.decode)
-      ))
+      const results = data.map(Codec.Song.decode)
+      dispatch(Action.Search.results.create(results))
     } else {
       dispatch(Action.Search.results.create([]))
     }
@@ -140,43 +135,43 @@ export default function API(getState, dispatch) {
       switch (event) {
         case 'open':
         case 'close':
-        case 'error':
+        case 'error': {
           callback(event)
           break
-        case 'ping':
+        }
+        case 'ping': {
           send('ping')
           break
-        case 'UserListUpdated':
-          dispatch(Action.Channel.members.create(
-            data.users.map(Codec.User.decode)
-          ))
+        }
+        case 'UserListUpdated': {
+          const members = data.users.map(Codec.User.decode)
+          dispatch(Action.Channel.members.create(members))
           break
-        case 'Play':
-          dispatch(Action.Player.reset.create({
-            downvote: !!data.downvote
-          }))
-          dispatch(Action.Song.play.create(data.song && {
+        }
+        case 'Play': {
+          const song = data.song && {
             ...Codec.Song.decode(data.song),
             player: data.user || '',
             time: (Date.now() / 1000) - (data.elapsed || 0)
-          }))
-          if (state.user.profile.id == data.user) {
-            dispatch(Action.Song.move.create(
-              Codec.Song.decode(data.song).id,
-              Number.MAX_SAFE_INTEGER
-            ))
+          }
+          const downvote = !!data.downvote
+          dispatch(Action.Player.reset.create({downvote}))
+          dispatch(Action.Song.play.create(song))
+          if (song && state.user.profile.id == data.user) {
+            dispatch(Action.Song.move.create(song.id, Number.MAX_SAFE_INTEGER))
           }
           break
-        case 'NextSongUpdate':
-          dispatch(Action.Song.preload.create(data.song && {
-            ...Codec.Song.decode(data.song)
-          }))
+        }
+        case 'NextSongUpdate': {
+          const song = data.song && Codec.Song.decode(data.song)
+          dispatch(Action.Song.preload.create(song))
           break
-        case 'Notification':
-          dispatch(Action.Misc.notification.create(
-            data.notification
-          ))
+        }
+        case 'Notification': {
+          const notification = data.notification
+          dispatch(Action.Misc.notification.create(notification))
           break
+        }
       }
     })
   }
