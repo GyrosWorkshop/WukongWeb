@@ -40,12 +40,12 @@ export default class VolumeSlider extends PureComponent {
     this.props.dispatchVolume(input)
   }
 
-  onMinButtonClick = (event) => {
-    this.props.dispatchVolume(0)
+  onDownButtonClick = (event) => {
+    this.props.dispatchVolume(Math.max(0, this.props.volume - 1 / 16))
   }
 
-  onMaxButtonClick = (event) => {
-    this.props.dispatchVolume(1)
+  onUpButtonClick = (event) => {
+    this.props.dispatchVolume(Math.min(1, this.props.volume + 1 / 16))
   }
 
   render() {
@@ -53,12 +53,12 @@ export default class VolumeSlider extends PureComponent {
     const {canSetVolume} = this.state
     return canSetVolume && (
       <div styleName='container'>
-        <button onClick={this.onMinButtonClick}>
+        <button onClick={this.onDownButtonClick}>
           <i className='fa fa-volume-down'/>
         </button>
         <input type='range' min={0} max={1} step={0.01}
           value={volume} onChange={this.onInputChange}/>
-        <button onClick={this.onMaxButtonClick}>
+        <button onClick={this.onUpButtonClick}>
           <i className='fa fa-volume-up'/>
         </button>
       </div>
