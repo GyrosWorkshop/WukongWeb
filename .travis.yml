@@ -1,12 +1,15 @@
 language: node_js
 node_js:
-  - node
-before_deploy: npm run package
+- node
 deploy:
-  provider: releases
-  api_key:
-    secure: KJf+zoveg2ZBNoW/Jd48rbIWhKM5GS8Ot8n2lXRdFwseCWVEuTroJE7YZb11E+Aw3kJqiZOi37IDIoZtHd31l2uJ0lJhCvnJDE4ky1mtcemeBUtOFUBafTqBV4eDHKPUVjNl0etO/d/8Qf84xksOJT1pSj9uyburh7ue5PXHY7mmktJ7JOVFYjgzTE1BipadLaErraVPkUSx6xceOwr/usFr83g1AsYr60QE/UIj3a7R7y3pzsSlmcrycAKjJ/qYC3aNjE8QiDhcN5UbEspmdFze6UUBbAMyRePQA/LaD8XXJM3bSqw57E7psXeiRivMocv0wFA9bagyR4l0kRt7QA9vuEUspbvWDV+TNgAMj6TqJ+ajtn0Mw4Ph1QbH+XuJWbDMPsq1q4OpsmABNgt+y2qwrhPJ0aB/V6CTGEvhw5xPRvvQhgXhWcp5BsDeIY+qLrZLgsxAZtGshyrqfEBl79FfOqEI6Z8Nc5ka1HvVQ1uFIoNE0XCIop3L2XtfvqTnIKKHQwDWn2Sqo5nkS4nQti0CniCVM1xeHcikSwm+Q3jIowoPBCkRkw5zIf2VvFKc6rx1hAhtcn3SBSAejs2d9SF4BXVNT47IqV5HoZmgOHEKjNxmo9XXIkwDgYPS7EBS5WFy1MRfituJTxGW1zKMOu8Wlrt7kybzW6yUUurhBzo=
-  file: wukong-web.tgz
+  provider: s3
   on:
-    repo: GyrosWorkshop/WukongWeb
-    tags: true
+    branch: master
+  bucket: wukong-frontend
+  region: ap-northeast-1
+  upload-dir: build
+  detect_encoding: true
+  skip_cleanup: true
+  access_key_id: AKIAIHXJAIN2JAVUYVNA
+  secret_access_key:
+    secure: pWKGEouClvP2y67g0DJ8omZ9CP7zjjEQTMI3KM5UM8ZvrxmidGo1cr93yqTGQoYL0jiwSI0uULlCskR4MLQhwZ5dZTrske8c6jZYgqbh96l7KiiRS8EXCzloWLjxsBmENY7kpd2b9rxKBYsp1X+KJSTL2qJKki/gLR0tEziMbe6iDOpxYtxhf4/iYpc6djBdn13tpP4waDikAf5UJ+sQ4Wdvr2+d366z9TnyBFDfFGXa5a2eb4WF5cNJ8326OQCUWd7WTvcflGxv/S+Os88LI0hAnN95eWKfdxUWq2kj3E52qvPiR2QLjH6xk6qor6ZcoEQ8UbKJx/i089NYlodfCAkeRYCpGGJkUOy/t7hA7EXAllW0n0WST51SfkM+HhAhEdBdT/jB31dPW4INFuOfUmDuQPfCE7aqoQ6Xz0nwiKYU7qjFrUFdkUgrvmsKlgtPOgVXJlgYJvHGXuVc9ejKuWbBmj1ik2Rj+MR7dwVoA41djUavfKsyl3DXW6dU457aZ1VNr/h1TQ7ny7wo3cXMQ+HGWN5aFY9LOZikjYbx5pH84lJj6aXxqsAGGDwHf+QwEDlAUC7BHSMFL/HgVDya5eVZY+072vYxzkMtvkrrIVwRsaTbX+NGy3FhVbDgcw/CCXA6GiEsWDd6oQF/7mavsMqXZLcbkHuo7ITS/g1O+ck=
