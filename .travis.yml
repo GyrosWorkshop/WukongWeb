@@ -7,7 +7,7 @@ deploy:
     branch: master
   bucket: wukong-frontend
   region: ap-northeast-1
-  upload-dir: build
+  local_dir: build
   detect_encoding: true
   skip_cleanup: true
   access_key_id: AKIAIHXJAIN2JAVUYVNA
