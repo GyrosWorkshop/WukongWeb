@@ -4,7 +4,8 @@ node_js:
 deploy:
   provider: s3
   on:
-    branch: master
+    repo: GyrosWorkshop/WukongWeb
+    tags: true
   bucket: wukong-frontend
   region: ap-northeast-1
   local_dir: build
