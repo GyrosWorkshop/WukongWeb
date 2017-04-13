@@ -38,3 +38,17 @@ npm run build
 ```
 
 输出生产环境文件到 `build` 目录下。
+
+```
+npm run package
+```
+
+将 `build` 目录打包为 `wukong-web.tgz`。
+
+```
+npm version major|minor|patch
+git push
+git push --tags
+```
+
+发布新版本。
