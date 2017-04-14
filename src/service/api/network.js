@@ -1,9 +1,6 @@
 import 'whatwg-fetch'
 
-const origin = `${location.protocol}//${location.host}`
-const server = __env.production ? origin : (
-  __env.server || 'http://localhost:5000'
-)
+const server = __env.server || 'http://localhost:5000'
 
 export default function Network(hook) {
   const network = {}
@@ -20,8 +17,8 @@ export default function Network(hook) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data),
-      mode: __env.production ? 'same-origin' : 'cors',
-      credentials: __env.production ? 'same-origin' : 'include',
+      mode: 'cors',
+      credentials: 'include',
       cache: 'default',
       redirect: 'manual',
       referrer: 'no-referrer'
