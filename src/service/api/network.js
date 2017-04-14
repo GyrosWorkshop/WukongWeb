@@ -1,12 +1,10 @@
 import 'whatwg-fetch'
 
-const server = __env.server || 'http://localhost:5000'
-
 export default function Network(hook) {
   const network = {}
 
   network.url = (protocol, endpoint) => {
-    return server.replace(/^http/i, protocol) + endpoint
+    return __env.server.replace(/^http/i, protocol) + endpoint
   }
 
   network.http = async (method, endpoint, data) => {
