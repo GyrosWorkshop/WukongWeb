@@ -156,10 +156,6 @@ export default function API(getState, dispatch) {
           callback(event)
           break
         }
-        case 'ping': {
-          send('ping')
-          break
-        }
         case 'UserListUpdated': {
           const members = data.users.map(Codec.User.decode)
           dispatch(Action.Channel.members.create(members))

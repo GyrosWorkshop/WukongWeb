@@ -40,11 +40,14 @@ export default function Network(hook) {
       ...eventData
     }))
     const emit = handler(send)
+    let interval
     socket.onopen = event => {
       emit('open', event)
+      interval = setInterval(send, 30 * 1000, 'ping')
     }
     socket.onclose = event => {
       emit('close', event)
+      clearInterval(interval)
       setTimeout(connect, 5 * 1000)
     }
     socket.onerror = event => {
