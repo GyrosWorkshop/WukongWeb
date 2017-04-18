@@ -16,7 +16,8 @@
       height: 1em;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: #f09442;
     }
 
@@ -33,13 +34,15 @@
       transition: opacity 200ms ease;
       opacity: 0;
 
-      &:hover {
+      &:hover,
+      &:focus {
         visibility: visible;
         opacity: 1;
       }
     }
 
-    &:hover ~ .tooltip {
+    &:hover ~ .tooltip,
+    &:focus ~ .tooltip {
       visibility: visible;
       opacity: 1;
     }

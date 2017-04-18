@@ -20,7 +20,8 @@
       height: 1em;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: #f09442;
     }
 
@@ -83,7 +84,7 @@
     }
 
     &:hover,
-    &:active {
+    &:focus {
       &::-webkit-slider-thumb {
         @apply --thumb-hover;
       }
