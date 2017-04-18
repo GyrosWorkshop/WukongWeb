@@ -2,6 +2,7 @@ import React, {PureComponent, PropTypes, createElement} from 'react'
 import {connect} from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import {BrowserRouter, Route} from 'react-router-dom'
+import EventListener from 'react-event-listener'
 
 import Background from './background'
 import Notification from './notification'
@@ -41,6 +42,7 @@ export default class App extends PureComponent {
             )}
             <Notification/>
             <Background/>
+            {listeners()}
             {children}
           </div>
         </BrowserRouter>
@@ -72,4 +74,19 @@ function lazy(loader) {
       }
     }
   }
+}
+
+function listeners() {
+  return [
+    <EventListener key='document' target={document}
+      onClick={event => {
+        const element = document.activeElement
+        switch (element.tagName) {
+          case 'A':
+          case 'BUTTON':
+            element.blur()
+        }
+      }}
+    />
+  ]
 }
