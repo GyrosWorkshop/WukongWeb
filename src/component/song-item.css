@@ -46,6 +46,7 @@
       &:hover,
       &:focus {
         color: #f09442;
+        outline: none;
       }
     }
   }
