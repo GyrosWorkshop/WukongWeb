@@ -8,6 +8,7 @@
 }
 
 body {
+  margin: 0;
   font-family:
     'Helvetica Neue',
     'Helvetica',
@@ -30,6 +31,8 @@ optgroup,
 select,
 textarea {
   font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
 }
 
 #app {
