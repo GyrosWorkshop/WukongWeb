@@ -1,8 +1,9 @@
-import React, {PureComponent, PropTypes, createElement} from 'react'
+import React, {PureComponent, createElement} from 'react'
 import {connect} from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import {BrowserRouter, Route} from 'react-router-dom'
 import EventListener from 'react-event-listener'
+import PropTypes from 'prop-types'
 
 import Background from './background'
 import Notification from './notification'

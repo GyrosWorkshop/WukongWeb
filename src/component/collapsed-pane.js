@@ -1,5 +1,6 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {PureComponent} from 'react'
 import CSSModules from 'react-css-modules'
+import PropTypes from 'prop-types'
 
 import style from './collapsed-pane.css'
 

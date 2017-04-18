@@ -1,6 +1,7 @@
-import React, {PureComponent, PropTypes} from 'react'
+import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
+import PropTypes from 'prop-types'
 import {get, fromPairs, debounce} from 'lodash'
 
 import Action from '../action'
