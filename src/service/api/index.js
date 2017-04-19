@@ -175,7 +175,7 @@ export default function API(getState, dispatch) {
           }
           break
         }
-        case 'NextSongUpdate': {
+        case 'Preload': {
           const song = data.song && Codec.Song.decode(data.song)
           dispatch(Action.Song.preload.create(song))
           break
