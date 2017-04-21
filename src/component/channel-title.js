@@ -1,5 +1,6 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
 
@@ -26,7 +27,10 @@ export default class ChannelTitle extends PureComponent {
     const {channel} = this.props
     return (
       <div styleName='container'>
-        <p>Wukong#{channel}</p>
+        <p>
+          <Link to='/'>Wukong</Link>
+          #<Link to={`/${channel}`}>{channel}</Link>
+        </p>
       </div>
     )
   }

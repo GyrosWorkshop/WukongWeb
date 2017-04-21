@@ -6,5 +6,17 @@
 
   & > p {
     margin: 0;
+
+    & > a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 200ms ease;
+
+      &:hover,
+      &:focus {
+        color: #f09442;
+        outline: none;
+      }
+    }
   }
 }
