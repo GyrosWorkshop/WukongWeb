@@ -10,9 +10,8 @@ import style from './player-audio.css'
 function mapStateToProps(state) {
   return {
     id: state.song.playing.id,
-    file: Selector.playingFile(state).url,
     time: state.song.playing.time,
-    running: state.player.running,
+    file: Selector.playingFile(state).url,
     volume: state.player.volume,
     reload: state.player.reload
   }
@@ -43,9 +42,8 @@ function mapDispatchToProps(dispatch) {
 export default class PlayerAudio extends PureComponent {
   static propTypes = {
     id: PropTypes.string,
-    file: PropTypes.string,
     time: PropTypes.number,
-    running: PropTypes.bool,
+    file: PropTypes.string,
     volume: PropTypes.number,
     reload: PropTypes.bool,
     dispatchRunning: PropTypes.func,
