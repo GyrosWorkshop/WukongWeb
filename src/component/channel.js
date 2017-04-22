@@ -13,7 +13,8 @@ import ActionPanel from './action-panel'
 import OmniPanel from './omni-panel'
 import SongList from './song-list'
 import PlayerAudio from './player-audio'
-import PreloadControl from './preload-control'
+import PlayerPreload from './player-preload'
+import PlayerExternal from './player-external'
 import style from './channel.css'
 
 function mapStateToProps(state, props) {
@@ -54,6 +55,7 @@ export default class Channel extends PureComponent {
 
   render() {
     const {channel} = this.props
+    const hasExternalAPI = !!window.webkit
     return (
       <DocumentTitle title={`Wukong#${channel}`}>
         <div styleName='container'>
@@ -72,8 +74,9 @@ export default class Channel extends PureComponent {
             <OmniPanel/>
             <SongList/>
           </div>
-          <PlayerAudio/>
-          <PreloadControl/>
+          {hasExternalAPI || <PlayerAudio/>}
+          {hasExternalAPI || <PlayerPreload/>}
+          {hasExternalAPI && <PlayerExternal/>}
         </div>
       </DocumentTitle>
     )

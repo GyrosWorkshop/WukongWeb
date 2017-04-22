@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
 
 import Selector from '../selector'
-import style from './preload-control.css'
+import style from './player-preload.css'
 
 function mapStateToProps(state) {
   return {
@@ -19,7 +19,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class PreloadControl extends PureComponent {
+export default class PlayerPreload extends PureComponent {
   static propTypes = {
     artwork: PropTypes.string,
     file: PropTypes.string
