@@ -31,6 +31,11 @@ function renderApp() {
 }
 
 renderApp()
-if (!__env.production && module.hot) {
-  module.hot.accept('./component/app', renderApp)
+if (__env.production) {
+  const OfflinePlugin = require('offline-plugin/runtime')
+  OfflinePlugin.install()
+} else {
+  if (module.hot) {
+    module.hot.accept('./component/app', renderApp)
+  }
 }

@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const FaviconsPlugin = require('favicons-webpack-plugin')
+const OfflinePlugin = require('offline-plugin')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
@@ -144,6 +145,13 @@ config.plugins.push(
 
 if (production) {
   config.plugins.push(
+    new OfflinePlugin({
+      version: version,
+      cacheMaps: [{
+        match: 'url => new URL(\'/\', location)',
+        requestTypes: ['navigate']
+      }]
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true
     })
