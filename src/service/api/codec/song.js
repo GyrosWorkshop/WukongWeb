@@ -44,13 +44,13 @@ function parseFile(file, multiple) {
 function parseLyrics(lyrics) {
   if (!lyrics) return
   const items = lyrics
-    .filter(item => item.lyric && item.withTimeline)
-    .sort((item1, item2) => item1.translate - item2.translate)
+    .filter(item => item.data && item.lrc)
+    .sort((item1, item2) => item1.translated - item2.translated)
   if (!items.length) return
   return items.map(item => {
     const metadata = {}
     const lines = []
-    for (let string = item.lyric.split(/[\n\r]/).join(' '); string;) {
+    for (let string = item.data.split(/[\n\r]/).join(' '); string;) {
       const times = []
       for (let match; (match = string.match(/^\s*\[(.*?):(.*?)]/));) {
         const data = match.slice(1, 3)
