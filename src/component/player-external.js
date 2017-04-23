@@ -78,7 +78,9 @@ export default class PlayerExternal extends PureComponent {
         object[name] = enabled ? this.props[key] : () => {}
       }
     })
-    window.webkit.messageEmitters = object
+    window.wukong = {
+      messageEmitters: object
+    }
   }
 
   postMessage(name, body) {
@@ -88,7 +90,7 @@ export default class PlayerExternal extends PureComponent {
   componentDidMount() {
     this.receiveMessage(true)
     this.postMessage('mount', {
-      messageEmitters: 'window.webkit.messageEmitters'
+      messageEmitters: 'window.wukong.messageEmitters'
     })
   }
 
