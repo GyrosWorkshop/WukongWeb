@@ -1,6 +1,5 @@
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
-import PropTypes from 'prop-types'
 
 import Selector from '../selector'
 import Action from '../action'
@@ -12,11 +11,12 @@ function mapStateToProps(state) {
     title: state.song.playing.title,
     album: state.song.playing.album,
     artist: state.song.playing.artist,
-    playingArtwork: Selector.playingArtwork(state),
-    playingFile: Selector.playingFile(state).url,
+    artwork: Selector.playingArtwork(state),
+    file: Selector.playingFile(state).url,
+    reload: state.player.reload,
+    preloadId: state.song.preload.id,
     preloadArtwork: Selector.preloadArtwork(state),
-    preloadFile: Selector.preloadFile(state).url,
-    reload: state.player.reload
+    preloadFile: Selector.preloadFile(state).url
   }
 }
 
@@ -42,24 +42,6 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class PlayerExternal extends PureComponent {
-  static propTypes = {
-    id: PropTypes.string,
-    time: PropTypes.number,
-    title: PropTypes.string,
-    album: PropTypes.string,
-    artist: PropTypes.string,
-    playingArtwork: PropTypes.string,
-    playingFile: PropTypes.string,
-    preloadArtwork: PropTypes.string,
-    preloadFile: PropTypes.string,
-    reload: PropTypes.bool,
-    dispatchRunning: PropTypes.func,
-    dispatchElapsed: PropTypes.func,
-    dispatchDuration: PropTypes.func,
-    dispatchEnded: PropTypes.func,
-    dispatchReloaded: PropTypes.func
-  }
-
   copyData(props) {
     const object = {}
     Object.keys(props).forEach(key => {
