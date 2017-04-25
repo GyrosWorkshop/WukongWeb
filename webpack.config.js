@@ -149,7 +149,7 @@ if (production) {
     new OfflinePlugin({
       version: version,
       cacheMaps: [{
-        match: 'url => new URL(\'/\', location)',
+        match: 'function(url) { return new URL(\'/\', location) }',
         requestTypes: ['navigate']
       }]
     }),
