@@ -24,9 +24,10 @@ export default function API(getState, dispatch) {
     const auth = state.user.auth
     if (auth.status) return
     if (auth.providers) {
-      const provider = auth.providers.find(
-        provider => provider.id == auth.selected
-      )
+      const {providers, selected} = auth
+      const provider = providers.length == 1
+        ? providers[0]
+        : providers.find(provider => provider.id == selected)
       if (provider) {
         location.href = network.url('http', `${provider.url}?redirectUri=${
           encodeURIComponent(location.href)
