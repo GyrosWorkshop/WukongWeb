@@ -39,7 +39,7 @@ export default class DownloadButton extends PureComponent {
             {urls.map((url, index) => (
               <span key={index}>
                 <br/>&nbsp;·&nbsp;
-                <a href={url} target='_blank'
+                <a href={url} target='_blank' rel='noopener noreferrer'
                   type={`audio/${format}`}
                   download={`${artist} - ${title}`}
                   style={{

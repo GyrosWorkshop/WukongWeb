@@ -39,10 +39,12 @@ export default class NowPlaying extends PureComponent {
       <div styleName='container'>
         <img src={artwork}/>
         <p>
-          <a href={link} target='_blank'>{title}</a>
-          {mvLink && <a href={mvLink} target='_blank'>
-            <i className='fa fa-youtube-play'/>
-          </a>}
+          <a href={link} target='_blank' rel='noopener noreferrer'>{title}</a>
+          {mvLink && (
+            <a href={mvLink} target='_blank' rel='noopener noreferrer'>
+              <i className='fa fa-youtube-play'/>
+            </a>
+          )}
         </p>
         <p>
           <span>{artist}{artist && album && ' − '}{album}</span>

@@ -21,7 +21,7 @@ export default class SongItem extends PureComponent {
       <div styleName='container'>
         <img src={icon}/>
         <p>
-          <a href={link} target='_blank'>{title}</a>
+          <a href={link} target='_blank' rel='noopener noreferrer'>{title}</a>
           <span>{artist}{artist && album && ' − '}{album}</span>
         </p>
         {children}
