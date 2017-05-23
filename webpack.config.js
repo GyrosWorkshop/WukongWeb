@@ -41,11 +41,14 @@ const config = {
       use: ExtractTextPlugin.extract({
         use: [{
           loader: 'css-loader',
-          query: {
+          options: {
             sourceMap: true
           }
         }, {
-          loader: 'postcss-loader'
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
         }],
         fallback: [{
           loader: 'style-loader'
@@ -60,14 +63,17 @@ const config = {
       use: ExtractTextPlugin.extract({
         use: [{
           loader: 'css-loader',
-          query: {
+          options: {
             sourceMap: true,
             modules: true,
             localIdentName: production ? '[hash:base64]' : '[name]-[local]',
             importLoaders: 1
           }
         }, {
-          loader: 'postcss-loader'
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
         }],
         fallback: [{
           loader: 'style-loader'
@@ -112,10 +118,7 @@ config.plugins.push(
     debug: !production,
     minimize: production,
     options: {
-      context: sourcePath,
-      postcss: () => [
-        require('postcss-cssnext')()
-      ]
+      context: sourcePath
     }
   }),
   new webpack.optimize.CommonsChunkPlugin({
