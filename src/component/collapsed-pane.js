@@ -16,7 +16,7 @@ export default class CollapsedPane extends PureComponent {
   }
 
   updateHeight() {
-    this.setState({height: `${this.refs.pane.scrollHeight}px`})
+    this.setState({height: `${this.pane.scrollHeight}px`})
   }
 
   componentDidMount() {
@@ -33,9 +33,10 @@ export default class CollapsedPane extends PureComponent {
     const {open, children} = this.props
     const {height} = this.state
     return (
-      <div ref='pane' styleName='container' style={{
-        height: open ? height : 0
-      }}>
+      <div ref={element => this.pane = element}
+        styleName='container' style={{
+          height: open ? height : 0
+        }}>
         {children}
       </div>
     )

@@ -54,18 +54,16 @@ export default class PlayerAudio extends PureComponent {
   }
 
   setAudioState(url, time) {
-    const {audio} = this.refs
     if (url) {
-      audio.src = url
-      if (time) audio.currentTime = (Date.now() / 1000) - time
-      audio.play()
+      this.audio.src = url
+      if (time) this.audio.currentTime = (Date.now() / 1000) - time
+      this.audio.play()
     } else {
-      audio.removeAttribute('src')
+      this.audio.removeAttribute('src')
     }
   }
 
   onAudioEvent = (event) => {
-    const {audio} = this.refs
     switch (event.type) {
       case 'playing':
         this.props.dispatchRunning(true)
@@ -74,8 +72,8 @@ export default class PlayerAudio extends PureComponent {
         this.props.dispatchRunning(false)
         break
       case 'timeupdate':
-        this.props.dispatchElapsed(audio.currentTime)
-        this.props.dispatchDuration(audio.duration)
+        this.props.dispatchElapsed(this.audio.currentTime)
+        this.props.dispatchDuration(this.audio.duration)
         break
       case 'ended':
         this.setAudioState(null)
@@ -89,25 +87,22 @@ export default class PlayerAudio extends PureComponent {
   }
 
   componentDidMount() {
-    const {audio} = this.refs
     for (const type of [
       'playing', 'pause', 'timeupdate', 'ended', 'error'
-    ]) audio.addEventListener(type, this.onAudioEvent)
-    audio.volume = this.props.volume
+    ]) this.audio.addEventListener(type, this.onAudioEvent)
+    this.audio.volume = this.props.volume
     this.setAudioState(this.props.file, this.props.time)
   }
 
   componentWillUnmount() {
-    const {audio} = this.refs
     for (const type of [
       'playing', 'pause', 'timeupdate', 'ended', 'error'
-    ]) audio.removeEventListener(type, this.onAudioEvent)
+    ]) this.audio.removeEventListener(type, this.onAudioEvent)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const {audio} = this.refs
     if (this.props.volume != nextProps.volume) {
-      audio.volume = nextProps.volume
+      this.audio.volume = nextProps.volume
     }
     if (nextProps.reload) {
       this.setAudioState(null)
@@ -123,7 +118,8 @@ export default class PlayerAudio extends PureComponent {
   render() {
     return (
       <div styleName='container'>
-        <audio ref='audio' autoPlay={true}/>
+        <audio ref={element => this.audio = element}
+          autoPlay={true}/>
       </div>
     )
   }

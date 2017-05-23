@@ -46,12 +46,11 @@ export default class SearchForm extends PureComponent {
   }
 
   onButtonClick = (event) => {
-    const {input} = this.refs
     if (this.state.value) {
       this.updateValue('', true)
-      input.blur()
+      this.input.blur()
     } else {
-      input.focus()
+      this.input.focus()
     }
   }
 
@@ -62,8 +61,9 @@ export default class SearchForm extends PureComponent {
         <button onClick={this.onButtonClick}>
           <i className={`fa fa-${value ? 'arrow-left' : 'search'}`}/>
         </button>
-        <input ref='input' value={value} onChange={this.onInputChange}
-          onKeyDown={this.onKeyDown}/>
+        <input ref={element => this.input = element}
+          value={value}
+          onChange={this.onInputChange} onKeyDown={this.onKeyDown}/>
       </div>
     )
   }
