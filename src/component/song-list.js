@@ -64,9 +64,9 @@ export default class SongList extends PureComponent {
             {search ? [
               added
                 ? <SongButton key='delete' icon='trash'
-                    action={this.onDeleteAction} context={i}/>
+                  action={this.onDeleteAction} context={i}/>
                 : <SongButton key='upnext' icon='plus'
-                    action={this.onUpnextAction} context={i}/>
+                  action={this.onUpnextAction} context={i}/>
             ] : [
               <SongButton key='upnext' icon='arrow-up'
                 action={this.onUpnextAction} context={i}/>,
