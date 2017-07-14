@@ -34,81 +34,79 @@
     flex: 1;
     appearance: none;
 
-    :root {
-      --thumb: {
-        height: 0.8em;
-        width: 0.8em;
-        background: #f09442;
-        border: solid 1px #5f5f5f;
-        border-radius: 50%;
-        transition: transform 200ms ease, background 200ms ease;
-      };
-      --thumb-hover: {
-        transform: scale(1.2, 1.2);
-      };
-      --thumb-active: {
-        background: #d8853b;
-      };
-      --track: {
-        height: 0.1em;
-        background: #5f5f5f;
-        border-radius: 0.05em;
-      };
-    }
-
     &::-webkit-slider-thumb {
-      @apply --thumb;
-
+      height: 0.8em;
+      width: 0.8em;
+      background: #f09442;
+      border: solid 1px #5f5f5f;
+      border-radius: 50%;
+      transition: transform 200ms ease, background 200ms ease;
       appearance: none;
       margin-top: -0.35em;
     }
 
     &::-moz-range-thumb {
-      @apply --thumb;
+      height: 0.8em;
+      width: 0.8em;
+      background: #f09442;
+      border: solid 1px #5f5f5f;
+      border-radius: 50%;
+      transition: transform 200ms ease, background 200ms ease;
     }
 
     &::-ms-thumb {
-      @apply --thumb;
+      height: 0.8em;
+      width: 0.8em;
+      background: #f09442;
+      border: solid 1px #5f5f5f;
+      border-radius: 50%;
+      transition: transform 200ms ease, background 200ms ease;
     }
 
     &::-webkit-slider-runnable-track {
-      @apply --track;
+      height: 0.1em;
+      background: #5f5f5f;
+      border-radius: 0.05em;
     }
 
     &::-moz-range-track {
-      @apply --track;
+      height: 0.1em;
+      background: #5f5f5f;
+      border-radius: 0.05em;
     }
 
     &::-ms-track {
-      @apply --track;
+      height: 0.1em;
+      background: #5f5f5f;
+      border-radius: 0.05em;
     }
 
     &:hover,
     &:focus {
       &::-webkit-slider-thumb {
-        @apply --thumb-hover;
+        transform: scale(1.2, 1.2);
       }
 
       &::-moz-range-thumb {
-        @apply --thumb-hover;
+        transform: scale(1.2, 1.2);
       }
 
       &::-ms-thumb {
-        @apply --thumb-hover;
+        transform: scale(1.2, 1.2);
       }
     }
 
     &:active {
       &::-webkit-slider-thumb {
-        @apply --thumb-active;
+        background: #d8853b;
       }
 
       &::-moz-range-thumb {
-        @apply --thumb-active;
+        background: #d8853b;
       }
 
       &::-ms-thumb {
-        @apply --thumb-active;
+        background: #d8853b;
       }
     }
   }
