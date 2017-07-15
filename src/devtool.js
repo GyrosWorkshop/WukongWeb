@@ -4,8 +4,7 @@ import LogMonitor from 'redux-devtools-log-monitor'
 import DockMonitor from 'redux-devtools-dock-monitor'
 import FilteredMonitor from 'redux-devtools-filter-actions'
 import {get, set, size, cloneDeep} from 'lodash'
-
-import Action from '../action'
+import {Action} from 'wukong-client'
 
 function redact(object, path) {
   if (object.redacted) return object

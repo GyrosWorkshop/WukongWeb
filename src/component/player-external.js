@@ -1,8 +1,6 @@
 import {PureComponent} from 'react'
 import {connect} from 'react-redux'
-
-import Selector from '../selector'
-import Action from '../action'
+import {Action, Selector} from 'wukong-client'
 
 function mapStateToProps(state) {
   return {

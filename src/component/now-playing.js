@@ -2,9 +2,10 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
+import {Selector} from 'wukong-client'
 
-import Selector from '../selector'
 import style from './now-playing.css'
+import artworkImage from '../resource/artwork.png'
 
 function mapStateToProps(state) {
   return {
@@ -37,7 +38,7 @@ export default class NowPlaying extends PureComponent {
     const {title, album, artist, artwork, link, mvLink} = this.props
     return (
       <div styleName='container'>
-        <img src={artwork}/>
+        <img src={artwork || artworkImage}/>
         <p>
           <a href={link} target='_blank' rel='noopener noreferrer'>{title}</a>
           {mvLink && (

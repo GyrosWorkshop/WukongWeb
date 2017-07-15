@@ -2,9 +2,13 @@ import 'babel-polyfill'
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
+import Wukong from 'wukong-client'
 
-import store from './store'
+import Platform from './platform'
 import App from './component/app'
+
+const Devtool = __env.production ? null : require('./devtool').default
+const store = Wukong(Platform, Devtool)
 
 function renderApp() {
   render((() => {
@@ -16,7 +20,6 @@ function renderApp() {
       )
     } else {
       const {AppContainer} = require('react-hot-loader')
-      const Devtool = require('./devtool').default
       return (
         <Provider store={store}>
           <AppContainer>

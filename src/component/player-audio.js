@@ -2,9 +2,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
+import {Action, Selector} from 'wukong-client'
 
-import Selector from '../selector'
-import Action from '../action'
 import style from './player-audio.css'
 
 function mapStateToProps(state) {

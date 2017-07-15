@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
+import {Selector} from 'wukong-client'
 
-import Selector from '../selector'
 import style from './lyrics-marquee.css'
 
 function mapStateToProps(state) {
