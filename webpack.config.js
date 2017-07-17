@@ -14,7 +14,7 @@ const devHost = process.env.DEV_HOST || 'localhost'
 const devPort = parseInt(process.env.DEV_PORT) || 8080
 const devServer = `http://${devHost}:${devPort}`
 const apiServer = process.env.WUKONG_SERVER
-  || 'https://wukong.azurewebsites.net'
+  || 'https://api.wukongmusic.us'
 
 const config = {
   context: sourcePath,
