@@ -12,6 +12,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "eslint": "^4.2.0",
     "eslint-plugin-react": "^7.1.0",
@@ -35,6 +36,7 @@
     "react-hot-loader": "^3.0.0-beta.7",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
+    "redux": "^3.7.2",
     "redux-devtools": "^3.4.0",
     "redux-devtools-dock-monitor": "^1.1.2",
     "redux-devtools-filter-actions": "^1.2.2",
@@ -48,8 +50,8 @@
     "wukong-client": "^0.0.5"
   },
   "scripts": {
-    "start": "env NODE_ENV=development webpack-dev-server --colors --progress",
-    "build": "env NODE_ENV=production webpack --colors --progress",
+    "start": "cross-env NODE_ENV=development webpack-dev-server --colors --progress",
+    "build": "cross-env NODE_ENV=production webpack --colors --progress",
     "lint": "eslint \"*.js\" src && stylelint \"src/**/*.css\"",
     "test": "npm run lint && npm run build",
     "package": "tar -czvf wukong-web.tgz -C build .",
