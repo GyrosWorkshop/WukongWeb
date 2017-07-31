@@ -154,7 +154,8 @@ if (production) {
       cacheMaps: [{
         match: 'function(url) { return new URL(\'/\', location) }',
         requestTypes: ['navigate']
-      }]
+      }],
+      AppCache: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true
