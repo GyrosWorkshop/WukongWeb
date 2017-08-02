@@ -55,7 +55,11 @@ export default class Channel extends PureComponent {
 
   render() {
     const {channel} = this.props
-    const hasExternalAPI = !!window.webkit
+    const hasExternalAPI = !!(
+      window.webkit &&
+      window.webkit.messageHandlers &&
+      window.webkit.messageHandlers.wukong
+    )
     return (
       <DocumentTitle title={`Wukong#${channel}`}>
         <div styleName='container'>
