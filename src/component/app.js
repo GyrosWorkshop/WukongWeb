@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 
 import Background from './background'
 import Notification from './notification'
+import DisconnectDialog from './disconnect-dialog'
 import './app.global.css'
 
 function mapStateToProps(state) {
@@ -41,6 +42,7 @@ export default class App extends PureComponent {
             {!auth && createElement(
               lazy(() => import('./login'))
             )}
+            <DisconnectDialog/>
             <Notification/>
             <Background/>
             {listeners()}
