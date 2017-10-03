@@ -46,7 +46,7 @@
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1",
     "whatwg-fetch": "^2.0.3",
-    "wukong-client": "^0.0.7"
+    "wukong-client": "^0.0.8"
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --colors --progress",

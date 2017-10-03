@@ -49,9 +49,14 @@ export function websocket(endpoint, handler) {
     interval = setInterval(send, 30 * 1000, 'ping')
   }
   socket.onclose = event => {
-    emit('close', event)
     clearInterval(interval)
-    setTimeout(connect, 5 * 1000)
+    if (event.code === 1000) {
+      // Normal closure
+      emit('disconnect')
+    } else {
+      emit('close', event)
+      setTimeout(connect, 5 * 1000)
+    }
   }
   socket.onerror = event => {
     emit('error', event)

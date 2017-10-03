@@ -1,0 +1,61 @@
+.container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.25);
+  animation: fade 800ms ease;
+
+  & > .content {
+    position: absolute;
+    max-width: 90%;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px 1px #666;
+    font-size: 18px;
+    animation: slide 800ms ease;
+    padding: 20px;
+
+    & > .title {
+      font-weight: bold;
+    }
+
+    & > .ActionGroup {
+      text-align: right;
+    }
+
+    & > p {
+      padding: 0;
+      margin: 16px 16px 4px;
+
+      & > button {
+        cursor: pointer;
+        color: #f09442;
+        background: transparent;
+        outline: none;
+        border: none;
+        margin-left: 0.5em;
+        transition: color 200ms ease;
+
+        &:active {
+          color: #d8853b;
+        }
+      }
+    }
+  }
+}
+
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slide {
+  0% { transform: translate(-50%, 0%); }
+  100% { transform: translate(-50%, -50%); }
+}
