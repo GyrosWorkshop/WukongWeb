@@ -5,6 +5,7 @@ node_modules
 #data
 build
 *.tgz
+src/client/wukong.*
 
 #vim
 *.swp

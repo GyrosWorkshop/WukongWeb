@@ -1,8 +1,8 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {Action} from 'wukong-client'
 
+import {Action} from '../client'
 import ButtonItem from './button-item'
 
 function mapStateToProps(state) {

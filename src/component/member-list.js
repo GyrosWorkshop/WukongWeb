@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
-import {Selector} from 'wukong-client'
 
+import {Selector} from '../client'
 import MemberItem from './member-item'
 import style from './member-list.css'
 

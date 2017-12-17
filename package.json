@@ -13,7 +13,6 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "eslint": "^4.5.0",
     "eslint-plugin-react": "^7.3.0",
@@ -51,12 +50,12 @@
     "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --colors --progress",
-    "build": "cross-env NODE_ENV=production webpack --colors --progress",
+    "start": "webpack-dev-server --config-name=webapp",
+    "build": "webpack --config-name=client --env.production && webpack --config-name=webapp --env.production",
     "lint": "eslint \"*.js\" src && stylelint \"src/**/*.css\"",
     "test": "npm run lint && npm run build",
     "package": "tar -czvf wukong-web.tgz -C build .",
-    "clean": "rm -rf build *.tgz"
+    "clean": "rm -rf build *.tgz src/client/wukong.*"
   },
   "repository": {
     "type": "git",

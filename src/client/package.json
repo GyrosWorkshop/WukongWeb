@@ -3,10 +3,6 @@
   "version": "0.0.8",
   "description": "Wukong Client",
   "files": [
-    "build"
-  ],
-  "scripts": {
-    "build": "env NODE_ENV=production webpack --colors --progress",
-    "clean": "rm -rf build"
-  }
+    "wukong.*"
+  ]
 }

@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
-import {Selector} from 'wukong-client'
 
+import {Selector} from '../client'
 import style from './now-playing.css'
 import artworkImage from '../resource/artwork.png'
 

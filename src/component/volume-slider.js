@@ -2,8 +2,8 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
-import {Action} from 'wukong-client'
 
+import {Action} from '../client'
 import style from './volume-slider.css'
 
 function mapStateToProps(state) {

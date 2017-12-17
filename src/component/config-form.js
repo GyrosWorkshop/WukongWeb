@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
 import {get, fromPairs, debounce} from 'lodash'
-import {Action} from 'wukong-client'
 
+import {Action} from '../client'
 import style from './config-form.css'
 
 const options = ['sync', 'cookie']

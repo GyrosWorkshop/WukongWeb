@@ -1,9 +1,8 @@
-import 'babel-polyfill'
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-import Wukong from 'wukong-client'
 
+import Wukong from './client'
 import Platform from './platform'
 import App from './component/app'
 
