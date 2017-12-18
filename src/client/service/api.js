@@ -1,4 +1,5 @@
 import {partial, isEqual} from 'lodash'
+import timer from 'timer'
 
 import Action from '../action'
 import Codec from './codec'
@@ -149,43 +150,69 @@ export default function API(Platform, getState, dispatch) {
   }
 
   api.receiveMessage = callback => {
-    Platform.Network.websocket('/api/ws', send => async (event, data) => {
-      const state = getState()
-      switch (event) {
-        case 'open':
-        case 'close':
-        case 'error': {
-          callback(event)
-          break
-        }
-        case 'UserListUpdated': {
-          const members = data.users.map(Codec.User.decode)
-          dispatch(Action.Channel.members.create(members))
-          break
-        }
-        case 'Play': {
-          const song = data.song && {
-            ...Codec.Song.decode(data.song),
-            player: data.user || '',
-            time: (Date.now() / 1000) - (data.elapsed || 0)
+    Platform.Network.websocket('/api/ws', (connect, send) => {
+      let interval
+      return (event, data) => {
+        const state = getState()
+        switch (event) {
+          case 'open': {
+            interval = timer.setInterval(send, 30 * 1000, 'ping')
+            callback('connected')
+            break
           }
-          const downvote = !!data.downvote
-          dispatch(Action.Player.reset.create({downvote}))
-          dispatch(Action.Song.play.create(song))
-          if (song && state.user.profile.id == data.user) {
-            dispatch(Action.Song.move.create(song.id, Number.MAX_SAFE_INTEGER))
+          case 'close': {
+            timer.clearInterval(interval)
+            if (state.misc.connection.status) {
+              timer.setTimeout(connect, 5 * 1000)
+              callback('interrupted')
+            } else {
+              callback('disconnected')
+            }
+            break
           }
-          break
-        }
-        case 'Preload': {
-          const song = data.song && Codec.Song.decode(data.song)
-          dispatch(Action.Song.preload.create(song))
-          break
-        }
-        case 'Notification': {
-          const notification = data.notification
-          dispatch(Action.Misc.notification.create(notification))
-          break
+          case 'error': {
+            break
+          }
+          case 'UserListUpdated': {
+            const members = data.users.map(Codec.User.decode)
+            dispatch(Action.Channel.members.create(members))
+            break
+          }
+          case 'Play': {
+            const song = data.song && {
+              ...Codec.Song.decode(data.song),
+              player: data.user || '',
+              time: (Date.now() / 1000) - (data.elapsed || 0)
+            }
+            const downvote = !!data.downvote
+            dispatch(Action.Player.reset.create({downvote}))
+            dispatch(Action.Song.play.create(song))
+            if (song && state.user.profile.id == data.user) {
+              const maxIndex = Number.MAX_SAFE_INTEGER
+              dispatch(Action.Song.move.create(song.id, maxIndex))
+            }
+            break
+          }
+          case 'Preload': {
+            const song = data.song && Codec.Song.decode(data.song)
+            dispatch(Action.Song.preload.create(song))
+            break
+          }
+          case 'Notification': {
+            const notification = {
+              message: data.notification.message
+            }
+            dispatch(Action.Misc.notification.create(notification))
+            break
+          }
+          case 'Disconnect': {
+            const connection = {
+              status: false,
+              message: data.cause
+            }
+            dispatch(Action.Misc.connection.create(connection))
+            break
+          }
         }
       }
     })

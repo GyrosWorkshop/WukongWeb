@@ -42,20 +42,10 @@ export function websocket(endpoint, handler) {
     eventName,
     ...eventData
   }))
-  const emit = handler(send)
-  let interval
-  socket.onopen = event => {
-    emit('open', event)
-    interval = setInterval(send, 30 * 1000, 'ping')
-  }
-  socket.onclose = event => {
-    emit('close', event)
-    clearInterval(interval)
-    setTimeout(connect, 5 * 1000)
-  }
-  socket.onerror = event => {
-    emit('error', event)
-  }
+  const emit = handler(connect, send)
+  socket.onopen = event => emit('open', event)
+  socket.onclose = event => emit('close', event)
+  socket.onerror = event => emit('error', event)
   socket.onmessage = event => {
     const string = event.data
     const {eventName, ...eventData} = JSON.parse(string)

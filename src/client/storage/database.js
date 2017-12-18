@@ -13,6 +13,11 @@ export default function Database(Platform) {
           connection: 0,
           audioQuality: 2
         }
+      },
+      misc: {
+        connection: {
+          status: true
+        }
       }
     },
     save: {}

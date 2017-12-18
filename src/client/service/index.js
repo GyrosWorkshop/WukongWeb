@@ -16,16 +16,22 @@ export default function Service(Platform) {
         return
       }
       api.receiveMessage(async event => {
+        const state = getState()
         try {
           switch (event) {
-            case 'open':
+            case 'connected':
               await api.sendUpnext()
               break
-            case 'close':
+            case 'interrupted':
+              utility.notifyError('Connection lost. Reconnecting...')
               await api.sendChannel()
               break
-            case 'error':
-              utility.notifyError('Connection lost. Reconnecting...')
+            case 'disconnected':
+              utility.notifyError(
+                state.misc.connection.message,
+                'Reload',
+                utility.reloadApp
+              )
               break
           }
         } catch (error) {

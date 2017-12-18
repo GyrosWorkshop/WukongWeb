@@ -11,6 +11,17 @@ function notification(state = {}, action) {
   }
 }
 
+
+function connection(state = {}, action) {
+  switch (action.type) {
+    case Action.Misc.connection.type:
+      return action.connection
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
-  notification
+  notification,
+  connection
 })

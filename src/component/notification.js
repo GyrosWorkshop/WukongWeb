@@ -30,7 +30,9 @@ export default class Notification extends PureComponent {
 
   updateTimeout() {
     clearTimeout(this.timeout)
-    this.timeout = setTimeout(this.props.dispatchClearNotification, 4000)
+    if (!this.props.notification.action) {
+      this.timeout = setTimeout(this.props.dispatchClearNotification, 4000)
+    }
   }
 
   componentDidMount() {
