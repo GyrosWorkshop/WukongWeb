@@ -9,7 +9,8 @@ const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
 const vendorPath = path.join(__dirname, 'node_modules')
 const clientPath = path.join(sourcePath, 'client')
-const version = process.env.npm_package_version
+const version = require('./package').version
+const browserslist = ['> 1%', 'last 2 versions']
 
 const notBoolean = value => value !== true && value !== false
 
@@ -24,7 +25,7 @@ module.exports = function(env = {}) {
     presets: [
       ['@babel/preset-env', {
         targets: {
-          browsers: ['last 2 versions']
+          browsers: browserslist
         },
         useBuiltIns: 'usage',
         modules: false
@@ -33,15 +34,17 @@ module.exports = function(env = {}) {
       '@babel/preset-react'
     ],
     plugins: [
-      require('babel-plugin-transform-decorators-legacy'),
-      production || require('react-hot-loader/babel')
+      'babel-plugin-transform-decorators-legacy',
+      production || 'react-hot-loader/babel'
     ].filter(notBoolean)
   }
 
   const postcssOptions = {
     ident: 'postcss',
     plugins: [
-      require('postcss-cssnext')()
+      require('postcss-cssnext')({
+        browsers: browserslist
+      })
     ],
     sourceMap: true
   }
