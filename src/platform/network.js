@@ -42,7 +42,8 @@ export function websocket(endpoint, handler) {
     eventName,
     ...eventData
   }))
-  const emit = handler(connect, send)
+  const ping = () => send('ping')
+  const emit = handler(connect, ping)
   socket.onopen = event => emit('open', event)
   socket.onclose = event => emit('close', event)
   socket.onerror = event => emit('error', event)

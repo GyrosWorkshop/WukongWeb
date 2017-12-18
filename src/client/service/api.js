@@ -1,5 +1,4 @@
 import {partial, isEqual} from 'lodash'
-import timer from 'timer'
 
 import Action from '../action'
 import Codec from './codec'
@@ -150,20 +149,20 @@ export default function API(Platform, getState, dispatch) {
   }
 
   api.receiveMessage = callback => {
-    Platform.Network.websocket('/api/ws', (connect, send) => {
+    Platform.Network.websocket('/api/ws', (connect, ping) => {
       let interval
       return (event, data) => {
         const state = getState()
         switch (event) {
           case 'open': {
-            interval = timer.setInterval(send, 30 * 1000, 'ping')
+            interval = Platform.Timer.setInterval(ping, 30 * 1000)
             callback('connected')
             break
           }
           case 'close': {
-            timer.clearInterval(interval)
+            Platform.Timer.clearInterval(interval)
             if (state.misc.connection.status) {
-              timer.setTimeout(connect, 5 * 1000)
+              Platform.Timer.setTimeout(connect, 5 * 1000)
               callback('interrupted')
             } else {
               callback('disconnected')
