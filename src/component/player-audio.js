@@ -72,6 +72,8 @@ export default class PlayerAudio extends Component {
         break
       case 'timeupdate':
         this.props.dispatchElapsed(this.audio.currentTime)
+        break
+      case 'durationchange':
         this.props.dispatchDuration(this.audio.duration)
         break
       case 'ended':
@@ -87,7 +89,7 @@ export default class PlayerAudio extends Component {
 
   componentDidMount() {
     for (const type of [
-      'playing', 'pause', 'timeupdate', 'ended', 'error'
+      'playing', 'pause', 'timeupdate', 'durationchange', 'ended', 'error'
     ]) this.audio.addEventListener(type, this.onAudioEvent)
     this.audio.volume = this.props.volume
     this.setAudioState(this.props.file, this.props.time)
@@ -95,7 +97,7 @@ export default class PlayerAudio extends Component {
 
   componentWillUnmount() {
     for (const type of [
-      'playing', 'pause', 'timeupdate', 'ended', 'error'
+      'playing', 'pause', 'timeupdate', 'durationchange', 'ended', 'error'
     ]) this.audio.removeEventListener(type, this.onAudioEvent)
   }
 
