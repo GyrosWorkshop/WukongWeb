@@ -13,8 +13,8 @@ const version = process.env.npm_package_version
 
 const notBoolean = value => value !== true && value !== false
 
-module.exports = function(env) {
-  const production = env.production
+module.exports = function(env = {}) {
+  const production = env.production || false
   const devHost = env.devHost || 'localhost'
   const devPort = env.devPort || 8080
   const devServer = `http://${devHost}:${devPort}`
