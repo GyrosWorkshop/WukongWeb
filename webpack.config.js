@@ -20,6 +20,32 @@ module.exports = function(env = {}) {
   const devServer = `http://${devHost}:${devPort}`
   const apiServer = env.apiServer || 'https://api5.wukongmusic.us'
 
+  const babelOptions = {
+    presets: [
+      ['@babel/preset-env', {
+        targets: {
+          browsers: ['last 2 versions']
+        },
+        useBuiltIns: 'usage',
+        modules: false
+      }],
+      '@babel/preset-stage-2',
+      '@babel/preset-react'
+    ],
+    plugins: [
+      require('babel-plugin-transform-decorators-legacy'),
+      production || require('react-hot-loader/babel')
+    ].filter(notBoolean)
+  }
+
+  const postcssOptions = {
+    ident: 'postcss',
+    plugins: [
+      require('postcss-cssnext')()
+    ],
+    sourceMap: true
+  }
+
   return [{
     name: 'client',
     context: clientPath,
@@ -36,12 +62,12 @@ module.exports = function(env = {}) {
           test: /\.js$/
         },
         use: [{
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: babelOptions
         }]
       }]
     },
     entry: [
-      'babel-polyfill',
       './index'
     ],
     plugins: [
@@ -75,7 +101,8 @@ module.exports = function(env = {}) {
           test: /\.js$/
         },
         use: [{
-          loader: 'babel-loader'
+          loader: 'babel-loader',
+          options: babelOptions
         }]
       }, {
         resource: {
@@ -90,9 +117,7 @@ module.exports = function(env = {}) {
             }
           }, {
             loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
+            options: postcssOptions
           }],
           fallback: [{
             loader: 'style-loader'
@@ -115,9 +140,7 @@ module.exports = function(env = {}) {
             }
           }, {
             loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
+            options: postcssOptions
           }],
           fallback: [{
             loader: 'style-loader'
@@ -136,7 +159,6 @@ module.exports = function(env = {}) {
       production || 'react-hot-loader/patch',
       production || 'webpack/hot/only-dev-server',
       production || `webpack-dev-server/client?${devServer}`,
-      'babel-polyfill',
       './entry'
     ].filter(notBoolean),
     plugins: [
