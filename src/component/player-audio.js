@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
@@ -38,7 +38,7 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class PlayerAudio extends PureComponent {
+export default class PlayerAudio extends Component {
   static propTypes = {
     id: PropTypes.string,
     time: PropTypes.number,
