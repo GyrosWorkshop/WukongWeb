@@ -19,7 +19,7 @@ module.exports = function(env = {}) {
   const devHost = env.devHost || 'localhost'
   const devPort = env.devPort || 8080
   const devServer = `http://${devHost}:${devPort}`
-  const apiServer = env.apiServer || 'https://wukong.azurewebsites.net'
+  const apiServer = env.apiServer || 'https://api5.wukongmusic.us'
 
   const babelOptions = {
     presets: [
