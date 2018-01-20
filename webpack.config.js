@@ -10,7 +10,6 @@ const buildPath = path.join(__dirname, 'build')
 const vendorPath = path.join(__dirname, 'node_modules')
 const clientPath = path.join(sourcePath, 'client')
 const version = require('./package').version
-const browserslist = ['> 1%', 'last 2 versions']
 
 const notBoolean = value => value !== true && value !== false
 
@@ -21,33 +20,7 @@ module.exports = function(env = {}) {
   const devServer = `http://${devHost}:${devPort}`
   const apiServer = env.apiServer || 'https://api5.wukongmusic.us'
 
-  const babelOptions = {
-    presets: [
-      ['@babel/preset-env', {
-        targets: {
-          browsers: browserslist
-        },
-        useBuiltIns: 'usage',
-        modules: false
-      }],
-      '@babel/preset-stage-2',
-      '@babel/preset-react'
-    ],
-    plugins: [
-      'babel-plugin-transform-decorators-legacy',
-      production || 'react-hot-loader/babel'
-    ].filter(notBoolean)
-  }
-
-  const postcssOptions = {
-    ident: 'postcss',
-    plugins: [
-      require('postcss-cssnext')({
-        browsers: browserslist
-      })
-    ],
-    sourceMap: true
-  }
+  process.env.NODE_ENV = production ? 'production' : 'development'
 
   return [{
     name: 'client',
@@ -65,8 +38,7 @@ module.exports = function(env = {}) {
           test: /\.js$/
         },
         use: [{
-          loader: 'babel-loader',
-          options: babelOptions
+          loader: 'babel-loader'
         }]
       }]
     },
@@ -104,8 +76,7 @@ module.exports = function(env = {}) {
           test: /\.js$/
         },
         use: [{
-          loader: 'babel-loader',
-          options: babelOptions
+          loader: 'babel-loader'
         }]
       }, {
         resource: {
@@ -119,8 +90,7 @@ module.exports = function(env = {}) {
               sourceMap: true
             }
           }, {
-            loader: 'postcss-loader',
-            options: postcssOptions
+            loader: 'postcss-loader'
           }],
           fallback: [{
             loader: 'style-loader'
@@ -142,8 +112,7 @@ module.exports = function(env = {}) {
               importLoaders: 1
             }
           }, {
-            loader: 'postcss-loader',
-            options: postcssOptions
+            loader: 'postcss-loader'
           }],
           fallback: [{
             loader: 'style-loader'
