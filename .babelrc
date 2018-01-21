@@ -4,11 +4,22 @@
       "useBuiltIns": "usage",
       "modules": false
     }],
-    "@babel/preset-stage-2",
-    "@babel/preset-react"
+    ["@babel/preset-stage-2"],
+    ["@babel/preset-react"]
   ],
   "plugins": [
     "babel-plugin-transform-decorators-legacy",
     "react-hot-loader/babel"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        ["@babel/preset-env", {
+          "useBuiltIns": "usage",
+          "modules": "commonjs",
+          "targets": {"node": "current"}
+        }]
+      ]
+    }
+  }
 }

@@ -21,7 +21,6 @@
     "file-loader": "^1.1.6",
     "font-awesome": "^4.7.0",
     "html-webpack-plugin": "^2.30.1",
-    "jest": "^22.1.4",
     "lodash": "^4.17.4",
     "normalize.css": "^7.0.0",
     "offline-plugin": "^4.9.0",
