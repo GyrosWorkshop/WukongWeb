@@ -29,6 +29,7 @@
     "offline-plugin": "^4.9.0",
     "postcss-cssnext": "^3.0.2",
     "postcss-loader": "^2.0.10",
+    "pre-commit": "^1.2.2",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-addons-perf": "^15.4.2",
