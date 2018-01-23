@@ -58,11 +58,12 @@
     "build": "run-p build:*",
     "build:client": "webpack --config-name=client --env.production",
     "build:webapp": "webpack --config-name=webapp --env.production",
-    "test": "run-s test:* build",
+    "test": "run-s test:*",
     "test:lint": "run-p test:lint:*",
     "test:lint:js": "eslint \"**/*.js\"",
     "test:lint:css": "stylelint \"**/*.css\"",
     "test:jest": "jest",
+    "validate": "run-s test build",
     "clean": "rimraf build *.tgz src/client/wukong.*"
   },
   "repository": {
