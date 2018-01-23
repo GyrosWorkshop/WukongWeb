@@ -1,6 +1,9 @@
 export function file(object, multiple) {
   if (!object) return
-  if (multiple) return object.map(item => file(item))
+  if (multiple) {
+    if (!Array.isArray(object)) return []
+    return object.map(item => file(item)).filter(item => item)
+  }
   if (!object.file) return
   const urls = [
     object.file,
