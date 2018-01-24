@@ -20,10 +20,11 @@ export function file(object, multiple) {
 
 export function lyrics(object) {
   if (!object) return
+  if (!Array.isArray(object)) return
   const items = object
     .filter(item => item.data && item.lrc)
     .sort((item1, item2) => item1.translated - item2.translated)
-  if (!items.length) return
+  if (!items.length) return []
   return items.map(item => {
     const metadata = {}
     const lines = []
@@ -49,5 +50,5 @@ export function lyrics(object) {
     }
     lines.sort((line1, line2) => line1.time - line2.time)
     return lines
-  })
+  }).filter(lines => lines.length)
 }
