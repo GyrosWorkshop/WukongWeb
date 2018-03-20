@@ -81,8 +81,16 @@ export default class PlayerAudio extends Component {
         this.props.dispatchEnded()
         break
       case 'error':
-        this.setAudioState(null)
-        this.setAudioState(this.props.file, this.props.time)
+        switch (this.audio.error.code) {
+          case MediaError.MEDIA_ERR_ABORTED:
+          case MediaError.MEDIA_ERR_NETWORK:
+            this.setAudioState(null)
+            this.setAudioState(this.props.file, this.props.time)
+            break
+          case MediaError.MEDIA_ERR_DECODE:
+          case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+            break
+        }
         break
     }
   }
