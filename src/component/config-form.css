@@ -10,26 +10,29 @@
       display: block;
       padding: 4px;
       width: stretch;
+      color: #444;
       background: transparent;
+      border: 1px solid #999;
+      border-radius: 2px;
       outline: none;
-    }
+      transition: color 200ms ease, background 200ms ease, border-color 200ms ease;
 
-    & > span {
-      text-transform: capitalize;
+      &:hover,
+      &:focus {
+        color: #000;
+        border-color: #333;
+      }
+
+      &:active {
+        color: #000;
+        border-color: #333;
+        background: rgba(0, 0, 0, 0.07);
+      }
     }
 
     & > textarea {
       font-size: 12px;
       resize: none;
-      color: #444;
-      border: 1px solid #999;
-      border-radius: 2px;
-      transition: color 200ms ease, border-color 200ms ease;
-
-      &:focus {
-        color: #000;
-        border-color: #333;
-      }
     }
   }
 }

@@ -2,23 +2,37 @@ import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
-import {get, fromPairs, debounce} from 'lodash'
+import {mapValues, map, debounce} from 'lodash'
 
 import {Action} from '../client'
 import style from './config-form.css'
 
-const options = ['sync', 'cookie']
+const options = {
+  sync: {
+    name: 'Playlist URLs'
+  },
+  cookie: {
+    name: 'User Cookies'
+  }
+}
+const actions = {
+  clear: {
+    name: 'Clear Playlist',
+    object: Action.Song.assign.create([])
+  }
+}
 
 function mapStateToProps(state) {
-  return fromPairs(options.map(option => [
-    option, get(state, `user.preferences.${option}`)
-  ]))
+  return mapValues(options, (value, key) => state.user.preferences[key])
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     dispatchPreferences(preferences) {
       dispatch(Action.User.preferences.create(preferences))
+    },
+    dispatchAction(action) {
+      dispatch(action)
     }
   }
 }
@@ -27,15 +41,12 @@ function mapDispatchToProps(dispatch) {
 @CSSModules(style)
 export default class ConfigForm extends PureComponent {
   static propTypes = {
-    ...fromPairs(options.map(option => [
-      option, PropTypes.string
-    ])),
-    dispatchPreferences: PropTypes.func
+    ...mapValues(options, (value, key) => PropTypes.string),
+    dispatchPreferences: PropTypes.func,
+    dispatchAction: PropTypes.func
   }
 
-  state = fromPairs(options.map(option => [
-    option, this.props[option] || ''
-  ]))
+  state = mapValues(options, (value, key) => this.props[key] || '')
 
   onInputChange = (() => {
     const debouncedDispatch = debounce(this.props.dispatchPreferences, 500)
@@ -47,14 +58,27 @@ export default class ConfigForm extends PureComponent {
     }
   })()
 
+  onButtonClick = (event) => {
+    const {name} = event.target
+    const action = actions[name].object
+    this.props.dispatchAction(action)
+  }
+
   render() {
     return (
       <div styleName='container'>
-        {options.map(option => (
-          <label key={option}>
-            <span>{option}</span>
-            <textarea name={option} rows={4}
-              value={this.state[option]} onChange={this.onInputChange}/>
+        {map(options, ({name}, key) => (
+          <label key={key}>
+            {name}
+            <textarea name={key} rows={4}
+              value={this.state[key]} onChange={this.onInputChange}/>
+          </label>
+        ))}
+        {map(actions, ({name}, key) => (
+          <label key={key}>
+            <button name={key} onClick={this.onButtonClick}>
+              {name}
+            </button>
           </label>
         ))}
       </div>
