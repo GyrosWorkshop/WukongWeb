@@ -31,8 +31,17 @@ const selectAudioQuality = filesSelector => createSelector(
   (files, level) => {
     const fileLevel = file => get(file, 'quality.level', 0)
     const results = files
-      .filter(file => fileLevel(file) <= level)
-      .sort((file1, file2) => fileLevel(file2) - fileLevel(file1))
+      .sort((file1, file2) => {
+        const level1 = fileLevel(file1)
+        const level2 = fileLevel(file2)
+        const diff1 = Math.abs(level1 - level)
+        const diff2 = Math.abs(level2 - level)
+        if (diff1 != diff2) {
+          return diff1 - diff2
+        } else {
+          return level2 - level1
+        }
+      })
     return results[0]
   }
 )
