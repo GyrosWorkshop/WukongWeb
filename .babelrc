@@ -1,22 +1,23 @@
 {
   "presets": [
     ["@babel/preset-env", {
-      "useBuiltIns": "usage",
-      "modules": false
+      "modules": false,
+      "useBuiltIns": "usage"
     }],
-    ["@babel/preset-stage-2"],
+    ["@babel/preset-stage-2", {
+      "decoratorsLegacy": true
+    }],
     ["@babel/preset-react"]
   ],
   "plugins": [
-    "babel-plugin-transform-decorators-legacy",
     "react-hot-loader/babel"
   ],
   "env": {
     "test": {
       "presets": [
         ["@babel/preset-env", {
-          "useBuiltIns": "usage",
           "modules": "commonjs",
+          "useBuiltIns": "usage",
           "targets": {"node": "current"}
         }]
       ]

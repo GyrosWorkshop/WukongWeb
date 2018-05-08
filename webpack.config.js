@@ -1,15 +1,20 @@
 const path = require('path')
 const webpack = require('webpack')
+const CssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const GenerateJsonPlugin = require('generate-json-webpack-plugin')
 const FaviconsPlugin = require('favicons-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 
 const sourcePath = path.join(__dirname, 'src')
 const buildPath = path.join(__dirname, 'build')
-const vendorPath = path.join(__dirname, 'node_modules')
 const clientPath = path.join(sourcePath, 'client')
-const version = require('./package').version
+const webappPackage = require('./package')
+const webappVersion = webappPackage.version
+const clientPackage = webappPackage.client
+clientPackage.version = '0.1.1'
 
 const notBoolean = value => value !== true && value !== false
 
@@ -19,14 +24,15 @@ module.exports = function(env = {}) {
   const devPort = env.devPort || 8080
   const devServer = `http://${devHost}:${devPort}`
   const apiServer = env.apiServer || 'https://wukong.leeleo.me'
-
-  process.env.NODE_ENV = production ? 'production' : 'development'
+  const mode = production ? 'production' : 'development'
+  process.env.NODE_ENV = mode
 
   return [{
     name: 'client',
+    mode: mode,
     context: clientPath,
     output: {
-      path: clientPath,
+      path: buildPath,
       filename: 'wukong.js',
       library: 'Wukong',
       libraryTarget: 'this'
@@ -46,28 +52,31 @@ module.exports = function(env = {}) {
       './index'
     ],
     plugins: [
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: 'production'
-      }),
-      new webpack.ProgressPlugin({
-        profile: false
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true
-      })
+      new webpack.ProgressPlugin(),
+      new GenerateJsonPlugin('package.json', clientPackage)
     ],
     devtool: 'source-map',
+    optimization: {
+      runtimeChunk: false,
+      splitChunks: false,
+      minimizer: [
+        new UglifyJsPlugin({
+          sourceMap: true
+        })
+      ]
+    },
     performance: {
       hints: false
     }
   }, {
     name: 'webapp',
+    mode: mode,
     context: sourcePath,
     output: {
       path: buildPath,
       publicPath: production ? '/' : `${devServer}/`,
-      filename: production ? '[chunkhash].js' : '[name].[hash].js',
-      chunkFilename: production ? '[chunkhash].js' : '[name].[hash].js'
+      filename: production ? '[contenthash].js' : '[name].js',
+      chunkFilename: production ? '[contenthash].js' : '[name].js'
     },
     module: {
       rules: [{
@@ -83,41 +92,35 @@ module.exports = function(env = {}) {
           include: sourcePath,
           test: /\.global\.css$/
         },
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          }, {
-            loader: 'postcss-loader'
-          }],
-          fallback: [{
-            loader: 'style-loader'
-          }]
-        })
+        use: [production ? CssExtractPlugin.loader : {
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true
+          }
+        }, {
+          loader: 'postcss-loader'
+        }]
       }, {
         resource: {
           include: sourcePath,
           test: /\.css$/,
           not: [/\.global\.css$/]
         },
-        use: ExtractTextPlugin.extract({
-          use: [{
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              modules: true,
-              localIdentName: production ? '[hash:base64]' : '[name]-[local]',
-              importLoaders: 1
-            }
-          }, {
-            loader: 'postcss-loader'
-          }],
-          fallback: [{
-            loader: 'style-loader'
-          }]
-        })
+        use: [production ? CssExtractPlugin.loader : {
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: {
+            sourceMap: true,
+            modules: true,
+            localIdentName: production ? '[hash:base64]' : '[name]-[local]',
+            importLoaders: 1
+          }
+        }, {
+          loader: 'postcss-loader'
+        }]
       }, {
         resource: {
           test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
@@ -134,71 +137,55 @@ module.exports = function(env = {}) {
       './entry'
     ].filter(notBoolean),
     plugins: [
-      new webpack.EnvironmentPlugin({
-        NODE_ENV: production ? 'production' : 'development'
-      }),
+      new webpack.ProgressPlugin(),
       new webpack.DefinePlugin({__env: {
         production: JSON.stringify(production),
         server: JSON.stringify(apiServer)
       }}),
-      new webpack.LoaderOptionsPlugin({
-        debug: !production,
-        minimize: production,
-        options: {
-          context: sourcePath
-        }
-      }),
-      new webpack.ProgressPlugin({
-        profile: false
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: (module, count) => module.context.startsWith(vendorPath)
-      }),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'manifest',
-        minChunks: Infinity
+      new CssExtractPlugin({
+        filename: production ? '[contenthash].css' : '[name].css',
+        chunkFilename: production ? '[contenthash].css' : '[name].css'
       }),
       new HtmlPlugin({
         template: './index.ejs',
-        comment: `Wukong v${version}`,
+        comment: `Wukong v${webappVersion}`,
         minify: !production ? undefined : {
           collapseWhitespace: true
         }
-      }),
-      new ExtractTextPlugin({
-        filename: '[contenthash].css',
-        allChunks: true,
-        disable: !production
       }),
       new FaviconsPlugin({
         logo: './resource/icon.png',
         title: 'Wukong'
       }),
       production && new OfflinePlugin({
-        version: version,
-        cacheMaps: [{
-          match: 'function(url) { return new URL(\'/\', location) }',
-          requestTypes: ['navigate']
-        }],
-        AppCache: false
+        version: webappVersion,
+        updateStrategy: 'all',
+        appShell: '/'
       }),
-      production && new webpack.optimize.UglifyJsPlugin({
-        sourceMap: true
-      }),
-      production || new webpack.HotModuleReplacementPlugin(),
-      production || new webpack.NamedModulesPlugin()
+      production || new webpack.HotModuleReplacementPlugin()
     ].filter(notBoolean),
     devtool: 'source-map',
+    optimization: {
+      runtimeChunk: 'single',
+      splitChunks: {
+        chunks: 'all'
+      },
+      minimizer: [
+        new UglifyJsPlugin({
+          sourceMap: true
+        }),
+        new OptimizeCSSAssetsPlugin()
+      ]
+    },
+    performance: {
+      hints: production && 'warning'
+    },
     devServer: {
       host: devHost,
       port: devPort,
       contentBase: buildPath,
       historyApiFallback: true,
       hot: true
-    },
-    performance: {
-      hints: production && 'warning'
     }
   }]
 }
