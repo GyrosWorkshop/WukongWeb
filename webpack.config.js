@@ -95,15 +95,9 @@ module.exports = function(env = {}) {
         use: [production ? CssExtractPlugin.loader : {
           loader: 'style-loader'
         }, {
-          loader: 'css-loader',
-          options: {
-            sourceMap: true
-          }
+          loader: 'css-loader'
         }, {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: true
-          }
+          loader: 'postcss-loader'
         }]
       }, {
         resource: {
@@ -116,16 +110,12 @@ module.exports = function(env = {}) {
         }, {
           loader: 'css-loader',
           options: {
-            sourceMap: true,
             modules: true,
             localIdentName: production ? '[hash:base64]' : '[name]-[local]',
             importLoaders: 1
           }
         }, {
-          loader: 'postcss-loader',
-          options: {
-            sourceMap: true
-          }
+          loader: 'postcss-loader'
         }]
       }, {
         resource: {
