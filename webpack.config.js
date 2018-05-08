@@ -100,7 +100,10 @@ module.exports = function(env = {}) {
             sourceMap: true
           }
         }, {
-          loader: 'postcss-loader'
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
         }]
       }, {
         resource: {
@@ -119,7 +122,10 @@ module.exports = function(env = {}) {
             importLoaders: 1
           }
         }, {
-          loader: 'postcss-loader'
+          loader: 'postcss-loader',
+          options: {
+            sourceMap: true
+          }
         }]
       }, {
         resource: {
@@ -174,7 +180,13 @@ module.exports = function(env = {}) {
         new UglifyJsPlugin({
           sourceMap: true
         }),
-        new OptimizeCSSAssetsPlugin()
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            map: {
+              inline: false
+            }
+          }
+        })
       ]
     },
     performance: {
