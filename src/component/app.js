@@ -33,13 +33,22 @@ export default class App extends PureComponent {
         <BrowserRouter>
           <div>
             <Route path='/' exact component={
-              lazy(() => import('./welcome'))
+              lazy(() => import(
+                /* webpackChunkName: 'welcome' */
+                './welcome'
+              ))
             }/>
             <Route path='/:channel' component={
-              lazy(() => import('./channel'))
+              lazy(() => import(
+                /* webpackChunkName: 'channel' */
+                './channel'
+              ))
             }/>
             {!auth && createElement(
-              lazy(() => import('./login'))
+              lazy(() => import(
+                /* webpackChunkName: 'login' */
+                './login'
+              ))
             )}
             <Notification/>
             <Background/>
@@ -58,11 +67,10 @@ function lazy(loader) {
       component: null
     }
 
-    load() {
-      loader().then(module => {
-        const component = module.default
-        this.setState({component})
-      })
+    async load() {
+      const module = await loader()
+      const component = module.default
+      this.setState({component})
     }
 
     render() {
