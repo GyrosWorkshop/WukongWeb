@@ -143,7 +143,7 @@ module.exports = function(env = {}) {
         chunkFilename: production ? '[contenthash].css' : '[name].css'
       }),
       new HtmlPlugin({
-        template: './index.ejs',
+        template: './index.html',
         comment: `Wukong v${webappVersion}`,
         minify: !production ? undefined : {
           collapseWhitespace: true
