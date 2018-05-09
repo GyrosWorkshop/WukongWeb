@@ -1,43 +1,21 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
+import * as OfflinePlugin from 'offline-plugin/runtime'
 
 import Wukong from './client'
 import Platform from './platform'
+import Devtool from './devtool'
 import App from './component/app'
 
-const Devtool = __env.production ? null : require('./devtool').default
+OfflinePlugin.install()
+
 const store = Wukong(Platform, Devtool)
+render((
+  <Provider store={store}>
+    <App>
+      {Devtool && <Devtool/>}
+    </App>
+  </Provider>
+), document.getElementById('app'))
 
-function renderApp() {
-  render((() => {
-    if (__env.production) {
-      return (
-        <Provider store={store}>
-          <App/>
-        </Provider>
-      )
-    } else {
-      const {AppContainer} = require('react-hot-loader')
-      return (
-        <Provider store={store}>
-          <AppContainer>
-            <App>
-              <Devtool/>
-            </App>
-          </AppContainer>
-        </Provider>
-      )
-    }
-  })(), document.getElementById('app'))
-}
-
-renderApp()
-if (__env.production) {
-  const OfflinePlugin = require('offline-plugin/runtime')
-  OfflinePlugin.install()
-} else {
-  if (module.hot) {
-    module.hot.accept('./component/app', renderApp)
-  }
-}

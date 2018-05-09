@@ -4,6 +4,7 @@ import DocumentTitle from 'react-document-title'
 import {BrowserRouter, Route} from 'react-router-dom'
 import EventListener from 'react-event-listener'
 import PropTypes from 'prop-types'
+import {hot} from 'react-hot-loader'
 
 import Background from './background'
 import Notification from './notification'
@@ -19,6 +20,7 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+@hot(module)
 @connect(mapStateToProps, mapDispatchToProps)
 export default class App extends PureComponent {
   static propTypes = {

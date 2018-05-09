@@ -127,7 +127,6 @@ module.exports = function(env = {}) {
       }]
     },
     entry: [
-      production || 'react-hot-loader/patch',
       production || 'webpack/hot/only-dev-server',
       production || `webpack-dev-server/client?${devServer}`,
       './entry'
