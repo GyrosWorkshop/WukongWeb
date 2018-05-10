@@ -127,10 +127,8 @@ module.exports = function(env = {}) {
       }]
     },
     entry: [
-      production || 'webpack/hot/only-dev-server',
-      production || `webpack-dev-server/client?${devServer}`,
       './entry'
-    ].filter(notBoolean),
+    ],
     plugins: [
       new webpack.ProgressPlugin(),
       new webpack.DefinePlugin({__env: {
@@ -156,8 +154,7 @@ module.exports = function(env = {}) {
         version: webappVersion,
         updateStrategy: 'all',
         appShell: '/'
-      }),
-      production || new webpack.HotModuleReplacementPlugin()
+      })
     ].filter(notBoolean),
     devtool: 'source-map',
     optimization: {
@@ -180,13 +177,6 @@ module.exports = function(env = {}) {
     },
     performance: {
       hints: production && 'warning'
-    },
-    devServer: {
-      host: devHost,
-      port: devPort,
-      contentBase: buildPath,
-      historyApiFallback: true,
-      hot: true
     }
   }]
 }
