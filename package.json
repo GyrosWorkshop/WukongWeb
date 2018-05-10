@@ -64,7 +64,7 @@
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "start": "webpack-dev-server --config-name=webapp",
+    "start": "webpack-serve",
     "build": "run-p build:*",
     "build:client": "webpack --config-name=client --env.production",
     "build:webapp": "webpack --config-name=webapp --env.production",

@@ -20,9 +20,6 @@ const notBoolean = value => value !== true && value !== false
 
 module.exports = function(env = {}) {
   const production = env.production || false
-  const devHost = env.devHost || 'localhost'
-  const devPort = env.devPort || 8080
-  const devServer = `http://${devHost}:${devPort}`
   const apiServer = env.apiServer || 'https://wukong.leeleo.me'
   const mode = production ? 'production' : 'development'
   process.env.NODE_ENV = mode
@@ -74,7 +71,7 @@ module.exports = function(env = {}) {
     context: sourcePath,
     output: {
       path: buildPath,
-      publicPath: production ? '/' : `${devServer}/`,
+      publicPath: '/',
       filename: production ? '[contenthash].js' : '[name].js',
       chunkFilename: production ? '[contenthash].js' : '[name].js'
     },
@@ -93,7 +90,10 @@ module.exports = function(env = {}) {
           test: /\.global\.css$/
         },
         use: [production ? CssExtractPlugin.loader : {
-          loader: 'style-loader'
+          loader: 'style-loader',
+          options: {
+            convertToAbsoluteUrls: !production
+          }
         }, {
           loader: 'css-loader'
         }, {
@@ -106,7 +106,10 @@ module.exports = function(env = {}) {
           not: [/\.global\.css$/]
         },
         use: [production ? CssExtractPlugin.loader : {
-          loader: 'style-loader'
+          loader: 'style-loader',
+          options: {
+            convertToAbsoluteUrls: !production
+          }
         }, {
           loader: 'css-loader',
           options: {
