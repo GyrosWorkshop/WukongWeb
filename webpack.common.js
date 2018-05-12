@@ -1,5 +1,6 @@
 require('dotenv').config()
 const path = require('path')
+const fs = require('fs')
 const webpack = require('webpack')
 const serve = require('webpack-serve')
 
@@ -254,6 +255,13 @@ module.exports = class Webpack {
     console.log(stats.toString({
       colors: true
     }))
+    fs.writeFileSync(
+      path.join(
+        path.dirname(this.data.buildPath),
+        `${path.basename(this.data.buildPath)}.json`
+      ),
+      JSON.stringify(stats.toJson())
+    )
     if (stats.hasErrors()) {
       process.exitCode = 2
     }
