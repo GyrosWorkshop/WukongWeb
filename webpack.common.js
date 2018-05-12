@@ -1,10 +1,17 @@
 require('dotenv').config()
 const path = require('path')
 const webpack = require('webpack')
+const serve = require('webpack-serve')
 
 module.exports = class Webpack {
-  constructor() {
-    this.data = {}
+  constructor(env) {
+    process.env.NODE_ENV = env
+    this.data = {
+      env: env,
+      prod: env == 'production',
+      devHost: process.env.DEV_HOST,
+      devPort: parseInt(process.env.DEV_PORT)
+    }
     this.config = {
       output: {},
       entry: [],
@@ -17,13 +24,11 @@ module.exports = class Webpack {
       },
       performance: {}
     }
+    this.commonSetup()
   }
 
-  prod(prod) {
-    this.data.prod = !!prod
-    this.data.env = prod ? 'production' : 'development'
+  commonSetup() {
     this.config.mode = this.data.env
-    process.env.NODE_ENV = this.data.env
     this.config.plugins.push(
       new webpack.ProgressPlugin()
     )
@@ -31,30 +36,39 @@ module.exports = class Webpack {
     this.config.performance.hints = this.data.prod && 'warning'
   }
 
-  path(source, build) {
-    this.data.sourcePath = path.join(__dirname, 'src', source)
-    this.data.buildPath = path.join(__dirname, 'build', build)
+  sourcePath(directory) {
+    this.data.sourcePath = path.join(__dirname, 'src', directory)
     this.config.context = this.data.sourcePath
+  }
+
+  buildPath(directory) {
+    this.data.buildPath = path.join(__dirname, 'build', directory)
     this.config.output.path = this.data.buildPath
   }
 
-  library(filename, library) {
-    this.config.output.filename = filename
-    this.config.output.library = library
-    this.config.output.libraryTarget = 'this'
+  publicPath(path) {
+    this.data.publicPath = path
+    this.config.output.publicPath = this.data.publicPath
   }
 
-  bundle(publicPath) {
-    this.config.publicPath = publicPath
-    this.filename = this.data.prod ? '[contenthash].js' : '[name].js'
-    this.chunkFilename = this.data.prod ? '[contenthash].js' : '[name].js'
+  outputFile(basename) {
+    this.data.basename = basename || (
+      this.data.prod ? '[contenthash]' : '[name]'
+    )
+    this.config.output.filename = `${this.data.basename}.js`
+    this.config.output.chunkFilename = `${this.data.basename}.js`
   }
 
-  entry(...files) {
+  libraryExport(name) {
+    this.config.output.libraryTarget = 'umd'
+    this.config.output.library = name
+  }
+
+  entryFiles(...files) {
     this.config.entry.push(...files)
   }
 
-  babel() {
+  jsLoader() {
     const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
     this.config.module.rules.push({
       resource: {
@@ -72,7 +86,7 @@ module.exports = class Webpack {
     )
   }
 
-  postcss() {
+  cssLoader() {
     const ExtractCssPlugin = require('mini-css-extract-plugin')
     const MinifyCssPlugin = require('optimize-css-assets-webpack-plugin')
     this.config.module.rules.push({
@@ -112,6 +126,12 @@ module.exports = class Webpack {
         loader: 'postcss-loader'
       }]
     })
+    this.config.plugins.push(
+      new ExtractCssPlugin({
+        filename: `${this.data.basename}.css`,
+        chunkFilename: `${this.data.basename}.css`
+      })
+    )
     this.config.optimization.minimizer.push(
       new MinifyCssPlugin({
         cssProcessorOptions: {
@@ -123,10 +143,61 @@ module.exports = class Webpack {
     )
   }
 
-  json(filename, object) {
+  fileLoader() {
+    this.config.module.rules.push({
+      resource: {
+        test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
+      },
+      use: [{
+        loader: 'file-loader'
+      }]
+    })
+  }
+
+  definePlugin(definitions) {
+    this.config.plugins.push(
+      new webpack.DefinePlugin(definitions)
+    )
+  }
+
+  jsonPlugin(filename, value) {
     const GenerateJsonPlugin = require('generate-json-webpack-plugin')
     this.config.plugins.push(
-      new GenerateJsonPlugin(filename, object)
+      new GenerateJsonPlugin(filename, value)
+    )
+  }
+
+  htmlPlugin(template, parameters) {
+    const HtmlPlugin = require('html-webpack-plugin')
+    this.config.plugins.push(
+      new HtmlPlugin({
+        template: template,
+        templateParameters: parameters,
+        minify: this.data.prod && {
+          collapseWhitespace: true
+        }
+      })
+    )
+  }
+
+  faviconPlugin(image, title) {
+    const FaviconsPlugin = require('favicons-webpack-plugin')
+    this.config.plugins.push(
+      new FaviconsPlugin({
+        logo: image,
+        title: title
+      })
+    )
+  }
+
+  offlinePlugin(version) {
+    const OfflinePlugin = require('offline-plugin')
+    this.config.plugins.push(
+      new OfflinePlugin({
+        version: version,
+        updateStrategy: 'all',
+        appShell: this.data.publicPath
+      })
     )
   }
 
@@ -136,4 +207,55 @@ module.exports = class Webpack {
       chunks: 'all'
     }
   }
+
+  build() {
+    try {
+      webpack(this.config).run((error, stats) => {
+        if (error) {
+          this.printError(error)
+        } else {
+          this.printStats(stats)
+        }
+      })
+    } catch (error) {
+      this.printError(error)
+    }
+  }
+
+  serve() {
+    try {
+      serve({
+        config: this.config,
+        host: this.data.devHost,
+        port: this.data.devPort,
+        dev: {
+          publicPath: this.data.publicPath
+        },
+        hot: {
+          port: this.data.devPort + 1
+        }
+      })
+    } catch (error) {
+      this.printError(error)
+    }
+  }
+
+  /* eslint-disable no-console */
+  printError(error) {
+    console.error(error.stack || error)
+    if (error.details) {
+      console.error(error.details)
+    }
+    process.exitCode = 1
+  }
+
+  printStats(stats) {
+    console.log(stats.toString({
+      colors: true
+    }))
+    if (stats.hasErrors()) {
+      process.exitCode = 2
+    }
+  }
+  /* eslint-enable no-console */
 }

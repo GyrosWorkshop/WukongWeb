@@ -5,7 +5,7 @@ const state = {
 }
 
 export function url(protocol, endpoint) {
-  return __env.server.replace(/^http/i, protocol) + endpoint
+  return process.env.API_SERVER.replace(/^http/i, protocol) + endpoint
 }
 
 export async function http(method, endpoint, data) {

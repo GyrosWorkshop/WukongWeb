@@ -1,14 +1,14 @@
 const Webpack = require('./webpack.common')
+const clientPackage = require('./package').client
 
-const webpack = new Webpack()
-webpack.prod(true)
-webpack.path('client', 'client')
-webpack.library('wukong.js', 'Wukong')
-webpack.entry('./index')
-webpack.babel()
-webpack.json('package.json', (() => {
-  const object = require('./package').client
-  object.version = '0.1.1'
-  return object
-})())
+const webpack = new Webpack('production')
+webpack.sourcePath('client')
+webpack.buildPath('client')
+webpack.outputFile('wukong')
+webpack.libraryExport('Wukong')
+webpack.entryFiles('./index')
+webpack.jsLoader()
+webpack.jsonPlugin('package.json', clientPackage)
 webpack.splitChunks(false)
+
+webpack.build()

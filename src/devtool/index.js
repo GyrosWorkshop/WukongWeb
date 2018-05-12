@@ -1,1 +1,5 @@
-export default __env.production ? null : require('./component').default
+if (process.env.NODE_ENV == 'production') {
+  module.exports = null
+} else {
+  module.exports = require('./component')
+}

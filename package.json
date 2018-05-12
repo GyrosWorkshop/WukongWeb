@@ -4,10 +4,8 @@
   "description": "Wukong Web App",
   "client": {
     "name": "wukong-client",
-    "description": "Wukong Client",
-    "files": [
-      "wukong.*"
-    ]
+    "version": "0.1.1",
+    "description": "Wukong Client"
   },
   "private": true,
   "dependencies": {},
@@ -65,10 +63,10 @@
     "whatwg-fetch": "^2.0.4"
   },
   "scripts": {
-    "start": "webpack-serve",
+    "start": "node webpack.webapp.js serve",
     "build": "run-p build:*",
-    "build:client": "webpack --config-name=client --env.production",
-    "build:webapp": "webpack --config-name=webapp --env.production",
+    "build:client": "node webpack.client.js",
+    "build:webapp": "node webpack.webapp.js",
     "test": "run-s test:*",
     "test:lint": "run-p test:lint:*",
     "test:lint:js": "eslint \"**/*.js\"",

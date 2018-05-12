@@ -1,19 +1,19 @@
 {
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
   "env": {
     "node": false,
     "commonjs": true,
     "browser": true
   },
   "globals": {
-    "__env": false
-  },
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true
-    }
+    "process": false
   },
   "plugins": ["react"],
   "extends": ["plugin:react/recommended"],
