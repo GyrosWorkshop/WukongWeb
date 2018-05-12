@@ -16,7 +16,7 @@ webpack.fileLoader()
 webpack.definePlugin({
   process: {
     env: {
-      API_SERVER: process.env.API_SERVER
+      API_SERVER: JSON.stringify(process.env.API_SERVER)
     }
   }
 })
