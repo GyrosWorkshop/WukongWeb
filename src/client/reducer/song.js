@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux'
-import {shuffle} from 'lodash'
+import shuffle from 'lodash/shuffle'
 
 import Action from '../action'
 

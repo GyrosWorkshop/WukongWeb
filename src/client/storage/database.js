@@ -1,4 +1,6 @@
-import {merge, pick, isEqual} from 'lodash'
+import merge from 'lodash/merge'
+import pick from 'lodash/pick'
+import isEqual from 'lodash/isEqual'
 
 export default function Database(Platform) {
   const key = 'wukong'

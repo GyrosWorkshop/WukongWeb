@@ -1,4 +1,5 @@
-import {partial, isEqual} from 'lodash'
+import partial from 'lodash/partial'
+import isEqual from 'lodash/isEqual'
 
 import Action from '../action'
 import Codec from './codec'

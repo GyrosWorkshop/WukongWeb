@@ -1,5 +1,7 @@
 import {createSelector} from 'reselect'
-import {get, flow, fromPairs} from 'lodash'
+import get from 'lodash/get'
+import flow from 'lodash/flow'
+import fromPairs from 'lodash/fromPairs'
 
 const composeSelector = (...functions) => flow(functions)()
 const takeState = () => state => state

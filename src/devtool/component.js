@@ -3,7 +3,10 @@ import {createDevTools} from 'redux-devtools'
 import LogMonitor from 'redux-devtools-log-monitor'
 import DockMonitor from 'redux-devtools-dock-monitor'
 import FilteredMonitor from 'redux-devtools-filter-actions'
-import {get, set, size, cloneDeep} from 'lodash'
+import get from 'lodash/get'
+import set from 'lodash/set'
+import size from 'lodash/size'
+import cloneDeep from 'lodash/cloneDeep'
 
 import {Action} from '../client'
 
