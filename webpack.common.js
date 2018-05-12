@@ -226,6 +226,7 @@ module.exports = class Webpack {
     try {
       serve({
         config: this.config,
+        content: __dirname,
         host: this.data.devHost,
         port: this.data.devPort,
         dev: {
