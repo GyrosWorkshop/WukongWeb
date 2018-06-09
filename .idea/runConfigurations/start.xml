@@ -1,5 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="start" type="NodeJSConfigurationType" factoryName="Node.js" application-parameters="serve" path-to-js-file="webpack.webapp.js" working-dir="$PROJECT_DIR$">
-    <method />
-  </configuration>
-</component>

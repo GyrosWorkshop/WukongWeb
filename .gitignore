@@ -10,14 +10,5 @@ build
 #vim
 *.swp
 
-#intellij
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/dictionaries
-
-#vscode
-.vscode
-jsconfig.json
-
 #macos
 .DS_Store
