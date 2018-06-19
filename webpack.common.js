@@ -33,7 +33,6 @@ module.exports = class Webpack {
     this.config.plugins.push(
       new webpack.ProgressPlugin()
     )
-    this.config.devtool = 'source-map'
     this.config.performance.hints = this.data.prod && 'warning'
   }
 
@@ -48,14 +47,13 @@ module.exports = class Webpack {
   }
 
   publicPath(path) {
-    this.data.publicPath = path
+    this.data.publicPath = this.data.prod ? path : '/'
     this.config.output.publicPath = this.data.publicPath
   }
 
   outputFile(basename) {
-    this.data.basename = basename || (
-      this.data.prod ? '[contenthash]' : '[name]'
-    )
+    this.data.basename = basename ||
+      (this.data.prod ? '[contenthash]' : '[name]')
     this.config.output.filename = `${this.data.basename}.js`
     this.config.output.chunkFilename = `${this.data.basename}.js`
   }
@@ -81,9 +79,7 @@ module.exports = class Webpack {
       }]
     })
     this.config.optimization.minimizer.push(
-      new UglifyJsPlugin({
-        sourceMap: true
-      })
+      new UglifyJsPlugin()
     )
   }
 
@@ -134,13 +130,7 @@ module.exports = class Webpack {
       })
     )
     this.config.optimization.minimizer.push(
-      new MinifyCssPlugin({
-        cssProcessorOptions: {
-          map: {
-            inline: false
-          }
-        }
-      })
+      new MinifyCssPlugin()
     )
   }
 
@@ -150,7 +140,10 @@ module.exports = class Webpack {
         test: /\.(png|eot|svg|ttf|woff|woff2)(\?.*)?$/
       },
       use: [{
-        loader: 'file-loader'
+        loader: 'file-loader',
+        options: {
+          name: `${this.data.prod ? '[hash]' : '[path][name]'}.[ext]`
+        }
       }]
     })
   }
@@ -186,7 +179,21 @@ module.exports = class Webpack {
     this.config.plugins.push(
       new FaviconsPlugin({
         logo: image,
-        title: title
+        title: title,
+        prefix: './',
+        persistentCache: false,
+        icons: {
+          favicons: true,
+          appleIcon: false,
+          appleStartup: false,
+          android: false,
+          windows: false,
+          firefox: false,
+          coast: false,
+          yandex: false,
+          opengraph: false,
+          twitter: false
+        }
       })
     )
   }
@@ -225,6 +232,8 @@ module.exports = class Webpack {
 
   serve() {
     try {
+      const history = require('connect-history-api-fallback')
+      const convert = require('koa-connect')
       serve({
         config: this.config,
         content: __dirname,
@@ -235,6 +244,9 @@ module.exports = class Webpack {
         },
         hot: {
           port: this.data.devPort + 1
+        },
+        add: (app, middleware, options) => {
+          app.use(convert(history()))
         }
       })
     } catch (error) {

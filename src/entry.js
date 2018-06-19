@@ -1,14 +1,16 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {Provider} from 'react-redux'
-import * as OfflinePlugin from 'offline-plugin/runtime'
 
 import Wukong from './client'
 import Platform from './platform'
 import Devtool from './devtool'
 import App from './component/app'
 
-OfflinePlugin.install()
+if (process.env.NODE_ENV == 'production') {
+  const OfflinePlugin = require('offline-plugin/runtime')
+  OfflinePlugin.install()
+}
 
 const store = Wukong(Platform, Devtool)
 render((
