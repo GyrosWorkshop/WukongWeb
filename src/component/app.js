@@ -1,4 +1,4 @@
-import React, {PureComponent, createElement} from 'react'
+import React, {PureComponent, Fragment, createElement} from 'react'
 import {connect} from 'react-redux'
 import DocumentTitle from 'react-document-title'
 import {BrowserRouter, Route} from 'react-router-dom'
@@ -33,7 +33,7 @@ export default class App extends PureComponent {
     return (
       <DocumentTitle title='Wukong'>
         <BrowserRouter>
-          <div>
+          <Fragment>
             <Route path='/' exact component={
               lazy(() => import(
                 /* webpackChunkName: 'welcome' */
@@ -56,7 +56,7 @@ export default class App extends PureComponent {
             <Background/>
             {listeners()}
             {children}
-          </div>
+          </Fragment>
         </BrowserRouter>
       </DocumentTitle>
     )
