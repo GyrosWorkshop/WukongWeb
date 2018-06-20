@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, {Component, createRef} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
@@ -52,13 +52,15 @@ export default class PlayerAudio extends Component {
     dispatchReloaded: PropTypes.func
   }
 
+  audio = createRef()
+
   setAudioState(url, time) {
     if (url) {
-      this.audio.src = url
-      if (time) this.audio.currentTime = (Date.now() / 1000) - time
-      this.audio.play()
+      this.audio.current.src = url
+      if (time) this.audio.current.currentTime = (Date.now() / 1000) - time
+      this.audio.current.play()
     } else {
-      this.audio.removeAttribute('src')
+      this.audio.current.removeAttribute('src')
     }
   }
 
@@ -71,17 +73,17 @@ export default class PlayerAudio extends Component {
         this.props.dispatchRunning(false)
         break
       case 'timeupdate':
-        this.props.dispatchElapsed(this.audio.currentTime)
+        this.props.dispatchElapsed(this.audio.current.currentTime)
         break
       case 'durationchange':
-        this.props.dispatchDuration(this.audio.duration)
+        this.props.dispatchDuration(this.audio.current.duration)
         break
       case 'ended':
         this.setAudioState(null)
         this.props.dispatchEnded()
         break
       case 'error':
-        switch (this.audio.error.code) {
+        switch (this.audio.current.error.code) {
           case MediaError.MEDIA_ERR_ABORTED:
           case MediaError.MEDIA_ERR_NETWORK:
             this.setAudioState(null)
@@ -98,20 +100,20 @@ export default class PlayerAudio extends Component {
   componentDidMount() {
     for (const type of [
       'playing', 'pause', 'timeupdate', 'durationchange', 'ended', 'error'
-    ]) this.audio.addEventListener(type, this.onAudioEvent)
-    this.audio.volume = this.props.volume
+    ]) this.audio.current.addEventListener(type, this.onAudioEvent)
+    this.audio.current.volume = this.props.volume
     this.setAudioState(this.props.file, this.props.time)
   }
 
   componentWillUnmount() {
     for (const type of [
       'playing', 'pause', 'timeupdate', 'durationchange', 'ended', 'error'
-    ]) this.audio.removeEventListener(type, this.onAudioEvent)
+    ]) this.audio.current.removeEventListener(type, this.onAudioEvent)
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.volume != nextProps.volume) {
-      this.audio.volume = nextProps.volume
+      this.audio.current.volume = nextProps.volume
     }
     if (nextProps.reload) {
       this.setAudioState(null)
@@ -127,7 +129,7 @@ export default class PlayerAudio extends Component {
   render() {
     return (
       <div styleName='container'>
-        <audio ref={element => this.audio = element}
+        <audio ref={this.audio}
           autoPlay={true}/>
       </div>
     )

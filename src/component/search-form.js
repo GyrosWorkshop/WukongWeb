@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {PureComponent, createRef} from 'react'
 import {connect} from 'react-redux'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
@@ -29,6 +29,8 @@ export default class SearchForm extends PureComponent {
     value: ''
   }
 
+  input = createRef()
+
   updateValue(value, emitChange) {
     this.setState({value})
     if (emitChange) this.props.dispatchKeyword(value)
@@ -48,9 +50,9 @@ export default class SearchForm extends PureComponent {
   onButtonClick = (event) => {
     if (this.state.value) {
       this.updateValue('', true)
-      this.input.blur()
+      this.input.current.blur()
     } else {
-      this.input.focus()
+      this.input.current.focus()
     }
   }
 
@@ -61,7 +63,7 @@ export default class SearchForm extends PureComponent {
         <button onClick={this.onButtonClick}>
           <i className={`fa fa-${value ? 'arrow-left' : 'search'}`}/>
         </button>
-        <input ref={element => this.input = element}
+        <input ref={this.input}
           value={value}
           onChange={this.onInputChange} onKeyDown={this.onKeyDown}/>
       </div>

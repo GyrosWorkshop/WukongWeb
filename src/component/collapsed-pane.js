@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react'
+import React, {PureComponent, createRef} from 'react'
 import CSSModules from 'react-css-modules'
 import PropTypes from 'prop-types'
 
@@ -15,8 +15,10 @@ export default class CollapsedPane extends PureComponent {
     height: 'auto'
   }
 
+  pane = createRef()
+
   updateHeight() {
-    this.setState({height: `${this.pane.scrollHeight}px`})
+    this.setState({height: `${this.pane.current.scrollHeight}px`})
   }
 
   componentDidMount() {
@@ -33,7 +35,7 @@ export default class CollapsedPane extends PureComponent {
     const {open, children} = this.props
     const {height} = this.state
     return (
-      <div ref={element => this.pane = element}
+      <div ref={this.pane}
         styleName='container' style={{
           height: open ? height : 0
         }}>
