@@ -1,4 +1,4 @@
 {
-    "javascript.validate.enable": false,
-    "css.validate": false
+  "javascript.validate.enable": false,
+  "css.validate": false
 }
