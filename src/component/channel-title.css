@@ -12,10 +12,12 @@
       text-decoration: none;
       transition: color 200ms ease;
 
-      &:hover,
-      &:focus {
-        color: #f09442;
-        outline: none;
+      @media (hover: hover) {
+        &:hover,
+        &:focus {
+          color: #f09442;
+          outline: none;
+        }
       }
     }
   }

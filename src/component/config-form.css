@@ -17,7 +17,13 @@
       outline: none;
       transition: color 200ms ease, background 200ms ease, border-color 200ms ease;
 
-      &:hover,
+      @media (hover: hover) {
+        &:hover {
+          color: #000;
+          border-color: #333;
+        }
+      }
+
       &:focus {
         color: #000;
         border-color: #333;

@@ -22,8 +22,10 @@
     margin-top: 12px;
   }
 
-  &:hover,
-  &:focus {
-    background: rgba(0, 0, 0, 0.07);
+  @media (hover: hover) {
+    &:hover,
+    &:focus {
+      background: rgba(0, 0, 0, 0.07);
+    }
   }
 }

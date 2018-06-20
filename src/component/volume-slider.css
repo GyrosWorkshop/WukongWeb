@@ -20,9 +20,11 @@
       height: 1em;
     }
 
-    &:hover,
-    &:focus {
-      color: #f09442;
+    @media (hover: hover) {
+      &:hover,
+      &:focus {
+        color: #f09442;
+      }
     }
 
     &:active {
@@ -81,18 +83,20 @@
       border-radius: 0.05em;
     }
 
-    &:hover,
-    &:focus {
-      &::-webkit-slider-thumb {
-        transform: scale(1.2, 1.2);
-      }
+    @media (hover: hover) {
+      &:hover,
+      &:focus {
+        &::-webkit-slider-thumb {
+          transform: scale(1.2, 1.2);
+        }
 
-      &::-moz-range-thumb {
-        transform: scale(1.2, 1.2);
-      }
+        &::-moz-range-thumb {
+          transform: scale(1.2, 1.2);
+        }
 
-      &::-ms-thumb {
-        transform: scale(1.2, 1.2);
+        &::-ms-thumb {
+          transform: scale(1.2, 1.2);
+        }
       }
     }
 

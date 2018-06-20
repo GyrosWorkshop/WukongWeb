@@ -16,9 +16,11 @@
       height: 1em;
     }
 
-    &:hover,
-    &:focus {
-      color: #f09442;
+    @media (hover: hover) {
+      &:hover,
+      &:focus {
+        color: #f09442;
+      }
     }
 
     &:active {
@@ -34,17 +36,21 @@
       transition: opacity 200ms ease;
       opacity: 0;
 
-      &:hover,
-      &:focus {
-        visibility: visible;
-        opacity: 1;
+      @media (hover: hover) {
+        &:hover,
+        &:focus {
+          visibility: visible;
+          opacity: 1;
+        }
       }
     }
 
-    &:hover ~ .tooltip,
-    &:focus ~ .tooltip {
-      visibility: visible;
-      opacity: 1;
+    @media (hover: hover) {
+      &:hover ~ .tooltip,
+      &:focus ~ .tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
     }
   }
 

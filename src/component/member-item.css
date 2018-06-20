@@ -32,9 +32,11 @@
     opacity: 0;
   }
 
-  &:hover > .tooltip,
-  &:focus > .tooltip {
-    visibility: visible;
-    opacity: 1;
+  @media (hover: hover) {
+    &:hover > .tooltip,
+    &:focus > .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }

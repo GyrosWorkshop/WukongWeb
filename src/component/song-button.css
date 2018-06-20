@@ -14,9 +14,11 @@
       height: 1em;
     }
 
-    &:hover,
-    &:focus {
-      color: #f09442;
+    @media (hover: hover) {
+      &:hover,
+      &:focus {
+        color: #f09442;
+      }
     }
 
     &:active {
