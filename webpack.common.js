@@ -59,6 +59,7 @@ module.exports = class Webpack {
   }
 
   libraryExport(name) {
+    this.config.output.globalObject = 'this'
     this.config.output.libraryTarget = 'umd'
     this.config.output.library = name
   }

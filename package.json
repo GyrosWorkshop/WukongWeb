@@ -4,7 +4,7 @@
   "description": "Wukong Web App",
   "client": {
     "name": "wukong-client",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Wukong Client"
   },
   "private": true,
