@@ -4,7 +4,6 @@ import {Provider} from 'react-redux'
 
 import Wukong from './client'
 import Platform from './platform'
-import Devtool from './devtool'
 import App from './component/app'
 
 if (process.env.NODE_ENV == 'production') {
@@ -12,11 +11,9 @@ if (process.env.NODE_ENV == 'production') {
   OfflinePlugin.install()
 }
 
-const store = Wukong(Platform, Devtool)
+const store = Wukong(Platform)
 render((
   <Provider store={store}>
-    <App>
-      {Devtool && <Devtool/>}
-    </App>
+    <App/>
   </Provider>
 ), document.getElementById('app'))
