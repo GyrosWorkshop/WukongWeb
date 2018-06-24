@@ -1,6 +1,6 @@
 {
   "name": "wukong-webapp",
-  "version": "1.8.3",
+  "version": "1.9.0",
   "description": "Wukong Web App",
   "client": {
     "name": "wukong-client",
