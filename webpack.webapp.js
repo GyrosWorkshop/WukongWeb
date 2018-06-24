@@ -23,12 +23,12 @@ webpack.definePlugin({
 webpack.htmlPlugin('./index.html', {
   comment: `Wukong v${webappVersion}`
 })
+webpack.faviconPlugin('./resource/icon.png', 'Wukong')
+webpack.offlinePlugin(webappVersion)
 webpack.splitChunks(true)
 
 switch (command) {
   case 'build':
-    webpack.faviconPlugin('./resource/icon.png', 'Wukong')
-    webpack.offlinePlugin(webappVersion)
     webpack.build()
     break
   case 'serve':

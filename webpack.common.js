@@ -205,7 +205,12 @@ module.exports = class Webpack {
       new OfflinePlugin({
         version: version,
         updateStrategy: 'all',
-        appShell: this.data.publicPath
+        appShell: this.data.publicPath,
+        autoUpdate: true,
+        ServiceWorker: {
+          events: true
+        },
+        AppCache: false
       })
     )
   }
