@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 
 const state = {
-  hook: () => {}
+  hook: () => { }
 }
 
 export function url(protocol, endpoint) {
@@ -13,7 +13,8 @@ export async function http(method, endpoint, data) {
     method,
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
     },
     body: JSON.stringify(data),
     mode: 'cors',
@@ -49,7 +50,7 @@ export function websocket(endpoint, handler) {
   socket.onerror = event => emit('error', event)
   socket.onmessage = event => {
     const string = event.data
-    const {eventName, ...eventData} = JSON.parse(string)
+    const { eventName, ...eventData } = JSON.parse(string)
     emit(eventName, eventData)
   }
 }
