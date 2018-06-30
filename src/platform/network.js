@@ -1,7 +1,7 @@
 import 'whatwg-fetch'
 
 const state = {
-  hook: () => { }
+  hook: () => {}
 }
 
 export function url(protocol, endpoint) {
@@ -50,7 +50,7 @@ export function websocket(endpoint, handler) {
   socket.onerror = event => emit('error', event)
   socket.onmessage = event => {
     const string = event.data
-    const { eventName, ...eventData } = JSON.parse(string)
+    const {eventName, ...eventData} = JSON.parse(string)
     emit(eventName, eventData)
   }
 }
