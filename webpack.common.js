@@ -240,15 +240,15 @@ module.exports = class Webpack {
     try {
       const history = require('connect-history-api-fallback')
       const convert = require('koa-connect')
-      serve({
+      serve({}, {
         config: this.config,
         content: __dirname,
         host: this.data.devHost,
         port: this.data.devPort,
-        dev: {
+        devMiddleware: {
           publicPath: this.data.publicPath
         },
-        hot: {
+        hotClient: {
           port: this.data.devPort + 1
         },
         add: (app, middleware, options) => {
