@@ -9,19 +9,26 @@ export default applyMiddleware(
     const state = getState()
     switch (action.type) {
       case Action.Channel.members.type: {
-        const prevMembers = prevState.channel.members
-        const nicknames = []
+        const {user: {profile}, channel: {name, members}} = state
+        const {members: prevMembers} = prevState.channel
         if (prevMembers.length) {
-          state.channel.members.forEach(member1 => {
-            if (!prevMembers.find(member2 => member1.id == member2.id)) {
-              nicknames.push(member1.nickname)
+          if (members.length >= prevMembers.length) {
+            const nicknames = members.filter(member =>
+              !prevMembers.find(prevMember => member.id == prevMember.id)
+            ).map(member => member.nickname)
+            if (nicknames.length) {
+              say(`欢迎我们的老伙计，${nicknames.join('和')}来到悟空${name}房间。`)
             }
-          })
+          } else {
+            const nicknames = prevMembers.filter(prevMember =>
+              !members.find(member => member.id == prevMember.id)
+            ).map(member => member.nickname)
+            if (nicknames.length) {
+              say(`噢，${nicknames.join('和')}离开了悟空，我向上帝保证，这简直是糟透了。`)
+            }
+          }
         } else {
-          nicknames.push(state.user.profile.nickname)
-        }
-        if (nicknames.length) {
-          say(`欢迎${nicknames.join('和')}进入悟空`)
+          say(`嘿，${profile.nickname}，见到你真是太令人高兴了。`)
         }
         break
       }
