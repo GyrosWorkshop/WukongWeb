@@ -26,13 +26,13 @@
     transform: translate(48px, -12px) translateX(-50%);
   }
 
-  @media (hover: hover) {
-    & > .tooltip {
-      visibility: hidden;
-      transition: opacity 200ms ease;
-      opacity: 0;
-    }
+  & > .tooltip {
+    visibility: hidden;
+    transition: opacity 200ms ease;
+    opacity: 0;
+  }
 
+  @media (hover: hover) {
     &:hover > .tooltip,
     &:focus > .tooltip {
       visibility: visible;
