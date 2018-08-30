@@ -39,8 +39,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class PlayerExternal extends PureComponent {
+class PlayerExternal extends PureComponent {
   copyData(props) {
     const object = {}
     Object.keys(props).forEach(key => {

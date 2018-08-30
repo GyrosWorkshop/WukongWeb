@@ -16,9 +16,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class UserView extends PureComponent {
+class UserView extends PureComponent {
   static propTypes = {
     nickname: PropTypes.string,
     avatar: PropTypes.string

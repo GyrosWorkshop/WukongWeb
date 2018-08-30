@@ -17,8 +17,9 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class DownloadButton extends PureComponent {
+class DownloadButton extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     artist: PropTypes.string,

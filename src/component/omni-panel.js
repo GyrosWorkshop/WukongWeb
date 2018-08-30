@@ -10,8 +10,9 @@ import CollapsedPane from './collapsed-pane'
 import ConfigForm from './config-form'
 import style from './omni-panel.css'
 
+export default
 @CSSModules(style)
-export default class OmniPanel extends PureComponent {
+class OmniPanel extends PureComponent {
   state = {
     expanded: false
   }

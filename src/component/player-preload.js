@@ -17,9 +17,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class PlayerPreload extends PureComponent {
+class PlayerPreload extends PureComponent {
   static propTypes = {
     artwork: PropTypes.string,
     file: PropTypes.string

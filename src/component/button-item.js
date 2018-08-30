@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './button-item.css'
 
+export default
 @CSSModules(style)
-export default class ButtonItem extends PureComponent {
+class ButtonItem extends PureComponent {
   static propTypes = {
     icon: PropTypes.string,
     hidden: PropTypes.bool,

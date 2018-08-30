@@ -16,9 +16,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class LyricsMarquee extends PureComponent {
+class LyricsMarquee extends PureComponent {
   static propTypes = {
     lyrics: PropTypes.array
   }

@@ -18,9 +18,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class MemberList extends PureComponent {
+class MemberList extends PureComponent {
   static propTypes = {
     members: PropTypes.array,
     index: PropTypes.number

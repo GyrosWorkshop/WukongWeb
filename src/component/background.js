@@ -17,9 +17,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class Background extends PureComponent {
+class Background extends PureComponent {
   static propTypes = {
     artwork: PropTypes.string
   }

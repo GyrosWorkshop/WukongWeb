@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './collapsed-pane.css'
 
+export default
 @CSSModules(style)
-export default class CollapsedPane extends PureComponent {
+class CollapsedPane extends PureComponent {
   static propTypes = {
     open: PropTypes.bool,
     children: PropTypes.node

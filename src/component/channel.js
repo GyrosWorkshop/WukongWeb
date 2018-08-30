@@ -31,9 +31,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class Channel extends PureComponent {
+class Channel extends PureComponent {
   static propTypes = {
     channel: PropTypes.string,
     dispatchChannel: PropTypes.func

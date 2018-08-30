@@ -17,8 +17,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ShuffleButton extends PureComponent {
+class ShuffleButton extends PureComponent {
   static propTypes = {
     dispatchShuffle: PropTypes.func
   }

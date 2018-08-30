@@ -20,9 +20,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class Notification extends PureComponent {
+class Notification extends PureComponent {
   static propTypes = {
     notification: PropTypes.object,
     dispatchClearNotification: PropTypes.func

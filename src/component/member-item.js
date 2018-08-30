@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './member-item.css'
 
+export default
 @CSSModules(style)
-export default class MemberItem extends PureComponent {
+class MemberItem extends PureComponent {
   static propTypes = {
     nickname: PropTypes.string,
     avatar: PropTypes.string,

@@ -20,9 +20,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class VolumeSlider extends PureComponent {
+class VolumeSlider extends PureComponent {
   static propTypes = {
     volume: PropTypes.number,
     dispatchVolume: PropTypes.func

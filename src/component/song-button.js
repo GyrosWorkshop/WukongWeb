@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './song-button.css'
 
+export default
 @CSSModules(style)
-export default class SongButton extends PureComponent {
+class SongButton extends PureComponent {
   static propTypes = {
     icon: PropTypes.string,
     action: PropTypes.func,

@@ -5,8 +5,9 @@ import UserView from './user-view'
 import ChannelForm from './channel-form'
 import style from './welcome.css'
 
+export default
 @CSSModules(style)
-export default class Welcome extends PureComponent {
+class Welcome extends PureComponent {
   render() {
     return (
       <div styleName='container'>

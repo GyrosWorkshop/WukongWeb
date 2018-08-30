@@ -22,9 +22,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class NowPlaying extends PureComponent {
+class NowPlaying extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     album: PropTypes.string,

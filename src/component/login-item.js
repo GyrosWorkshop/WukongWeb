@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './login-item.css'
 
+export default
 @CSSModules(style)
-export default class LoginItem extends PureComponent {
+class LoginItem extends PureComponent {
   static propTypes = {
     name: PropTypes.string,
     icon: PropTypes.string,

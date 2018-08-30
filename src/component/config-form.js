@@ -39,9 +39,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class ConfigForm extends PureComponent {
+class ConfigForm extends PureComponent {
   static propTypes = {
     ...mapValues(options, (value, key) => PropTypes.string),
     dispatchPreferences: PropTypes.func,

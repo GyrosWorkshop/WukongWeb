@@ -20,9 +20,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @hot(module)
 @connect(mapStateToProps, mapDispatchToProps)
-export default class App extends PureComponent {
+class App extends PureComponent {
   static propTypes = {
     auth: PropTypes.bool,
     children: PropTypes.node

@@ -19,8 +19,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class ReloadButton extends PureComponent {
+class ReloadButton extends PureComponent {
   static propTypes = {
     running: PropTypes.bool,
     dispatchReload: PropTypes.func

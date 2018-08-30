@@ -18,9 +18,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class SearchForm extends PureComponent {
+class SearchForm extends PureComponent {
   static propTypes = {
     dispatchKeyword: PropTypes.func
   }

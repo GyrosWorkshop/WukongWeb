@@ -4,8 +4,9 @@ import CSSModules from 'react-css-modules'
 
 import style from './channel-form.css'
 
+export default
 @CSSModules(style)
-export default class ChannelForm extends PureComponent {
+class ChannelForm extends PureComponent {
   state = {
     value: '',
     submit: false

@@ -24,9 +24,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class LoginList extends PureComponent {
+class LoginList extends PureComponent {
   static propTypes = {
     providers: PropTypes.array,
     dispatchAuthSelected: PropTypes.func

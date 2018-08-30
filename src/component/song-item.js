@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './song-item.css'
 
+export default
 @CSSModules(style)
-export default class SongItem extends PureComponent {
+class SongItem extends PureComponent {
   static propTypes = {
     title: PropTypes.string,
     album: PropTypes.string,

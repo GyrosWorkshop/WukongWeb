@@ -28,9 +28,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class SongList extends PureComponent {
+class SongList extends PureComponent {
   static propTypes = {
     songs: PropTypes.array,
     dispatchAdd: PropTypes.func,

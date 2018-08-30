@@ -19,8 +19,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class SilenceButton extends PureComponent {
+class SilenceButton extends PureComponent {
   static propTypes = {
     listenOnly: PropTypes.bool,
     dispatchListenOnly: PropTypes.func

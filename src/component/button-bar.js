@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 
 import style from './button-bar.css'
 
+export default
 @CSSModules(style)
-export default class ButtonBar extends PureComponent {
+class ButtonBar extends PureComponent {
   static propTypes = {
     children: PropTypes.node
   }

@@ -17,8 +17,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class SyncButton extends PureComponent {
+class SyncButton extends PureComponent {
   static propTypes = {
     dispatchSync: PropTypes.func
   }

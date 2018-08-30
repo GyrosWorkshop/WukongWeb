@@ -19,8 +19,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class DownvoteButton extends PureComponent {
+class DownvoteButton extends PureComponent {
   static propTypes = {
     downvote: PropTypes.bool,
     dispatchDownvote: PropTypes.func

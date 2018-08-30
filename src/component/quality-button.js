@@ -21,8 +21,9 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
-export default class QualityButton extends PureComponent {
+class QualityButton extends PureComponent {
   static propTypes = {
     format: PropTypes.string,
     quality: PropTypes.object,

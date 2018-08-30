@@ -36,9 +36,10 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class PlayerAudio extends Component {
+class PlayerAudio extends Component {
   static propTypes = {
     id: PropTypes.string,
     time: PropTypes.number,

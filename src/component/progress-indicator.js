@@ -16,9 +16,10 @@ function mapDispatchToProps(dispatch) {
   return {}
 }
 
+export default
 @connect(mapStateToProps, mapDispatchToProps)
 @CSSModules(style)
-export default class ProgressIndicator extends PureComponent {
+class ProgressIndicator extends PureComponent {
   static propTypes = {
     elapsed: PropTypes.number,
     duration: PropTypes.number
