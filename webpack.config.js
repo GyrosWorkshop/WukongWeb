@@ -1,15 +1,53 @@
 require('dotenv').config()
 const path = require('path')
-const fs = require('fs')
 const webpack = require('webpack')
-const serve = require('webpack-serve')
 
-module.exports = class Webpack {
-  constructor(env) {
-    process.env.NODE_ENV = env
+const package = require('./package')
+
+module.exports = (env, {mode}) => {
+  const client = new Webpack('client', mode)
+  client.sourcePath('client')
+  client.buildPath('client')
+  client.outputFile('wukong')
+  client.libraryExport('Wukong')
+  client.entryFiles('./index')
+  client.jsLoader()
+  client.jsonPlugin('package.json', package.client)
+
+  const webapp = new Webpack('webapp', mode)
+  webapp.sourcePath('.')
+  webapp.buildPath('webapp')
+  webapp.publicPath('/')
+  webapp.outputFile()
+  webapp.entryFiles('./entry')
+  webapp.jsLoader()
+  webapp.cssLoader()
+  webapp.fileLoader()
+  webapp.definePlugin({
+    process: {
+      env: {
+        API_SERVER: JSON.stringify(process.env.API_SERVER)
+      }
+    }
+  })
+  webapp.htmlPlugin('./index.html', {
+    comment: `Wukong v${package.version}`
+  })
+  webapp.faviconPlugin('./resource/icon.png', 'Wukong')
+  webapp.offlinePlugin(package.version)
+  webapp.splitChunks()
+  webapp.hotModule()
+
+  return [client, webapp].map(item => item.config)
+}
+
+class Webpack {
+  constructor(name, mode) {
+    process.env.NODE_ENV = mode
     this.data = {
-      env: env,
-      prod: env == 'production',
+      name: name,
+      mode: mode,
+      prod: mode == 'production',
       devHost: process.env.DEV_HOST,
       devPort: parseInt(process.env.DEV_PORT)
     }
@@ -23,17 +61,21 @@ module.exports = class Webpack {
       optimization: {
         minimizer: []
       },
-      performance: {}
+      performance: {},
+      devServer: {}
     }
     this.commonSetup()
   }
 
   commonSetup() {
-    this.config.mode = this.data.env
+    this.config.name = this.data.name
+    this.config.mode = this.data.mode
     this.config.plugins.push(
       new webpack.ProgressPlugin()
     )
     this.config.performance.hints = this.data.prod && 'warning'
+    this.config.devServer.host = this.data.devHost
+    this.config.devServer.port = this.data.devPort
   }
 
   sourcePath(directory) {
@@ -215,74 +257,18 @@ module.exports = class Webpack {
     )
   }
 
-  splitChunks(enabled) {
-    this.config.optimization.runtimeChunk = enabled && 'single'
-    this.config.optimization.splitChunks = enabled && {
+  splitChunks() {
+    this.config.optimization.runtimeChunk = 'single'
+    this.config.optimization.splitChunks = {
       chunks: 'all'
     }
   }
 
-  build() {
-    try {
-      webpack(this.config).run((error, stats) => {
-        if (error) {
-          this.printError(error)
-        } else {
-          this.printStats(stats)
-        }
-      })
-    } catch (error) {
-      this.printError(error)
-    }
-  }
-
-  serve() {
-    try {
-      const history = require('connect-history-api-fallback')
-      const convert = require('koa-connect')
-      serve({}, {
-        config: this.config,
-        content: __dirname,
-        host: this.data.devHost,
-        port: this.data.devPort,
-        devMiddleware: {
-          publicPath: this.data.publicPath
-        },
-        hotClient: {
-          port: this.data.devPort + 1
-        },
-        add: (app, middleware, options) => {
-          app.use(convert(history()))
-        }
-      })
-    } catch (error) {
-      this.printError(error)
-    }
-  }
-
-  /* eslint-disable no-console */
-  printError(error) {
-    console.error(error.stack || error)
-    if (error.details) {
-      console.error(error.details)
-    }
-    process.exitCode = 1
-  }
-
-  printStats(stats) {
-    console.log(stats.toString({
-      colors: true
-    }))
-    fs.writeFileSync(
-      path.join(
-        path.dirname(this.data.buildPath),
-        `${path.basename(this.data.buildPath)}.json`
-      ),
-      JSON.stringify(stats.toJson())
+  hotModule() {
+    if (this.data.prod) return
+    this.config.devServer.hotOnly = true
+    this.config.plugins.push(
+      new webpack.HotModuleReplacementPlugin()
     )
-    if (stats.hasErrors()) {
-      process.exitCode = 2
-    }
   }
-  /* eslint-enable no-console */
 }
