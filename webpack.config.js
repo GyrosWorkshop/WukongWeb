@@ -76,6 +76,7 @@ class Webpack {
     this.config.performance.hints = this.data.prod && 'warning'
     this.config.devServer.host = this.data.devHost
     this.config.devServer.port = this.data.devPort
+    this.config.devServer.historyApiFallback = true
   }
 
   sourcePath(directory) {
