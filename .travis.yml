@@ -1,11 +1,6 @@
-dist: trusty
-sudo: false
 language: node_js
-node_js:
-- node
-cache:
-  directories:
-  - node_modules
+node_js: [node]
+cache: npm
 script: npm run validate
 deploy:
   provider: firebase
