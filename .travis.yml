@@ -1,11 +1,26 @@
 language: node_js
 node_js: [node]
 cache: npm
-script: npm run validate
-deploy:
-  provider: firebase
-  skip_cleanup: true
-  on:
-    tags: true
-  token:
-    secure: bCIP8P9O18GAewchrZejZVTxAFfObdSAZhzEQLTbCY5qG2EX3zzM0sFDMbT3OKRzXT9tjOLjfknBq8DP0qdE+zCy4aGT8kzcdHHpeqgyn6fZxGr/2OT8NvU/WI+nq5z8HQ3YnpKQDs8sQoO6IBFWdlzurkbm3/4ae6MRraiMvd+x4Z9HuiY63JAxkNX3+E+OcvIfsLNdbqHx1LGfG07sRqdKbgLOhr24QJyomUylH2PGZhaRVtvT17XPSQ5YiWjxsRNYq4wzyxtM/ltsCbdppINjAb1SveUOTMNTOkW+0dumWHPx6B2KkVfDb8AwNO0SKdj23pcjhtDpOaAJU2Ej+khR3Ulwe03QwKfyATpRlFm3L4Y9E/f/GINAHyxTWo6xhEye2fB8ZzLCLF5CxVc9PYzm6ldDNFn/Zrylp6jcHNSotOo+7nIfO0Nvye/aDL4cucW7pPR1yW4rsNTCbOkNKqAbzAnvNE4ROWfY57J7keru5hGFhOsyYG01mHIiwn6bXh/F8BOmKlEgJ/Ta3Nz4UIDt7s8QRzP7TABvSu9pny7scCH2nNRIPK2NewgaxVwTrpniwEQSU+6MFAhMfQQVCNU/BZGjGgAaFV/gwCO1rhs1NRfzfYUawhrVMbtMmXpgKxhaKqNtHZzOtMaaBt13s5ZPEfUe8FOk0vUGK5gp7d8=
+jobs:
+  include:
+  - stage: test
+    script: npm test
+  - stage: deploy client
+    if: tag =~ ^c
+    script: npm run build:client
+    before_deploy: cd build/client
+    deploy:
+      provider: npm
+      skip_cleanup: true
+      email:
+        secure: R7dtt9FukrO0v35bivM62Xt9oFoMUoyeJsuOkJ6O/vQv9qXBdfMqbAr5xT1Ry0Hiyq9mKRS5ftV6r1wABiodaOBhlokE1n0rdCOJJLWyR4IRZwZ8xwK5VbafITTASo6oNz8hYW0C0GKRtmceiK9MkM7IFC+2IcPEQ9LZa/yrPKqe8OUHXgmL8SsfrduDWr+q55q24EQL4VaSzME45AQRTYEncU2e5W5RXg+DVoQPYP0bSo6hrA0YOgECOVAB09GnfEqTGpKT0RBd9QznzP0o6oOY2uN65yWu2lv9Mh2q+lt+p7YmT9ajrIuJ27hDSJilxGpl1rGp6gJkZjoxkawmuzYCRZdBiz0FKIXjeFpAjsD3qw/012fk90lU0QDd9kFakjPyyXVgcGYDFUA7mJsMXM9zokZCp9zPYpJmpSkW7bEcWVHz49Vy3RTiqLhBbmDQu+JYJY2xM5Y+LndOTjD5aSwiNgW91CNJ1dk1A94XpJIsDjc86URXA/qX2FImklX1do3fuXj21quAEICr3ihMW0B43+FjKZi9QGlLRdZJIHvJqWMv8QfXtj8XTDVCLL6fUCF9cQKI8ELD1Iftm7BB1jVtPDW1c8qT8GIq+5SeI/hMHrdOgTgDU4NUqxdIKJGKDSgkxaaHfHh9oNbQtjldTB6b8Tmq0udChDcEfdsr31o=
+      api_key:
+        secure: mi7jttp2PCDTw3GNG4EY9p7ChC9ZBt/a80RjXE26LkwpUt+9LPD2PAu5K7TF6BzQ27mLNtPitTJPZa3fLCPL2OlPARviIM8JXyQYC/S34Nc1AhnNNw75MFG5x9xyd/B8djzIwLPKD+52JnwLIvm0TXOlZy6S7Hb4DuG/+jd0ZShpMLS5P+Xko8+0GYNdVMq/wr8sbmBeJYWgj2e1t5+MWv3UcXPOHMw+C5z3zLCbVyGVWFidisHrJBspEtRCnM4HG3IeYlTAY5nw1g6vzf2VpHyMrVOcXLAe2v4yBvlQgeV2fXxUoYdy+IS3ieoH7SmqJuW118Ybw+TpuemvWWTpCc1lNLW1Vlh2ne7h2eG/GqNT2t/Ga+P175b4Tf0wzYCJ6DxjmsVwgHcOSPzeUibQ5J5L/3t9G/drHFqnW2TNI/rNmg51E4Ff99lLitqS/ILhJsMcA7/OMqKdKw6pnf2uUCL45mt7X7YuuNEspkB0osh6/jJnY2LJpr1zrxEnBAOea6qnOAWIVTFgQwW4ZlwoIMmmhPaXygB8d+ebFBTJF0Q1a2FukCS78C8lyUF3OEbK2WC8Ih0grZKSgpv0aX7h9wTiNlfCX3YJp0cD1gtJhSIiIYaPCdv247W9AMdP59QJ87VTS9PsIZ8V8K6MGWSMbSwZCYy6uf/o+YQJhLS+Ap0=
+  - stage: deploy webapp
+    if: tag =~ ^v
+    script: npm run build:webapp
+    deploy:
+      provider: firebase
+      skip_cleanup: true
+      token:
+        secure: bCIP8P9O18GAewchrZejZVTxAFfObdSAZhzEQLTbCY5qG2EX3zzM0sFDMbT3OKRzXT9tjOLjfknBq8DP0qdE+zCy4aGT8kzcdHHpeqgyn6fZxGr/2OT8NvU/WI+nq5z8HQ3YnpKQDs8sQoO6IBFWdlzurkbm3/4ae6MRraiMvd+x4Z9HuiY63JAxkNX3+E+OcvIfsLNdbqHx1LGfG07sRqdKbgLOhr24QJyomUylH2PGZhaRVtvT17XPSQ5YiWjxsRNYq4wzyxtM/ltsCbdppINjAb1SveUOTMNTOkW+0dumWHPx6B2KkVfDb8AwNO0SKdj23pcjhtDpOaAJU2Ej+khR3Ulwe03QwKfyATpRlFm3L4Y9E/f/GINAHyxTWo6xhEye2fB8ZzLCLF5CxVc9PYzm6ldDNFn/Zrylp6jcHNSotOo+7nIfO0Nvye/aDL4cucW7pPR1yW4rsNTCbOkNKqAbzAnvNE4ROWfY57J7keru5hGFhOsyYG01mHIiwn6bXh/F8BOmKlEgJ/Ta3Nz4UIDt7s8QRzP7TABvSu9pny7scCH2nNRIPK2NewgaxVwTrpniwEQSU+6MFAhMfQQVCNU/BZGjGgAaFV/gwCO1rhs1NRfzfYUawhrVMbtMmXpgKxhaKqNtHZzOtMaaBt13s5ZPEfUe8FOk0vUGK5gp7d8=

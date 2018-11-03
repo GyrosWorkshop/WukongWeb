@@ -69,7 +69,6 @@
     "test:lint:js": "eslint \"**/*.js\"",
     "test:lint:css": "stylelint \"**/*.css\"",
     "test:jest": "jest",
-    "validate": "run-s test build",
     "clean": "rimraf build *.tgz"
   },
   "repository": {
