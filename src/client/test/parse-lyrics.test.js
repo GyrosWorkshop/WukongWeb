@@ -83,6 +83,19 @@ describe('parse mock lyrics', () => {
     ]]
     expect(parseLyrics(input)).toEqual(output)
   })
+
+  test('handle timestamp offset', () => {
+    const input = [{
+      lrc: true,
+      translated: false,
+      data: '[offset:-500.0] [00:01.00] aaa [00:02.00] bbb'
+    }]
+    const output = [[
+      {time: 0.5, text: 'aaa'},
+      {time: 1.5, text: 'bbb'}
+    ]]
+    expect(parseLyrics(input)).toEqual(output)
+  })
 })
 
 describe('parse real lyrics', () => {
