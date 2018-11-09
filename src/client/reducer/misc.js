@@ -11,7 +11,6 @@ function notification(state = {}, action) {
   }
 }
 
-
 function connection(state = {}, action) {
   switch (action.type) {
     case Action.Misc.connection.type:
