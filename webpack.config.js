@@ -112,7 +112,7 @@ class Webpack {
   }
 
   jsLoader() {
-    const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+    const TerserPlugin = require('terser-webpack-plugin')
     this.config.module.rules.push({
       resource: {
         include: this.data.sourcePath,
@@ -123,7 +123,7 @@ class Webpack {
       }]
     })
     this.config.optimization.minimizer.push(
-      new UglifyJsPlugin()
+      new TerserPlugin()
     )
   }
 
