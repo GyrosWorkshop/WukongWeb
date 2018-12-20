@@ -4,7 +4,7 @@ import DocumentTitle from 'react-document-title'
 import {BrowserRouter, Route} from 'react-router-dom'
 import EventListener from 'react-event-listener'
 import PropTypes from 'prop-types'
-import {hot} from 'react-hot-loader'
+import {hot} from 'react-hot-loader/root'
 
 import Background from './background'
 import Notification from './notification'
@@ -21,12 +21,21 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default
-@hot(module)
+@hot
 @connect(mapStateToProps, mapDispatchToProps)
 class App extends PureComponent {
   static propTypes = {
     auth: PropTypes.bool,
     children: PropTypes.node
+  }
+
+  onClick = (event) => {
+    const element = document.activeElement
+    switch (element.tagName) {
+      case 'A':
+      case 'BUTTON':
+        element.blur()
+    }
   }
 
   render() {
@@ -55,7 +64,7 @@ class App extends PureComponent {
             )}
             <Notification/>
             <Background/>
-            {listeners()}
+            <EventListener target={document} onClick={this.onClick}/>
             {children}
           </Fragment>
         </BrowserRouter>
@@ -86,19 +95,4 @@ function lazy(loader) {
       }
     }
   }
-}
-
-function listeners() {
-  return [
-    <EventListener key='document' target={document}
-      onClick={event => {
-        const element = document.activeElement
-        switch (element.tagName) {
-          case 'A':
-          case 'BUTTON':
-            element.blur()
-        }
-      }}
-    />
-  ]
 }
